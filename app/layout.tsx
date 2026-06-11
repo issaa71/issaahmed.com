@@ -12,7 +12,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://issaahmed.com";
+// TODO: switch to https://issaahmed.com once the custom domain is wired up
+const SITE_URL = "https://issaahmed-com.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
