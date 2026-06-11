@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, FileText } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 
 function Github({ size = 15 }: { size?: number }) {
   return (
@@ -36,7 +36,7 @@ const PROFILE = {
     "Currently Product Engineer at Scooty Mobility, building an AI-powered transit companion app in pilot conversations with municipalities across the GTHA.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
-  linkedin: "https://www.linkedin.com/in/issa-ahmed",
+  linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
 };
 
 const PROJECTS: {
@@ -274,12 +274,7 @@ function Hero() {
         >
           <Linkedin size={15} /> LinkedIn
         </a>
-        <a
-          href="/resume.pdf"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
-          <FileText size={15} /> Resume
-        </a>
+        {/* TODO: re-add resume CTA once /public/resume.pdf is added */}
       </div>
     </section>
   );
