@@ -8,6 +8,8 @@ import {
   Artifact,
   ArtifactRow,
   TechRow,
+  YouTubeEmbed,
+  VideoGrid,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
@@ -167,6 +169,28 @@ export default function Page() {
         </figure>
       </Section>
 
+      <Section title="Demo videos">
+        <p>
+          Three pick-attempt runs captured during prototype testing and on the
+          showcase floor. Each run exercises the full vision-servo loop: detect →
+          approach → pick → sort.
+        </p>
+        <VideoGrid>
+          <YouTubeEmbed
+            id="_Bktd8VUelg"
+            title="RECLAIM — Pickup 1"
+          />
+          <YouTubeEmbed
+            id="vifXLBFmasQ"
+            title="RECLAIM — Pickup 2"
+          />
+          <YouTubeEmbed
+            id="jR9Q2AjDWao"
+            title="RECLAIM — Pickup 3"
+          />
+        </VideoGrid>
+      </Section>
+
       <Section title="Tech stack">
         <TechRow
           items={[
@@ -205,9 +229,9 @@ export default function Page() {
             detail="Interactive 3D React/Three.js demo — deployment in progress"
           />
           <Artifact
-            href="#"
-            label="🛠 Demo video"
-            detail="Full cycle from the March 26 live demo — YouTube upload in progress"
+            href="https://www.youtube.com/watch?v=_Bktd8VUelg"
+            label="Demo video · Pickup 1"
+            detail="YouTube · pick-attempt run from prototype testing"
           />
           <Artifact
             href="#"

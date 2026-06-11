@@ -168,3 +168,36 @@ export function TechRow({ items }: { items: string[] }) {
     </ul>
   );
 }
+
+export function YouTubeEmbed({
+  id,
+  title,
+  caption,
+}: {
+  id: string;
+  title: string;
+  caption?: string;
+}) {
+  return (
+    <figure className="overflow-hidden rounded-xl border border-border">
+      <div className="relative aspect-video w-full bg-black">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+        />
+      </div>
+      <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
+        <span className="font-medium text-foreground">{title}</span>
+        {caption ? <span className="ml-1">— {caption}</span> : null}
+      </figcaption>
+    </figure>
+  );
+}
+
+export function VideoGrid({ children }: { children: React.ReactNode }) {
+  return <div className="grid gap-4 sm:grid-cols-2">{children}</div>;
+}
