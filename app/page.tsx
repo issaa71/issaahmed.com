@@ -187,7 +187,9 @@ const CERTIFICATIONS: {
     name: "Azure AI Fundamentals",
     code: "AI-900",
     issuer: "Microsoft",
-    // TODO: add the year you earned this + paste the verification URL from https://learn.microsoft.com/users/<your-handle>/credentials
+    year: "2025",
+    verifyUrl:
+      "https://learn.microsoft.com/en-us/users/issaahmed-3571/credentials/ec72eb1f9331a5a9",
   },
   {
     name: "Security, Compliance & Identity Fundamentals",
