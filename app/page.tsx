@@ -193,7 +193,9 @@ const CERTIFICATIONS: {
     name: "Security, Compliance & Identity Fundamentals",
     code: "SC-900",
     issuer: "Microsoft",
-    // TODO: add year + verify URL
+    year: "2025",
+    verifyUrl:
+      "https://learn.microsoft.com/en-us/users/issaahmed-3571/credentials/1978cdc579e763a4",
   },
   {
     name: "SolidWorks Design Associate",
