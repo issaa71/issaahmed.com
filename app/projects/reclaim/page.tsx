@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   CaseStudyShell,
   Section,
@@ -23,6 +24,20 @@ export default function Page() {
       tagline="An end-to-end robot for post-event venues that scans for litter, drives to it, picks it up with a 6-DOF arm, classifies it, and sorts it into the correct bin — fully autonomously."
       meta="MSE 4499 Mechatronic Design Project · Western Engineering · 3rd place · April 2026"
     >
+      <figure className="overflow-hidden rounded-xl border border-border">
+        <Image
+          src="/projects/reclaim/team.jpg"
+          alt="The RECLAIM capstone team with the prototype at the Western Engineering MSE 4499 showcase."
+          width={1024}
+          height={768}
+          priority
+          className="w-full h-auto"
+        />
+        <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
+          Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place placement.
+        </figcaption>
+      </figure>
+
       <Section title="Headline">
         <MetricGrid>
           <Metric
@@ -138,6 +153,18 @@ export default function Page() {
           scan→detect→drive→pick→sort cycles across all six waste classes with no manual
           intervention. The cohort awarded the project 3rd place.
         </p>
+        <figure className="mt-6 mx-auto max-w-md overflow-hidden rounded-xl border border-border">
+          <Image
+            src="/projects/reclaim/demo.jpg"
+            alt="The RECLAIM prototype on the showcase floor with status monitors in the background showing the SCAN phase of the state machine."
+            width={768}
+            height={1024}
+            className="w-full h-auto"
+          />
+          <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
+            Prototype on the showcase floor. Status monitors (background) show the state machine in the SCAN phase.
+          </figcaption>
+        </figure>
       </Section>
 
       <Section title="Tech stack">
