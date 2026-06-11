@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight, Mail, BadgeCheck } from "lucide-react";
 
 function Github({ size = 15 }: { size?: number }) {
@@ -40,46 +41,46 @@ const PROFILE = {
 };
 
 const PROJECTS: {
+  slug: string;
   title: string;
   codename: string;
   blurb: string;
   highlight: string;
-  status: "coming-soon" | "live";
 }[] = [
   {
+    slug: "reclaim",
     title: "RECLAIM — Autonomous Waste-Sorting Robot",
     codename: "Robotics · ROS2 · Computer Vision",
     blurb:
       "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
     highlight:
       "8.1 items/min · 30 FPS perception on Jetson Orin NX · mAP50 0.693 → 0.826",
-    status: "coming-soon",
   },
   {
+    slug: "nba-shot-selection",
     title: "NBA Shot Selection — Offline RL",
     codename: "Reinforcement Learning · PyTorch",
     blurb:
       "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
     highlight:
       "+0.246 EPSA vs +0.042 NBA player baseline · 116,928 possessions · 631 games",
-    status: "coming-soon",
   },
   {
+    slug: "tha-pain-prediction",
     title: "Predicting Pain After Total Hip Arthroplasty",
     codename: "Applied ML · Research · Streamlit",
     blurb:
       "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
     highlight:
-      "J. Arthroplasty 2026 · KNN MSE 2.70 @ T3 · 90.1% classification accuracy",
-    status: "coming-soon",
+      "J. Arthroplasty 2026 · KNN MSE 2.70 @ T3 · 85.9% buffer accuracy ±2",
   },
   {
+    slug: "no-fly-list-kids",
     title: "No Fly List Kids — Federal Advocacy",
     codename: "Policy · Communication · Coalition work",
     blurb:
       "Long-running federal advocacy via the No Fly List Kids coalition. Toronto Star op-ed, multiple media features, direct engagement with the PMO and federal Cabinet.",
     highlight: "Contributed to Bill C-59 + $81M federal redress budget",
-    status: "coming-soon",
   },
 ];
 
@@ -351,30 +352,29 @@ function Projects() {
   return (
     <section id="projects" className="py-16 border-t border-border/60">
       <SectionLabel>Featured Projects</SectionLabel>
-      <p className="mt-3 text-sm text-muted">
-        Case-study pages are in progress — short summaries below.
-      </p>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {PROJECTS.map((p) => (
-          <li
-            key={p.title}
-            className="group relative rounded-xl border border-border p-5 hover:border-accent/60 transition-colors"
-          >
-            <p className="font-mono text-[11px] uppercase tracking-wider text-muted">
-              {p.codename}
-            </p>
-            <h3 className="mt-2 text-base font-semibold leading-snug">
-              {p.title}
-            </h3>
-            <p className="mt-2 text-sm text-foreground/80 leading-relaxed">
-              {p.blurb}
-            </p>
-            <p className="mt-3 font-mono text-[11px] text-accent">
-              {p.highlight}
-            </p>
-            <p className="mt-4 text-[11px] uppercase tracking-wider text-muted">
-              {p.status === "coming-soon" ? "Case study in progress" : "Live"}
-            </p>
+          <li key={p.slug}>
+            <Link
+              href={`/projects/${p.slug}`}
+              className="group block h-full rounded-xl border border-border p-5 hover:border-accent/60 transition-colors"
+            >
+              <p className="font-mono text-[11px] uppercase tracking-wider text-muted">
+                {p.codename}
+              </p>
+              <h3 className="mt-2 text-base font-semibold leading-snug">
+                {p.title}
+              </h3>
+              <p className="mt-2 text-sm text-foreground/80 leading-relaxed">
+                {p.blurb}
+              </p>
+              <p className="mt-3 font-mono text-[11px] text-accent">
+                {p.highlight}
+              </p>
+              <p className="mt-4 inline-flex items-center gap-1 text-[11px] uppercase tracking-wider text-muted group-hover:text-accent transition-colors">
+                Read case study <ArrowUpRight size={11} />
+              </p>
+            </Link>
           </li>
         ))}
       </ul>

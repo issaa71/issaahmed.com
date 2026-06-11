@@ -1,0 +1,204 @@
+import type { Metadata } from "next";
+import {
+  CaseStudyShell,
+  Section,
+  Metric,
+  MetricGrid,
+  Artifact,
+  ArtifactRow,
+  TechRow,
+} from "../_components/case-study";
+
+export const metadata: Metadata = {
+  title: "Predicting Long-Term Pain after Total Hip Arthroplasty",
+  description:
+    "Peer-reviewed ML pipeline (J. Arthroplasty 2026) comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
+};
+
+export default function Page() {
+  return (
+    <CaseStudyShell
+      eyebrow="Applied ML · Peer-reviewed Research"
+      title="Predicting Long-Term Pain After Total Hip Replacement"
+      tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
+      meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
+    >
+      <Section title="Headline">
+        <MetricGrid>
+          <Metric
+            label="Best T3 MSE"
+            value="2.70"
+            hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
+          />
+          <Metric
+            label="Best T5 MSE"
+            value="4.11"
+            hint="CatBoost, 5-year follow-up"
+          />
+          <Metric
+            label="Buffer accuracy ±2"
+            value="85.9%"
+            hint="CatBoost at T3 — within 2 points of true pain"
+          />
+          <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
+          <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
+          <Metric
+            label="Classification accuracy"
+            value="90.1%"
+            hint="low / moderate / high pain (also reached by mean regressor — see Results)"
+          />
+        </MetricGrid>
+      </Section>
+
+      <Section title="Problem">
+        <p>
+          Total hip arthroplasty (THA) is one of the most successful procedures in modern
+          medicine — over half a million performed annually in North America — but{" "}
+          <strong>up to 23% of patients still report chronic postoperative pain</strong>,
+          which contributes to higher opioid use, readmission rates, and worse overall
+          outcomes. Identifying patients at higher risk of persistent pain{" "}
+          <em>preoperatively</em> is a critical clinical challenge: surgeons currently
+          have no validated tool to estimate this risk, and traditional regression models
+          have struggled to capture the non-linear relationships that drive the outcome.
+        </p>
+        <p>
+          The collaboration with the Holland Bone & Joint Program at Sunnybrook and the
+          University of Toronto Department of Orthopaedic Surgery aimed to (1) build and
+          validate ML models that predict long-term pain from preoperative patient
+          factors, and (2) translate the best-performing model into a web tool that a
+          clinician could use during a patient consultation.
+        </p>
+      </Section>
+
+      <Section title="My role">
+        <p>
+          Among the seven co-authors I was the only engineer; the senior team were MDs
+          and PhDs at Sunnybrook + UofT. I led the technical implementation: feature
+          preprocessing and imputation, model selection and training across 13
+          algorithms, hyperparameter search with cross-validation, the four-method
+          feature importance pipeline, and the Streamlit calculator that surfaces the
+          model in a clinically usable form.
+        </p>
+      </Section>
+
+      <Section title="Approach">
+        <p>
+          The dataset was Cohort 1 of the prospective SAFE-T study — 513 patients
+          undergoing primary unilateral THA at two large academic hospitals, with data
+          collected from preoperative baseline through five years postoperatively. Pain
+          was measured on a 0–10 visual analog scale at 3-year (T3) and 5-year (T5)
+          follow-ups and served as the target variable.
+        </p>
+        <p>
+          <strong>Feature engineering.</strong> 71 candidate features (60 numeric, 11
+          categorical) spanning demographics, surgical variables, comorbidities, and
+          patient-reported outcome measures (WOMAC and ICOAP osteoarthritis pain
+          scales). Numeric features were imputed via iterative imputation to preserve
+          inter-feature relationships; categorical features used most-frequent imputation.
+          Continuous variables like height and weight were robust-scaled to dampen
+          outliers; bounded scales were normalized to [0, 1].
+        </p>
+        <p>
+          <strong>Model family.</strong> 13 models across three families — linear
+          (logistic regression, elastic net, linear SVM, SGD), tree ensembles (decision
+          tree, random forest, AdaBoost, XGBoost, CatBoost, LightGBM, KNN), and neural
+          networks (scikit-learn MLP, PyTorch MLP). A mean regressor served as the
+          floor-comparison baseline.
+        </p>
+        <p>
+          <strong>Training protocol.</strong> Stratified 80/20 train/test split.
+          GridSearchCV inside the training set to minimize MSE; the held-out test set
+          was only touched once final hyperparameters were locked. Deep models used Adam
+          with batch size 128.
+        </p>
+        <p>
+          <strong>Feature importance.</strong> Four complementary methods (Spearman
+          correlation, Kruskal–Wallis, Random Forest importance, recursive feature
+          elimination) were combined via cross-validated rank aggregation to identify
+          the variables that drove the top-performing models. Age, BMI, history of back
+          and neck problems, and specific WOMAC / ICOAP items consistently surfaced as
+          the strongest preoperative predictors.
+        </p>
+      </Section>
+
+      <Section title="Results">
+        <p>
+          <strong>Non-linear models won decisively.</strong> CatBoost, Random Forest, and
+          KNN were the top three performers across both timepoints; linear models
+          (Linear Regression and Elastic Net) had higher MSE and weaker buffer accuracy
+          at both T3 and T5, consistent with prior orthopedic literature showing linear
+          methods struggle to capture the non-linear relationships in postoperative-pain
+          data.
+        </p>
+        <p>
+          At T3, KNN achieved the lowest MSE (2.70) followed closely by XGBoost (2.77),
+          Random Forest (2.79), and CatBoost (2.83) — all beating the 3.07 mean baseline.
+          CatBoost had the highest buffer-accuracy-within-±2 score at 85.9%. At T5,
+          CatBoost achieved the lowest MSE (4.11), with Random Forest second (4.30).
+        </p>
+        <p>
+          <strong>An honest caveat on the 90.1% classification accuracy.</strong> The
+          paper reports 90.1% classification accuracy across the low / moderate / high
+          pain categories — but this number was also reached by the mean regressor,
+          reflecting the heavy class imbalance in the dataset (most patients report
+          minimal or no pain at T3/T5). The more clinically meaningful signal is the MSE
+          gap (2.70 vs 3.07) and the buffer accuracy spread.
+        </p>
+      </Section>
+
+      <Section title="Clinical translation">
+        <p>
+          Feature-importance analyses guided the input set for a web-based calculator
+          that estimates expected pain severity from a small number of preoperative
+          inputs. The tool was built with Streamlit, deployed to Streamlit Community
+          Cloud, and is the version cited in the published paper.
+        </p>
+      </Section>
+
+      <Section title="Tech stack">
+        <TechRow
+          items={[
+            "Python",
+            "scikit-learn",
+            "PyTorch",
+            "XGBoost",
+            "CatBoost",
+            "LightGBM",
+            "pandas",
+            "NumPy",
+            "Streamlit",
+            "GridSearchCV",
+          ]}
+        />
+      </Section>
+
+      <Section title="Artifacts">
+        <ArtifactRow>
+          <Artifact
+            href="https://doi.org/10.1016/j.arth.2026.04.023"
+            label="Published paper · J. Arthroplasty"
+            detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
+          />
+          <Artifact
+            href="https://hippain-8ipnqvicztvdyk3cip7hfa.streamlit.app/"
+            label="Live calculator · Streamlit"
+            detail="Cited tool from the paper — Streamlit Community Cloud (cold start ~30s)"
+          />
+        </ArtifactRow>
+      </Section>
+
+      <Section title="Reflection">
+        <p>
+          The most interesting engineering call was recognizing that the headline
+          90.1% number is partly noise — the mean baseline also hits it — and choosing
+          to lead the discussion with MSE and buffer accuracy instead. Class-imbalanced
+          datasets in clinical ML reward this kind of skepticism: it&apos;s easy to
+          present a high accuracy number that doesn&apos;t reflect what the model
+          actually learned. The future-work section of the paper flags this directly —
+          stratified or ordinal modeling approaches and AUC reporting would tighten the
+          claim, but only if the dichotomization doesn&apos;t worsen the imbalance.
+        </p>
+      </Section>
+    </CaseStudyShell>
+  );
+}
