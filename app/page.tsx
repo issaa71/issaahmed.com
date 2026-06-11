@@ -257,6 +257,11 @@ function Nav() {
             </a>
           </li>
           <li>
+            <a href="#certifications" className="hover:text-foreground transition-colors">
+              Certifications
+            </a>
+          </li>
+          <li>
             <a href="#contact" className="hover:text-foreground transition-colors">
               Contact
             </a>
@@ -435,7 +440,7 @@ function Skills() {
         ))}
       </div>
 
-      <div className="mt-12">
+      <div id="certifications" className="mt-12 scroll-mt-24">
         <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
           Certifications
         </h3>
