@@ -196,10 +196,11 @@ const CERTIFICATIONS: {
     // TODO: add year + verify URL
   },
   {
-    name: "Certified SolidWorks Associate",
+    name: "SolidWorks Design Associate",
     code: "CSWA",
     issuer: "Dassault Systèmes",
-    // TODO: add year + verify URL (from your MySolidWorks profile)
+    year: "2021",
+    verifyUrl: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-79BYK8QFZ6",
   },
 ];
 
