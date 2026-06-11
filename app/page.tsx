@@ -111,6 +111,16 @@ const EXPERIENCE: {
     ],
   },
   {
+    role: "R&D Summer Intern",
+    org: "Glaukos Corporation",
+    period: "Aug — Sep 2021 · San Clemente, CA",
+    bullets: [
+      "Worked with the R&D team on medical-device and combination pharmaceutical product development; performed lab tests on a retinal drug implant using a Phantom high-speed camera, an Instron material-properties testing machine, and a Keyence dimensional inspection system.",
+      "Designed and reconfigured manufacturing process fixturing in SolidWorks — rapid-iterated with Formlabs SLA printing, then produced the first fixture on a Tormach CNC.",
+      "Iterated on eye-stent CAD drawings and models alongside R&D engineers.",
+    ],
+  },
+  {
     role: "Engineering Summer Student",
     org: "Thurber Engineering",
     period: "Summers 2020 & 2021",
