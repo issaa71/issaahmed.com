@@ -202,6 +202,13 @@ const CERTIFICATIONS: {
     year: "2021",
     verifyUrl: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-79BYK8QFZ6",
   },
+  {
+    name: "SolidWorks Simulation Associate",
+    code: "CSWA-S",
+    issuer: "Dassault Systèmes",
+    year: "2023",
+    verifyUrl: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-PY2M54RUNJ",
+  },
 ];
 
 export default function Home() {
