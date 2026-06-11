@@ -178,15 +178,18 @@ export default function Page() {
         <VideoGrid>
           <YouTubeEmbed
             id="_Bktd8VUelg"
-            title="RECLAIM — Pickup 1"
+            title="Pickup 1 — Tissue, then water bottle"
+            caption="Two-item autonomous run: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
           />
           <YouTubeEmbed
             id="vifXLBFmasQ"
-            title="RECLAIM — Pickup 2"
+            title="Pickup 2 — Aluminum can"
+            caption="Single-item autonomous run on a recyclable, illustrating the scan → detect → drive → pick → sort loop."
           />
           <YouTubeEmbed
             id="jR9Q2AjDWao"
-            title="RECLAIM — Pickup 3"
+            title="Pickup 3 — Three-class sweep"
+            caption="Sequential run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). The full pipeline in one demo."
           />
         </VideoGrid>
       </Section>
@@ -229,9 +232,9 @@ export default function Page() {
             detail="Interactive 3D React/Three.js demo — deployment in progress"
           />
           <Artifact
-            href="https://www.youtube.com/watch?v=_Bktd8VUelg"
-            label="Demo video · Pickup 1"
-            detail="YouTube · pick-attempt run from prototype testing"
+            href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
+            label="Demo video · Three-class sweep"
+            detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
           />
           <Artifact
             href="#"
