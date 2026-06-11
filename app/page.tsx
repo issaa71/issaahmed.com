@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail } from "lucide-react";
+import { ArrowUpRight, Mail, BadgeCheck } from "lucide-react";
 
 function Github({ size = 15 }: { size?: number }) {
   return (
@@ -131,7 +131,7 @@ const SKILLS: { group: string; items: string[] }[] = [
       "Jetson Orin NX",
       "OAK-D / DepthAI",
       "RPLIDAR",
-      "SolidWorks (CSWA)",
+      "SolidWorks",
     ],
   },
   {
@@ -170,11 +170,36 @@ const SKILLS: { group: string; items: string[] }[] = [
       "GCP",
       "Docker",
       "n8n",
-      "Microsoft AI-900",
-      "Microsoft SC-900",
       "Jira",
       "SAP",
     ],
+  },
+];
+
+const CERTIFICATIONS: {
+  name: string;
+  code: string;
+  issuer: string;
+  year?: string;
+  verifyUrl?: string;
+}[] = [
+  {
+    name: "Azure AI Fundamentals",
+    code: "AI-900",
+    issuer: "Microsoft",
+    // TODO: add the year you earned this + paste the verification URL from https://learn.microsoft.com/users/<your-handle>/credentials
+  },
+  {
+    name: "Security, Compliance & Identity Fundamentals",
+    code: "SC-900",
+    issuer: "Microsoft",
+    // TODO: add year + verify URL
+  },
+  {
+    name: "Certified SolidWorks Associate",
+    code: "CSWA",
+    issuer: "Dassault Systèmes",
+    // TODO: add year + verify URL (from your MySolidWorks profile)
   },
 ];
 
@@ -396,6 +421,54 @@ function Skills() {
             </ul>
           </div>
         ))}
+      </div>
+
+      <div className="mt-12">
+        <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
+          Certifications
+        </h3>
+        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+          {CERTIFICATIONS.map((c) => {
+            const inner = (
+              <>
+                <BadgeCheck size={16} className="mt-0.5 shrink-0 text-accent" />
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-snug">
+                    {c.name}{" "}
+                    <span className="font-mono text-[11px] text-muted">
+                      · {c.code}
+                    </span>
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted">
+                    {c.issuer}
+                    {c.year ? ` · ${c.year}` : ""}
+                    {c.verifyUrl ? (
+                      <span className="ml-1 text-accent">· Verify ↗</span>
+                    ) : null}
+                  </p>
+                </div>
+              </>
+            );
+            return (
+              <li key={c.code}>
+                {c.verifyUrl ? (
+                  <a
+                    href={c.verifyUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-start gap-3 rounded-lg border border-border p-3 hover:border-accent/60 transition-colors"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div className="flex items-start gap-3 rounded-lg border border-border p-3">
+                    {inner}
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );
