@@ -125,16 +125,124 @@ export default function Page() {
         </p>
       </Section>
 
-      <Section title="Approach — navigation">
+      <Section title="Approach — navigation (the RECLAIM hybrid algorithm)">
         <p>
-          A hybrid coverage algorithm was benchmarked in simulation against four
-          baselines — random walk, nearest-neighbour, boustrophedon, and information-gain
-          exploration — across three room presets (Conference 20×15m, Arena 30×20m,
-          Dense 15×12m). The hybrid algorithm achieved <strong>8.1 items per
-          minute</strong> on the 100-item venue, beating every alternative. The
-          simulation itself was implemented as a React + Three.js + R3F app and
-          deployed as an interactive demo — visitors can pick an algorithm, room, and
-          item density and watch the robot path animate live.
+          I designed the RECLAIM hybrid navigation algorithm end-to-end and built the
+          React + Three.js benchmark simulation that validates it. The algorithm is
+          a <strong>3-mode hybrid deliberative–reactive controller</strong>{" "}
+          orchestrated by an executive layer monitoring fog-of-war coverage and the
+          collection queue. Mode switching is event-driven, not a fixed sequence —
+          the robot bounces between SCAN and COLLECT as items appear, with SWEEP
+          reserved for endgame cleanup.
+        </p>
+        <ul className="space-y-3 pl-5 list-disc">
+          <li>
+            <strong>SCAN — information-gain viewpoint exploration</strong> when
+            fog coverage drops below 80%. Candidate viewpoints are scored by{" "}
+            <code>unseen_cells_in_FOV / travel_distance</code>, penalised by visit
+            frequency; the robot navigates to the highest-scoring viewpoint and
+            performs a 120° directed scan on arrival.
+          </li>
+          <li>
+            <strong>COLLECT — nearest-neighbour initialisation + 2-opt local
+            search</strong>, producing routes typically{" "}
+            <strong>30–50% shorter than naive NN</strong>. A smart-bin-balancing
+            layer defers items when a bin exceeds 93% capacity and consolidates
+            dump trips.
+          </li>
+          <li>
+            <strong>SWEEP — flood-fill to identify contiguous unseen patches,
+            mini-boustrophedon over each.</strong> Engages when fog &gt; 80% and
+            queue is empty. Endgame completeness guarantee.
+          </li>
+        </ul>
+        <p>
+          The benchmark simulation pits RECLAIM against four baselines — random
+          walk, nearest-visible (greedy reactive), full boustrophedon (systematic
+          coverage), and an information-gain explorer — across three room presets.
+          On the dense preset (15×12 m, 100 items, 20 obstacles) RECLAIM ran at{" "}
+          <strong>8.1 items/min</strong> — <strong>23% faster than the next-best
+          algorithm</strong> (full boustrophedon at 6.6 items/min) — and was the
+          only algorithm to collect 100% of items on the conference preset.
+        </p>
+        <div className="not-prose overflow-x-auto rounded-lg border border-border">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border bg-foreground/5">
+                <th className="px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wider text-muted">
+                  Algorithm
+                </th>
+                <th className="px-3 py-2 text-right font-mono text-[11px] uppercase tracking-wider text-muted">
+                  Items / min
+                </th>
+                <th className="px-3 py-2 text-right font-mono text-[11px] uppercase tracking-wider text-muted">
+                  Collected
+                </th>
+                <th className="px-3 py-2 text-right font-mono text-[11px] uppercase tracking-wider text-muted">
+                  Time (s)
+                </th>
+              </tr>
+            </thead>
+            <tbody className="font-mono text-xs">
+              <tr className="border-b border-border">
+                <td className="px-3 py-2">Random walk</td>
+                <td className="px-3 py-2 text-right text-muted">3.2</td>
+                <td className="px-3 py-2 text-right text-muted">31.7 / 100</td>
+                <td className="px-3 py-2 text-right text-muted">600</td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="px-3 py-2">Nearest-visible</td>
+                <td className="px-3 py-2 text-right text-muted">5.6</td>
+                <td className="px-3 py-2 text-right text-muted">90.7 / 100</td>
+                <td className="px-3 py-2 text-right text-muted">1631</td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="px-3 py-2">Info-gain explorer</td>
+                <td className="px-3 py-2 text-right text-muted">6.4</td>
+                <td className="px-3 py-2 text-right text-muted">94.3 / 100</td>
+                <td className="px-3 py-2 text-right text-muted">1559</td>
+              </tr>
+              <tr className="border-b border-border">
+                <td className="px-3 py-2">Full boustrophedon</td>
+                <td className="px-3 py-2 text-right text-muted">6.6</td>
+                <td className="px-3 py-2 text-right text-muted">99.7 / 100</td>
+                <td className="px-3 py-2 text-right text-muted">909</td>
+              </tr>
+              <tr className="bg-accent-soft/30">
+                <td className="px-3 py-2 font-semibold text-accent">
+                  RECLAIM Hybrid
+                </td>
+                <td className="px-3 py-2 text-right font-semibold text-accent">
+                  8.1
+                </td>
+                <td className="px-3 py-2 text-right font-semibold text-accent">
+                  99.7 / 100
+                </td>
+                <td className="px-3 py-2 text-right font-semibold text-accent">
+                  738
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-muted">
+          3-run averages, Dense Preset (15×12 m, 100 items, 20 obstacles). Full
+          benchmark details in Appendix D of the final report.
+        </p>
+        <p>
+          The simulation itself is a single-file React + Three.js + R3F app
+          (~5,000 lines) running entirely client-side, deployed as an{" "}
+          <a
+            href="https://reclaim-nav-sim.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className="text-accent underline-offset-4 hover:underline"
+          >
+            interactive 3D demo ↗
+          </a>{" "}
+          — visitors can pick an algorithm, room preset, and item density, and
+          watch the robot path animate live with FOV, LiDAR, costmap, and vision
+          overlays toggleable.
         </p>
       </Section>
 
@@ -227,9 +335,9 @@ export default function Page() {
             detail="5-package ROS2 monorepo — issaa71/RECLAIM"
           />
           <Artifact
-            href="#"
-            label="🛠 Navigation simulation"
-            detail="Interactive 3D React/Three.js demo — deployment in progress"
+            href="https://reclaim-nav-sim.vercel.app"
+            label="Interactive 3D navigation simulation"
+            detail="Live React + Three.js · pick an algorithm, room, and item density; watch the robot path animate"
           />
           <Artifact
             href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
