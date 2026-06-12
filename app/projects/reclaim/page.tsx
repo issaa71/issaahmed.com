@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import {
   CaseStudyShell,
   Section,
@@ -120,6 +121,30 @@ export default function Page() {
           <Metric label="Placement" value="🥉 3rd place" hint="MSE 4499 cohort" />
         </MetricGrid>
       </Section>
+
+      <a
+        href="https://reclaim-nav-sim.vercel.app"
+        target="_blank"
+        rel="noreferrer"
+        className="glass rounded-xl p-4 group flex items-center gap-4 transition-colors hover:border-accent/40"
+      >
+        <span className="min-w-0 flex-1">
+          <span className="eyebrow block text-faint">
+            Interactive 3D simulator · runs in your browser
+          </span>
+          <span className="mt-1 block font-display text-lg font-semibold tracking-tight sm:text-xl">
+            Watch the 15/15 navigation stack run — pick a venue and seed, race it
+            against four baselines
+          </span>
+          <span className="mt-1 block font-mono text-xs text-muted">
+            reclaim_v2 · deterministic replays · comparison dashboard
+          </span>
+        </span>
+        <ArrowUpRight
+          size={16}
+          className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        />
+      </a>
 
       <Section title="Demo videos">
         <p>
@@ -296,8 +321,8 @@ export default function Page() {
           algorithm for navigation, and an STM32F405 microcontroller for CAN-bus
           actuator control. The reduced-scope prototype used lower-cost substitutes —
           OAK-D Lite, a hobby-servo arm with a LewanSoul claw, YOLO26n (6 classes),
-          Teensy 4.1, and a vision-servo state machine — but exercised the full
-          scan→detect→drive→pick→sort loop.
+          Teensy 4.1, and a vision-servo state machine, with an RPLIDAR A1M8 on the
+          prototype — but exercised the full scan→detect→drive→pick→sort loop.
         </p>
         <p>
           The repository is a five-package ROS2 monorepo:{" "}
