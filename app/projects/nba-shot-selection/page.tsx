@@ -4,15 +4,20 @@ import {
   Section,
   Metric,
   MetricGrid,
-  Artifact,
-  ArtifactRow,
   TechRow,
+  Figure,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
   title: "NBA Shot Selection — Offline RL",
   description:
-    "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping. Learns shoot-or-pass policies from 116K real NBA SportVU possessions and outperforms NBA player decisions by ~6×.",
+    "Dueling DQN with per-entity Deep Sets and PBRS reward shaping, trained on 116,928 real NBA possessions — outperforms NBA player shot decisions ~6× on EPSA.",
+  openGraph: {
+    title: "NBA Shot Selection — Offline RL",
+    description:
+      "Dueling DQN with per-entity Deep Sets and PBRS reward shaping, trained on 116,928 real NBA possessions — outperforms NBA player shot decisions ~6× on EPSA.",
+    type: "article",
+  },
 };
 
 export default function Page() {
@@ -23,6 +28,16 @@ export default function Page() {
       tagline="A Dueling Deep Q-Network with a per-entity Deep Sets architecture and Potential-Based Reward Shaping that learns shoot-or-pass policies from 116,928 real NBA possessions — and outperforms actual NBA player decisions by ~6× on Expected Points per Shot Attempt."
       meta="AISE 4030 Reinforcement Learning · Western Engineering · April 2026"
     >
+      <Figure
+        src="/projects/nba-shot-selection/decision-maps.png"
+        alt="Heatmaps of learned shoot probability by court zone for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
+        caption="Decision maps from held-out test data — both agents independently rediscover modern shot-selection analytics."
+        width={4769}
+        height={1850}
+        priority
+        plate
+      />
+
       <Section title="Headline">
         <MetricGrid>
           <Metric
@@ -156,6 +171,14 @@ export default function Page() {
           gap (0.039), confirming the headline finding: reward design and per-entity
           architecture matter far more than value decomposition.
         </p>
+        <Figure
+          src="/projects/nba-shot-selection/final-performance.png"
+          alt="Bar chart of mean EPSA across policies: Random −0.018, Always Shoot −0.034, NBA player behavior +0.042, DQN +0.208, Dueling DQN +0.246"
+          caption="Final evaluation — 500 held-out episodes, seed 42. Error bars are per-episode standard deviation."
+          width={3000}
+          height={1800}
+          plate
+        />
         <p>
           A post-hoc analysis found 55.4% agreement between the agent&apos;s greedy
           policy and what NBA players actually did on the same possessions — above
@@ -189,26 +212,6 @@ export default function Page() {
             "Streamlit",
           ]}
         />
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="#"
-            label="🛠 GitHub repository"
-            detail="Public repo in progress — local code at NBA_Shot_Selection/"
-          />
-          <Artifact
-            href="#"
-            label="🛠 Live demo (FastAPI court visualization)"
-            detail="Hugging Face Spaces deployment in progress — slimming dataset from 864MB to test-only"
-          />
-          <Artifact
-            href="#"
-            label="🛠 Project report (28 pp)"
-            detail="Full methodology + results"
-          />
-        </ArtifactRow>
       </Section>
 
       <Section title="Reflection">
