@@ -8,6 +8,8 @@ import {
   ArtifactRow,
   TechRow,
   StatusBadge,
+  Figure,
+  ComparisonTable,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
@@ -93,6 +95,39 @@ export default function Page() {
             <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
           </MetricGrid>
         </Section>
+
+      <Section title="From the paper">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Figure
+            src="/projects/tha-pain-prediction/paper-fig4-catboost-importances.png"
+            alt="Bar charts of CatBoost top-10 feature importances at 3 and 5 years: preoperative pain-perception items, age, BMI, length of stay, and back/neck history dominate."
+            caption="Figure 4 of the paper — what actually drives long-term pain in the best-performing model (CatBoost): patient-reported pain-perception items, age, BMI, and length of stay."
+            width={1405}
+            height={2468}
+            plate
+          />
+          <Figure
+            src="/projects/tha-pain-prediction/paper-fig1-pain-distribution.png"
+            alt="Bar charts of the pain-score distribution at 3 and 5 years showing most patients report zero or near-zero pain."
+            caption="Figure 1 of the paper — the heavy skew toward zero pain. This class imbalance is why headline 'accuracy' flatters the baseline, and why the study leads with MSE and buffer accuracy."
+            width={1405}
+            height={1605}
+            plate
+          />
+        </div>
+        <ComparisonTable
+          columns={["Model", "MSE", "Buffer ±1", "Buffer ±2"]}
+          rows={[
+            { cells: ["KNN", "2.70", "63.4%", "83.1%"], highlight: true },
+            { cells: ["XGBoost", "2.77", "59.2%", "80.3%"] },
+            { cells: ["Random Forest", "2.79", "52.1%", "77.5%"] },
+            { cells: ["CatBoost", "2.83", "50.7%", "85.9%"] },
+            { cells: ["Linear Regression", "4.20", "42.3%", "70.4%"] },
+            { cells: ["Mean baseline", "3.07", "21.1%", "90.1%"] },
+          ]}
+          caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72). Lower MSE is better; nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 figure is the class-imbalance artifact discussed in Results. Full 13-model tables (T3 + T5) in the publication."
+        />
+      </Section>
 
       <Section title="Artifacts">
         <ArtifactRow>
