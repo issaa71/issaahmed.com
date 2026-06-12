@@ -61,6 +61,25 @@ export default function Page() {
         </MetricGrid>
       </Section>
 
+      <Section title="Artifacts">
+        <ArtifactRow>
+          <Artifact
+            href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
+            label="Toronto Star op-ed"
+            detail="“Grounded: What it’s like to be a No Fly List kid”"
+          />
+          <Artifact
+            href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
+            label="HuffPost Canada — Bill C-59 passage"
+            detail="Quoted + photographed at the Library of Parliament · June 2019"
+          />
+        </ArtifactRow>
+        <p className="text-sm text-muted">
+          The campaign — including my family — has also been covered by CTV News and
+          Middle East Eye.
+        </p>
+      </Section>
+
       <Section title="Context">
         <p>
           Canada operates a &ldquo;Passenger Protect&rdquo; list, sometimes called the
@@ -138,25 +157,6 @@ export default function Page() {
           To be clear about credit: the coalition is collective work. Sulemaan Ahmed,
           Khadija Cajee, and many other families and members carried the campaign for
           years. My contribution was alongside theirs, not in place of them.
-        </p>
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
-            label="Toronto Star op-ed"
-            detail="“Grounded: What it’s like to be a No Fly List kid”"
-          />
-          <Artifact
-            href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
-            label="HuffPost Canada — Bill C-59 passage"
-            detail="Quoted + photographed at the Library of Parliament · June 2019"
-          />
-        </ArtifactRow>
-        <p className="text-sm text-muted">
-          The campaign — including my family — has also been covered by CTV News and
-          Middle East Eye.
         </p>
       </Section>
 

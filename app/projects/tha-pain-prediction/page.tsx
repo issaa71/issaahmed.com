@@ -94,6 +94,21 @@ export default function Page() {
           </MetricGrid>
         </Section>
 
+      <Section title="Artifacts">
+        <ArtifactRow>
+          <Artifact
+            href="https://doi.org/10.1016/j.arth.2026.04.023"
+            label="Published paper · J. Arthroplasty"
+            detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
+          />
+          <Artifact
+            href="https://github.com/issaa71/GoodPatientPain"
+            label="Calculator source code · GitHub"
+            detail="The clinician-facing Streamlit calculator cited in the paper — models, app, training code"
+          />
+        </ArtifactRow>
+      </Section>
+
       <Section title="Problem">
         <p>
           Total hip arthroplasty (THA) is one of the most successful procedures in modern
@@ -214,21 +229,6 @@ export default function Page() {
             "GridSearchCV",
           ]}
         />
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://doi.org/10.1016/j.arth.2026.04.023"
-            label="Published paper · J. Arthroplasty"
-            detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-          />
-          <Artifact
-            href="https://github.com/issaa71/GoodPatientPain"
-            label="Calculator source code · GitHub"
-            detail="The clinician-facing Streamlit calculator cited in the paper — models, app, training code"
-          />
-        </ArtifactRow>
       </Section>
 
       <Section title="Reflection">

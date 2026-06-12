@@ -121,6 +121,148 @@ export default function Page() {
         </MetricGrid>
       </Section>
 
+      <Section title="Demo videos">
+        <p>
+          Three pick-attempt runs on the physical prototype, captured during capstone
+          testing and on the showcase floor (March 2026). Each exercises the full
+          vision-servo loop: detect → approach → pick → sort. (The navigation
+          re-benchmark above is post-capstone, in simulation.)
+        </p>
+        <VideoGrid>
+          <YouTubeEmbed
+            id="_Bktd8VUelg"
+            title="Pickup 1 — Tissue, then water bottle"
+            caption="Two-item autonomous run from capstone prototype testing, March 2026: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
+          />
+          <YouTubeEmbed
+            id="vifXLBFmasQ"
+            title="Pickup 2 — Aluminum can"
+            caption="Single-item run on a recyclable, March 2026 — the scan → detect → drive → pick → sort loop on the physical prototype."
+          />
+          <YouTubeEmbed
+            id="jR9Q2AjDWao"
+            title="Pickup 3 — Three-class sweep"
+            caption="Showcase-period run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). Physical prototype, March 2026."
+          />
+        </VideoGrid>
+      </Section>
+
+      {/* Inside the rebuilt simulator — renders automatically once all four
+          H-key stills are dropped into public/projects/reclaim/ and the site
+          rebuilds. Until then the section is omitted (no placeholder, no broken
+          image). See STILLS above for the expected filenames. */}
+      {stillsReady ? (
+        <Section title="Inside the rebuilt simulator">
+          <p>
+            Stills from reclaim_v2&apos;s clean-screenshot mode — what the live demo looks
+            like under the hood.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {STILLS.map((s) => (
+              <Figure
+                key={s.src}
+                src={s.src}
+                alt={s.alt}
+                caption={s.caption}
+                width={1600}
+                height={900}
+              />
+            ))}
+          </div>
+        </Section>
+      ) : null}
+
+      <Section title="Results — the re-benchmarked navigation stack">
+        <p>
+          Re-benchmarked across 5 venue presets × 3 seeds (15 missions per algorithm), v2
+          completed every venue — from conference (30 items; seed 7: 1030.6 s, 130.3 m) to
+          expo (70 items; seed 42: 3142 s, 508.4 m, 5 dump trips):
+        </p>
+        <ComparisonTable
+          columns={["Algorithm", "Missions complete", "Items collected", "Notes"]}
+          rows={[
+            {
+              cells: [
+                "RECLAIM v2",
+                "15/15",
+                "447/450",
+                "99.0–100% verified coverage every run; 3 items declared unviewable, logged",
+              ],
+              highlight: true,
+            },
+            {
+              cells: [
+                "Info-gain explorer",
+                "12/15",
+                "380/450",
+                "stalls out; leaves 3–10 items per run",
+              ],
+            },
+            {
+              cells: [
+                "Nearest-neighbor",
+                "10/15",
+                "412/450",
+                "avg 602.8 m driven vs v2's 301.2 m",
+              ],
+            },
+            {
+              cells: [
+                "Full boustrophedon",
+                "6/15",
+                "318/450",
+                "rigid stripes fail in complex venues",
+              ],
+            },
+            {
+              cells: [
+                "RECLAIM v1 (showcase algorithm)",
+                "6/15",
+                "246/450",
+                "self-declares done prematurely at ~95% fog",
+              ],
+            },
+          ]}
+          caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70) × 3 seeds, calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
+        />
+        <Callout title="Flagship run — cafeteria, 80 items, seed 42">
+          RECLAIM v2 collected 80/80 items in 179.1 m of driving. The nearest-neighbor
+          baseline drove 929.5 m — 5.2× farther — and still finished with 75/80. Per meter
+          of travel, that&apos;s the difference between a robot that finishes the job and
+          one that wanders.
+        </Callout>
+        <Callout title="Why items per minute is the wrong headline">
+          v2 posts lower items-per-minute than some baselines, and that&apos;s by
+          construction. It models the real robot&apos;s stop-look-drive approach — TURN,
+          DRIVE, ALIGN, roughly 13 seconds per item at calibrated speeds — while the
+          baselines grab items with idealized continuous motion. v2 also refuses to declare
+          a mission done before reaching ≥99% verified coverage and returning for a final
+          dump; baselines quit at 90–96%. Throughput comparisons across that asymmetry would
+          flatter the wrong side. The numbers that survive it are mission completion and
+          distance per item collected — so those are the headlines.
+        </Callout>
+      </Section>
+
+      <Section title="Artifacts">
+        <ArtifactRow>
+          <Artifact
+            href="https://github.com/issaa71/CapstoneRECLAIM"
+            label="GitHub repository"
+            detail="5-package ROS2 monorepo — issaa71/CapstoneRECLAIM"
+          />
+          <Artifact
+            href="https://reclaim-nav-sim.vercel.app"
+            label="Interactive 3D navigation simulation"
+            detail="Live React + Three.js (reclaim_v2) — 5 seeded venue presets, comparison dashboard, behavior timeline, deterministic replays"
+          />
+          <Artifact
+            href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
+            label="Demo video · Three-class sweep"
+            detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
+          />
+        </ArtifactRow>
+      </Section>
+
       <Section title="Problem">
         <p>
           Post-event waste at large indoor venues is a concurrent operational and
@@ -221,74 +363,6 @@ export default function Page() {
           </li>
         </ul>
         <p>
-          Re-benchmarked across 5 venue presets × 3 seeds (15 missions per algorithm), v2
-          completed every venue — from conference (30 items; seed 7: 1030.6 s, 130.3 m) to
-          expo (70 items; seed 42: 3142 s, 508.4 m, 5 dump trips):
-        </p>
-        <ComparisonTable
-          columns={["Algorithm", "Missions complete", "Items collected", "Notes"]}
-          rows={[
-            {
-              cells: [
-                "RECLAIM v2",
-                "15/15",
-                "447/450",
-                "99.0–100% verified coverage every run; 3 items declared unviewable, logged",
-              ],
-              highlight: true,
-            },
-            {
-              cells: [
-                "Info-gain explorer",
-                "12/15",
-                "380/450",
-                "stalls out; leaves 3–10 items per run",
-              ],
-            },
-            {
-              cells: [
-                "Nearest-neighbor",
-                "10/15",
-                "412/450",
-                "avg 602.8 m driven vs v2's 301.2 m",
-              ],
-            },
-            {
-              cells: [
-                "Full boustrophedon",
-                "6/15",
-                "318/450",
-                "rigid stripes fail in complex venues",
-              ],
-            },
-            {
-              cells: [
-                "RECLAIM v1 (showcase algorithm)",
-                "6/15",
-                "246/450",
-                "self-declares done prematurely at ~95% fog",
-              ],
-            },
-          ]}
-          caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70) × 3 seeds, calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
-        />
-        <Callout title="Flagship run — cafeteria, 80 items, seed 42">
-          RECLAIM v2 collected 80/80 items in 179.1 m of driving. The nearest-neighbor
-          baseline drove 929.5 m — 5.2× farther — and still finished with 75/80. Per meter
-          of travel, that&apos;s the difference between a robot that finishes the job and
-          one that wanders.
-        </Callout>
-        <Callout title="Why items per minute is the wrong headline">
-          v2 posts lower items-per-minute than some baselines, and that&apos;s by
-          construction. It models the real robot&apos;s stop-look-drive approach — TURN,
-          DRIVE, ALIGN, roughly 13 seconds per item at calibrated speeds — while the
-          baselines grab items with idealized continuous motion. v2 also refuses to declare
-          a mission done before reaching ≥99% verified coverage and returning for a final
-          dump; baselines quit at 90–96%. Throughput comparisons across that asymmetry would
-          flatter the wrong side. The numbers that survive it are mission completion and
-          distance per item collected — so those are the headlines.
-        </Callout>
-        <p>
           The simulator runs entirely client-side — React + Three.js (R3F), with a headless
           Node harness that regenerates the benchmark matrix from a single command. Every
           run is reproducible byte-for-byte from its (preset · seed) chip, shown in the UI.
@@ -306,31 +380,6 @@ export default function Page() {
           .
         </p>
       </Section>
-
-      {/* Inside the rebuilt simulator — renders automatically once all four
-          H-key stills are dropped into public/projects/reclaim/ and the site
-          rebuilds. Until then the section is omitted (no placeholder, no broken
-          image). See STILLS above for the expected filenames. */}
-      {stillsReady ? (
-        <Section title="Inside the rebuilt simulator">
-          <p>
-            Stills from reclaim_v2&apos;s clean-screenshot mode — what the live demo looks
-            like under the hood.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {STILLS.map((s) => (
-              <Figure
-                key={s.src}
-                src={s.src}
-                alt={s.alt}
-                caption={s.caption}
-                width={1600}
-                height={900}
-              />
-            ))}
-          </div>
-        </Section>
-      ) : null}
 
       <Section title="Approach — manipulation">
         <p>
@@ -363,32 +412,6 @@ export default function Page() {
         </figure>
       </Section>
 
-      <Section title="Demo videos">
-        <p>
-          Three pick-attempt runs on the physical prototype, captured during capstone
-          testing and on the showcase floor (March 2026). Each exercises the full
-          vision-servo loop: detect → approach → pick → sort. (The navigation
-          re-benchmark above is post-capstone, in simulation.)
-        </p>
-        <VideoGrid>
-          <YouTubeEmbed
-            id="_Bktd8VUelg"
-            title="Pickup 1 — Tissue, then water bottle"
-            caption="Two-item autonomous run from capstone prototype testing, March 2026: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
-          />
-          <YouTubeEmbed
-            id="vifXLBFmasQ"
-            title="Pickup 2 — Aluminum can"
-            caption="Single-item run on a recyclable, March 2026 — the scan → detect → drive → pick → sort loop on the physical prototype."
-          />
-          <YouTubeEmbed
-            id="jR9Q2AjDWao"
-            title="Pickup 3 — Three-class sweep"
-            caption="Showcase-period run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). Physical prototype, March 2026."
-          />
-        </VideoGrid>
-      </Section>
-
       <Section title="Tech stack">
         <TechRow
           items={[
@@ -413,26 +436,6 @@ export default function Page() {
             "MATLAB",
           ]}
         />
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://github.com/issaa71/CapstoneRECLAIM"
-            label="GitHub repository"
-            detail="5-package ROS2 monorepo — issaa71/CapstoneRECLAIM"
-          />
-          <Artifact
-            href="https://reclaim-nav-sim.vercel.app"
-            label="Interactive 3D navigation simulation"
-            detail="Live React + Three.js (reclaim_v2) — 5 seeded venue presets, comparison dashboard, behavior timeline, deterministic replays"
-          />
-          <Artifact
-            href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
-            label="Demo video · Three-class sweep"
-            detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
-          />
-        </ArtifactRow>
       </Section>
 
       <Section title="Reflection">
