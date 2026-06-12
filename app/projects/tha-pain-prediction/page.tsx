@@ -7,48 +7,92 @@ import {
   Artifact,
   ArtifactRow,
   TechRow,
+  StatusBadge,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
-  title: "Predicting Long-Term Pain after Total Hip Arthroplasty",
+  title: "THA Pain Prediction — Peer-Reviewed ML",
   description:
-    "Peer-reviewed ML pipeline (J. Arthroplasty 2026) comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
+    "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
+  openGraph: {
+    title: "THA Pain Prediction — Peer-Reviewed ML",
+    description:
+      "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
+    type: "article",
+  },
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline:
+    "Predicting Long-Term Pain After Total Hip Replacement",
+  sameAs: "https://doi.org/10.1016/j.arth.2026.04.023",
+  author: {
+    "@type": "Person",
+    name: "Issa Ahmed",
+  },
+  isPartOf: {
+    "@type": "Periodical",
+    name: "The Journal of Arthroplasty",
+  },
+  datePublished: "2026",
 };
 
 export default function Page() {
   return (
-    <CaseStudyShell
-      eyebrow="Applied ML · Peer-reviewed Research"
-      title="Predicting Long-Term Pain After Total Hip Replacement"
-      tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
-      meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-    >
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Best T3 MSE"
-            value="2.70"
-            hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
-          />
-          <Metric
-            label="Best T5 MSE"
-            value="4.11"
-            hint="CatBoost, 5-year follow-up"
-          />
-          <Metric
-            label="Buffer accuracy ±2"
-            value="85.9%"
-            hint="CatBoost at T3 — within 2 points of true pain"
-          />
-          <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
-          <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
-          <Metric
-            label="Classification accuracy"
-            value="90.1%"
-            hint="low / moderate / high pain (also reached by mean regressor — see Results)"
-          />
-        </MetricGrid>
-      </Section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <CaseStudyShell
+        eyebrow="Applied ML · Peer-reviewed Research"
+        title="Predicting Long-Term Pain After Total Hip Replacement"
+        tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
+        meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
+      >
+        <div className="flex flex-wrap gap-2">
+          <StatusBadge tone="accent">
+            Published — The Journal of Arthroplasty · 2026
+          </StatusBadge>
+          <StatusBadge tone="accent">Open-source clinical calculator</StatusBadge>
+        </div>
+        <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
+          <a
+            href="https://doi.org/10.1016/j.arth.2026.04.023"
+            target="_blank"
+            rel="noreferrer"
+            className="text-accent underline-offset-4 hover:underline"
+          >
+            Read the paper ↗
+          </a>
+          <a
+            href="https://github.com/issaa71/GoodPatientPain"
+            target="_blank"
+            rel="noreferrer"
+            className="text-accent underline-offset-4 hover:underline"
+          >
+            View the code ↗
+          </a>
+        </div>
+
+        <Section title="Headline">
+          <MetricGrid>
+            <Metric
+              label="Best T3 MSE"
+              value="2.70"
+              hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
+            />
+            <Metric
+              label="Buffer accuracy ±2"
+              value="85.9%"
+              hint="CatBoost at T3 — within 2 points of true pain"
+            />
+            <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
+            <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
+          </MetricGrid>
+        </Section>
 
       <Section title="Problem">
         <p>
@@ -180,9 +224,9 @@ export default function Page() {
             detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
           />
           <Artifact
-            href="https://hippain-8ipnqvicztvdyk3cip7hfa.streamlit.app/"
-            label="Live calculator · Streamlit"
-            detail="Cited tool from the paper — Streamlit Community Cloud (cold start ~30s)"
+            href="https://github.com/issaa71/GoodPatientPain"
+            label="Calculator source code · GitHub"
+            detail="The clinician-facing Streamlit calculator cited in the paper — models, app, training code"
           />
         </ArtifactRow>
       </Section>
@@ -199,6 +243,7 @@ export default function Page() {
           claim, but only if the dichotomization doesn&apos;t worsen the imbalance.
         </p>
       </Section>
-    </CaseStudyShell>
+      </CaseStudyShell>
+    </>
   );
 }
