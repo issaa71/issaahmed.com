@@ -220,7 +220,7 @@ export function YouTubeEmbed({
           className="absolute inset-0 h-full w-full"
         />
       </div>
-      <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-muted">
+      <figcaption className="border-t border-border bg-background px-4 py-3 text-xs text-muted">
         <span className="text-foreground/90">{title}</span>
         {caption ? <span className="ml-1">— {caption}</span> : null}
       </figcaption>
@@ -263,7 +263,7 @@ export function Figure({
     <figure className="glass overflow-hidden rounded-xl">
       {plate ? <div className="bg-white">{image}</div> : image}
       {caption ? (
-        <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-muted">
+        <figcaption className="border-t border-border bg-background px-4 py-3 text-xs text-muted">
           {caption}
         </figcaption>
       ) : null}
@@ -334,7 +334,7 @@ export function Callout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-accent/20 border-l-2 border-l-accent bg-accent-soft/30 p-4 text-sm text-foreground/80 leading-relaxed">
+    <div className="rounded-xl border border-accent/20 border-l-2 border-l-accent bg-accent-soft/30 p-4 text-sm text-foreground/85 leading-relaxed">
       {title ? <p className="eyebrow text-accent mb-2">{title}</p> : null}
       {children}
     </div>

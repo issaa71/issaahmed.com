@@ -24,7 +24,7 @@ export function GlassCard({
 
 export function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <li className="rounded-full border border-border bg-white/[0.03] px-3 py-1 text-xs text-muted">
+    <li className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted">
       {children}
     </li>
   );
@@ -44,7 +44,7 @@ export function ButtonLink({
   const className =
     variant === "primary"
       ? "inline-flex h-10 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90"
-      : "inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-white/[0.02] px-4 text-sm font-medium text-foreground/90 transition-colors hover:border-accent/50 hover:text-accent";
+      : "inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-surface px-4 text-sm font-medium text-foreground/90 transition-colors hover:border-accent/50 hover:text-accent";
 
   const externalProps = external
     ? { target: "_blank", rel: "noreferrer" }
@@ -84,7 +84,7 @@ export function StatusBadge({
     );
   }
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white/[0.03] px-2.5 py-0.5 font-mono text-[11px] text-faint">
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[11px] text-faint">
       <span className="h-1.5 w-1.5 rounded-full bg-faint" />
       {children}
     </span>

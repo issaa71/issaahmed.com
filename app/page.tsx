@@ -1,13 +1,8 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail, BadgeCheck } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, Mail, BadgeCheck, ArrowRight } from "lucide-react";
 import { Github, Linkedin } from "./_components/icons";
-import {
-  Eyebrow,
-  GlassCard,
-  Pill,
-  ButtonLink,
-  StatusBadge,
-} from "./_components/ui";
+import { Eyebrow, Pill, ButtonLink, GlassCard } from "./_components/ui";
 import { Reveal } from "./_components/reveal";
 import {
   PROFILE,
@@ -21,11 +16,10 @@ export default function Home() {
   return (
     <>
       <Nav />
-      <main className="mx-auto max-w-6xl px-6 sm:px-8">
-        <Hero />
-        <ProofStrip />
-        <About />
+      <main className="mx-auto max-w-5xl px-6 sm:px-8">
+        <Intro />
         <Projects />
+        <About />
         <Experience />
         <Skills />
         <Contact />
@@ -35,50 +29,29 @@ export default function Home() {
   );
 }
 
-/* Mono HUD chip used in the hero status row. */
-function HudChip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center gap-1.5 rounded-sm border border-border bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-      {children}
-    </span>
-  );
-}
-
-/* Oversized ghost-numeral section header. */
-function SectionHeader({ index, label }: { index: string; label: string }) {
-  return (
-    <div className="flex items-end gap-4">
-      <span
-        aria-hidden="true"
-        className="font-display text-5xl sm:text-6xl leading-none text-foreground/15 tabular-nums"
-      >
-        {index}
-      </span>
-      <Eyebrow className="pb-1.5">{label}</Eyebrow>
-    </div>
-  );
-}
-
 function Nav() {
   return (
     <nav
       aria-label="Primary"
-      className="sticky top-0 z-40 border-b border-border/60 bg-background/75 backdrop-blur-md"
+      className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md"
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 sm:px-8">
-        <a href="#top" className="font-mono text-sm tracking-tight">
-          issa.ahmed<span className="text-accent">_</span>
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6 sm:px-8">
+        <a
+          href="#top"
+          className="font-display text-base font-semibold tracking-tight text-foreground"
+        >
+          Issa Ahmed
         </a>
-        <ul className="flex items-center gap-5 text-sm text-foreground/80 max-sm:gap-4 max-sm:text-xs">
+        <ul className="flex items-center gap-5 text-sm text-muted max-sm:gap-4 max-sm:text-xs">
           <li>
-            <a href="#projects" className="hover:text-accent transition-colors">
+            <a href="#projects" className="transition-colors hover:text-foreground">
               Projects
             </a>
           </li>
           <li>
             <a
               href="#experience"
-              className="hover:text-accent transition-colors"
+              className="transition-colors hover:text-foreground"
             >
               Experience
             </a>
@@ -86,13 +59,13 @@ function Nav() {
           <li className="hidden sm:block">
             <a
               href="#certifications"
-              className="hover:text-accent transition-colors"
+              className="transition-colors hover:text-foreground"
             >
               Certifications
             </a>
           </li>
           <li>
-            <a href="#contact" className="hover:text-accent transition-colors">
+            <a href="#contact" className="transition-colors hover:text-foreground">
               Contact
             </a>
           </li>
@@ -102,45 +75,20 @@ function Nav() {
   );
 }
 
-function Hero() {
+function Intro() {
   return (
-    <section
-      id="top"
-      className="relative flex min-h-[78svh] scroll-mt-24 flex-col justify-center py-20"
-    >
-      {/* HUD corner brackets */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-8 h-10 w-10 border-l-2 border-t-2 border-accent/30"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-8 right-0 h-10 w-10 border-b-2 border-r-2 border-accent/30"
-      />
-
-      <div className="animate-rise flex flex-wrap gap-2 [animation-delay:0ms]">
-        <HudChip>
-          <span className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-pulse" />
-          Open to new-grad roles — 2026
-        </HudChip>
-        <HudChip>Toronto, ON</HudChip>
-        <HudChip>BESc Mechatronics + AI · Western</HudChip>
-      </div>
-
-      <h1 className="animate-rise mt-8 font-display uppercase leading-[0.95] tracking-[-0.02em] text-[clamp(3.75rem,11vw,8rem)] [animation-delay:120ms]">
+    <section id="top" className="scroll-mt-24 pt-24 pb-16 sm:pt-32">
+      <h1 className="animate-rise font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl [animation-delay:0ms]">
         {PROFILE.name}
       </h1>
-
-      <p className="animate-rise mt-6 max-w-2xl text-xl sm:text-2xl leading-relaxed text-foreground/90 [animation-delay:180ms]">
+      <p className="animate-rise mt-6 max-w-2xl text-xl leading-snug text-muted sm:text-2xl [animation-delay:80ms]">
         {PROFILE.tagline}
       </p>
-
-      <p className="animate-rise mt-4 max-w-2xl text-base text-muted [animation-delay:240ms]">
+      <p className="animate-rise mt-4 max-w-2xl text-base leading-relaxed text-muted [animation-delay:140ms]">
         Currently Product Engineer at Scooty Mobility — building an AI transit
         companion app, in pilot conversations with GTHA municipalities.
       </p>
-
-      <div className="animate-rise mt-10 flex flex-wrap gap-3 [animation-delay:240ms]">
+      <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:200ms]">
         <ButtonLink href="#projects" variant="primary">
           See projects <ArrowUpRight size={16} />
         </ButtonLink>
@@ -159,110 +107,78 @@ function Hero() {
   );
 }
 
-function ProofStrip() {
-  const stats = [
-    {
-      value: "15/15",
-      caption: "nav missions completed · re-baselined sim",
-    },
-    {
-      value: "30 FPS",
-      caption: "edge perception · Jetson Orin NX",
-    },
-    {
-      value: "513",
-      caption: "patients · peer-reviewed ML (J. Arthroplasty)",
-    },
-    {
-      value: "$81M",
-      caption: "federal funding · Bill C-59 advocacy (NFLK coalition)",
-    },
-  ];
-  return (
-    <section
-      aria-label="Proof points"
-      className="grid grid-cols-2 border-y border-border/60 lg:grid-cols-4"
-    >
-      {stats.map((s, i) => {
-        // Internal dividers only — outer edges come from the section's border-y.
-        // Mobile 2-col: vertical between cols (cells 1,3), horizontal between rows (cells 2,3).
-        // lg 4-col: vertical between all cells except the first (cells 1,2,3), no horizontal.
-        const vertical =
-          i % 2 === 1 ? "border-l" : i === 2 ? "lg:border-l" : "";
-        const horizontal = i >= 2 ? "border-t lg:border-t-0" : "";
-        return (
-          <div
-            key={s.value}
-            className={`border-border/60 px-5 py-7 sm:px-7 sm:py-8 ${vertical} ${horizontal}`}
-          >
-            <p className="font-display text-4xl sm:text-5xl leading-none text-accent tabular-nums">
-              {s.value}
-            </p>
-            <p className="mt-3 font-mono text-xs uppercase tracking-wide leading-relaxed text-muted">
-              {s.caption}
-            </p>
-          </div>
-        );
-      })}
-    </section>
-  );
-}
+/* Per-tile presentation, keyed by slug. Category + metric chips are drawn from
+   canonical numbers; media is rendered by ProjectMedia below. */
+const TILE: Record<
+  string,
+  { category: string; chips: string[] }
+> = {
+  reclaim: {
+    category: "Robotics · ROS2",
+    chips: ["15/15 nav missions", "30 FPS perception", "3rd place"],
+  },
+  "nba-shot-selection": {
+    category: "Reinforcement Learning",
+    chips: ["+0.246 EPSA", "116,928 possessions", "Dueling DQN"],
+  },
+  "tha-pain-prediction": {
+    category: "Clinical ML · Published",
+    chips: ["J. Arthroplasty 2026", "513 patients", "85.9% ±2 buffer"],
+  },
+  "no-fly-list-kids": {
+    category: "Advocacy · Policy",
+    chips: ["Bill C-59", "$81M redress", "Toronto Star op-ed"],
+  },
+};
 
-function About() {
+function ProjectMedia({ slug }: { slug: string }) {
+  if (slug === "reclaim") {
+    return (
+      <Image
+        src="/projects/reclaim/demo.jpg"
+        alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 6-DOF sorting arm"
+        width={768}
+        height={1024}
+        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+    );
+  }
+  if (slug === "nba-shot-selection") {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-white p-5">
+        <Image
+          src="/projects/nba-shot-selection/decision-maps.png"
+          alt="Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
+          width={4769}
+          height={1850}
+          className="h-auto max-h-full w-full object-contain"
+        />
+      </div>
+    );
+  }
+  if (slug === "tha-pain-prediction") {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center bg-accent-soft/60 p-6 text-center">
+        <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
+          85.9%
+        </p>
+        <p className="mt-3 text-sm text-muted">
+          buffer accuracy ±2 pts · 513 patients
+        </p>
+        <p className="eyebrow mt-3 text-faint">Published · J. Arthroplasty</p>
+      </div>
+    );
+  }
+  // no-fly-list-kids
   return (
-    <section
-      id="about"
-      className="scroll-mt-24 border-t border-border/60 py-20 sm:py-28"
-    >
-      <Reveal>
-        <SectionHeader index="01" label="About" />
-        <div className="mt-8 lg:grid lg:grid-cols-[1fr_280px] lg:gap-10">
-          <div className="max-w-2xl space-y-4 text-[15px] sm:text-base leading-[1.75] text-foreground/90">
-            <p>
-              I&apos;m a Mechatronics Engineering with AI Specialization
-              undergraduate at Western University, graduating Spring 2026 (GPA
-              3.70, Dean&apos;s List 2022–2024). My work spans autonomous
-              robotics, applied ML, and full-stack systems — breadth I treat as
-              the differentiator, not a hedge.
-            </p>
-            <p>
-              I&apos;m a co-author on a peer-reviewed publication in{" "}
-              <em>The Journal of Arthroplasty</em> (2026), led the perception
-              and control stack on an award-placing autonomous waste-sorting
-              capstone, and built offline RL agents that outperform real NBA
-              player decisions on 100K+ tracking possessions. Outside
-              engineering, I&apos;ve been part of the No Fly List Kids federal
-              advocacy coalition since I was five; the campaign contributed to
-              the passage of Bill C-59 and an $81M federal redress budget.
-            </p>
-          </div>
-          <GlassCard className="mt-6 h-fit p-5 lg:mt-0">
-            <dl className="space-y-3">
-              <div>
-                <dt className="eyebrow text-faint">Degree</dt>
-                <dd className="mt-1 text-sm text-foreground/90">
-                  BESc Mechatronics + AI
-                </dd>
-              </div>
-              <div>
-                <dt className="eyebrow text-faint">Graduating</dt>
-                <dd className="mt-1 text-sm text-foreground/90">Spring 2026</dd>
-              </div>
-              <div>
-                <dt className="eyebrow text-faint">GPA</dt>
-                <dd className="mt-1 text-sm text-foreground/90">
-                  3.70 · Dean&apos;s List &apos;22–24
-                </dd>
-              </div>
-              <div>
-                <dt className="eyebrow text-faint">Based in</dt>
-                <dd className="mt-1 text-sm text-foreground/90">Toronto, ON</dd>
-              </div>
-            </dl>
-          </GlassCard>
-        </div>
-      </Reveal>
-    </section>
+    <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
+      <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
+        $81M
+      </p>
+      <p className="mt-3 text-sm text-muted">
+        federal redress funding · Bill C-59
+      </p>
+    </div>
   );
 }
 
@@ -270,68 +186,47 @@ function Projects() {
   return (
     <section
       id="projects"
-      className="scroll-mt-24 border-t border-border/60 py-20 sm:py-28"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
     >
-      <SectionHeader index="02" label="Projects" />
-      <ul className="mt-10 grid gap-4 lg:grid-cols-3">
+      <h2 className="eyebrow text-accent">Selected Projects</h2>
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+        Four things I built and shipped — a robot, a research model, a clinical
+        tool, and a federal campaign. Open any one to read the full story.
+      </p>
+      <ul className="mt-10 grid gap-6 sm:grid-cols-2">
         {PROJECTS.map((p, i) => {
-          const flagship =
-            p.slug === "reclaim" || p.slug === "nba-shot-selection";
-          const span =
-            p.slug === "reclaim" || p.slug === "no-fly-list-kids"
-              ? "lg:col-span-2"
-              : "";
-          const prjCode = `PRJ-0${i + 1}`;
+          const t = TILE[p.slug];
           return (
-            <li key={p.slug} className={`h-full ${span}`}>
-              <Reveal delay={i * 60} className="h-full">
+            <li key={p.slug}>
+              <Reveal delay={i * 60}>
                 <Link
                   href={`/projects/${p.slug}`}
-                  className="group block h-full"
+                  className="group block h-full overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(28,26,23,0.04),0_8px_24px_-12px_rgba(28,26,23,0.10)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_2px_4px_rgba(28,26,23,0.05),0_16px_36px_-14px_rgba(28,26,23,0.18)]"
                 >
-                  <GlassCard className="relative h-full overflow-hidden p-5 transition-[border-color,transform] duration-200 group-hover:-translate-y-0.5 group-hover:border-accent/40">
-                    {/* HUD target-lock corner brackets on hover */}
-                    <CornerBrackets />
-                    <div className="flex items-start justify-between">
-                      <p className="eyebrow text-faint">{prjCode}</p>
-                      {flagship ? (
-                        <StatusBadge tone="accent">Flagship</StatusBadge>
-                      ) : null}
-                    </div>
-                    <p className="mt-1 font-mono text-[11px] text-muted">
-                      {p.codename}
-                    </p>
-                    <h3 className="mt-2 text-base sm:text-lg font-semibold tracking-[-0.01em] leading-snug">
+                  <div className="aspect-[3/2] w-full overflow-hidden border-b border-border">
+                    <ProjectMedia slug={p.slug} />
+                  </div>
+                  <div className="p-6">
+                    <p className="eyebrow text-faint">{t.category}</p>
+                    <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
                       {p.title}
                     </h3>
-                    {p.stats ? (
-                      <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-accent">
-                        {p.stats.map((s, si) => (
-                          <li key={s} className="flex items-center gap-3">
-                            {si > 0 ? (
-                              <span className="text-faint">·</span>
-                            ) : null}
-                            {s}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
-                    <p className="mt-3 text-sm leading-relaxed text-foreground/85">
+                    <p className="mt-2 text-[15px] leading-relaxed text-foreground/85">
                       {p.blurb}
                     </p>
-                    {!p.stats ? (
-                      <p className="mt-3 font-mono text-[11px] leading-relaxed text-accent">
-                        {p.highlight}
-                      </p>
-                    ) : null}
-                    <p className="mt-4 inline-flex items-center gap-1 text-[11px] uppercase tracking-wider text-faint group-hover:text-accent transition-colors">
-                      Read case study{" "}
-                      <ArrowUpRight
-                        size={11}
-                        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {t.chips.map((c) => (
+                        <Pill key={c}>{c}</Pill>
+                      ))}
+                    </ul>
+                    <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                      View case study
+                      <ArrowRight
+                        size={15}
+                        className="transition-transform group-hover:translate-x-1"
                       />
                     </p>
-                  </GlassCard>
+                  </div>
                 </Link>
               </Reveal>
             </li>
@@ -342,29 +237,44 @@ function Projects() {
   );
 }
 
-/* Four accent L-brackets that fade in on group-hover — HUD target lock. */
-function CornerBrackets() {
-  const base =
-    "pointer-events-none absolute h-4 w-4 border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100";
+function About() {
   return (
-    <>
-      <span
-        aria-hidden="true"
-        className={`${base} left-2 top-2 border-l-2 border-t-2`}
-      />
-      <span
-        aria-hidden="true"
-        className={`${base} right-2 top-2 border-r-2 border-t-2`}
-      />
-      <span
-        aria-hidden="true"
-        className={`${base} bottom-2 left-2 border-b-2 border-l-2`}
-      />
-      <span
-        aria-hidden="true"
-        className={`${base} bottom-2 right-2 border-b-2 border-r-2`}
-      />
-    </>
+    <section
+      id="about"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <Reveal>
+        <h2 className="eyebrow text-accent">About</h2>
+        <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
+          <p>
+            I&apos;m a Mechatronics Engineering with AI Specialization
+            undergraduate at Western University, graduating Spring 2026 (GPA
+            3.70, Dean&apos;s List 2022–2024). My work spans autonomous
+            robotics, applied ML, and full-stack systems — breadth I treat as
+            the differentiator, not a hedge.
+          </p>
+          <p>
+            I&apos;m a co-author on a peer-reviewed publication in{" "}
+            <em>The Journal of Arthroplasty</em> (2026), led the perception and
+            control stack on an award-placing autonomous waste-sorting capstone,
+            and built offline RL agents that outperform real NBA player
+            decisions on 100K+ tracking possessions. Outside engineering,
+            I&apos;ve been part of the No Fly List Kids federal advocacy
+            coalition since I was five; the campaign contributed to the passage
+            of Bill C-59 and an $81M federal redress budget.
+          </p>
+        </div>
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-faint">
+          <li>BESc Mechatronics + AI</li>
+          <li className="text-border">·</li>
+          <li>Graduating Spring 2026</li>
+          <li className="text-border">·</li>
+          <li>GPA 3.70 · Dean&apos;s List &apos;22–24</li>
+          <li className="text-border">·</li>
+          <li>Toronto, ON</li>
+        </ul>
+      </Reveal>
+    </section>
   );
 }
 
@@ -372,26 +282,26 @@ function Experience() {
   return (
     <section
       id="experience"
-      className="scroll-mt-24 border-t border-border/60 py-20 sm:py-28"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
     >
-      <SectionHeader index="03" label="Experience" />
+      <h2 className="eyebrow text-accent">Experience</h2>
       <ol className="mt-10 space-y-12">
         {EXPERIENCE.map((e) => (
           <li key={e.role + e.org}>
             <Reveal>
-              <div className="grid gap-2 sm:grid-cols-[180px_1fr] sm:gap-6">
-                <div className="font-mono text-xs uppercase tracking-wider text-faint pt-1">
+              <div className="grid gap-2 sm:grid-cols-[160px_1fr] sm:gap-6">
+                <div className="pt-1 font-mono text-xs uppercase tracking-wider text-faint">
                   {e.period}
                 </div>
-                <div className="relative pl-6 before:absolute before:left-0 before:top-2 before:h-2 before:w-2 before:rounded-full before:border before:border-accent/60 before:bg-accent-soft">
-                  <h3 className="text-base sm:text-lg font-semibold tracking-[-0.01em] leading-snug">
+                <div>
+                  <h3 className="font-display text-lg font-semibold tracking-tight">
                     {e.role} <span className="text-faint">·</span>{" "}
-                    <span className="text-foreground/90">{e.org}</span>
+                    <span className="text-muted">{e.org}</span>
                   </h3>
-                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-foreground/90">
+                  <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-foreground/85">
                     {e.bullets.map((b, i) => (
                       <li key={i} className="relative pl-4">
-                        <span className="absolute left-0 top-[0.55em] h-1 w-1 rounded-full bg-accent" />
+                        <span className="absolute left-0 top-[0.6em] h-1 w-1 rounded-full bg-accent" />
                         {b}
                       </li>
                     ))}
@@ -410,10 +320,10 @@ function Skills() {
   return (
     <section
       id="skills"
-      className="scroll-mt-24 border-t border-border/60 py-20 sm:py-28"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
     >
-      <SectionHeader index="04" label="Skills & Certs" />
-      <div className="mt-10 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <h2 className="eyebrow text-accent">Skills</h2>
+      <div className="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {SKILLS.map((g) => (
           <div key={g.group}>
             <p className="eyebrow text-faint">{g.group}</p>
@@ -427,7 +337,7 @@ function Skills() {
       </div>
 
       <div id="certifications" className="mt-16 scroll-mt-24">
-        <Eyebrow className="text-faint">Certifications</Eyebrow>
+        <Eyebrow>Certifications</Eyebrow>
         <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {CERTIFICATIONS.map((c) => {
             const inner = (
@@ -476,28 +386,22 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-border/60 py-24 sm:py-32"
+      className="scroll-mt-24 border-t border-border py-20 sm:py-28"
     >
       <Reveal>
-        <SectionHeader index="05" label="Contact" />
-        <h2 className="mt-6 font-display text-3xl sm:text-4xl font-semibold tracking-[-0.02em]">
+        <Eyebrow>Contact</Eyebrow>
+        <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           Get in touch
         </h2>
-        <p className="mt-4 max-w-2xl text-[15px] sm:text-base leading-[1.75] text-foreground/90">
+        <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
           Open to new-grad full-time roles in robotics, AI / ML, and full-stack
           engineering. Easiest way to reach me is email.
         </p>
         <a
           href={`mailto:${PROFILE.email}`}
-          className="group mt-8 inline-flex items-center gap-2 font-display text-3xl sm:text-4xl tracking-[-0.02em] text-foreground transition-colors hover:text-accent"
+          className="mt-8 inline-block font-display text-2xl tracking-tight text-foreground underline decoration-accent/40 decoration-2 underline-offset-8 transition-colors hover:decoration-accent sm:text-3xl"
         >
-          <span className="underline-offset-8 group-hover:underline">
-            {PROFILE.email}
-          </span>
-          <ArrowUpRight
-            size={28}
-            className="text-accent transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
+          {PROFILE.email}
         </a>
         <div className="mt-8 flex flex-wrap gap-3">
           <ButtonLink href={PROFILE.github} variant="ghost" external>
@@ -514,12 +418,12 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/60">
-      <div className="mx-auto max-w-6xl px-6 py-10 sm:px-8">
+    <footer className="border-t border-border">
+      <div className="mx-auto max-w-5xl px-6 py-10 sm:px-8">
         <div className="flex flex-wrap gap-x-5 gap-y-2">
           <a
             href={`mailto:${PROFILE.email}`}
-            className="font-mono text-xs text-muted hover:text-accent transition-colors"
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
           >
             issaahmed1@icloud.com
           </a>
@@ -527,7 +431,7 @@ function Footer() {
             href={PROFILE.github}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-xs text-muted hover:text-accent transition-colors"
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
           >
             GitHub
           </a>
@@ -535,7 +439,7 @@ function Footer() {
             href={PROFILE.linkedin}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-xs text-muted hover:text-accent transition-colors"
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
           >
             LinkedIn
           </a>

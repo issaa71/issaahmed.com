@@ -18,20 +18,30 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: 72,
-          backgroundColor: "#09090b",
-          backgroundImage:
-            "radial-gradient(800px 400px at 50% -10%, rgba(52,211,153,0.16), transparent 70%)",
+          backgroundColor: "#faf9f7",
         }}
       >
         <div
           style={{
             display: "flex",
-            color: "#34d399",
+            alignItems: "center",
+            gap: 20,
+            color: "#047857",
             fontSize: 24,
             letterSpacing: 4,
           }}
         >
-          MECHATRONICS & AI SYSTEMS · WESTERN 2026
+          <div style={{ display: "flex" }}>
+            MECHATRONICS &amp; AI SYSTEMS · WESTERN 2026
+          </div>
+          <div
+            style={{
+              display: "flex",
+              width: 120,
+              height: 2,
+              backgroundColor: "#047857",
+            }}
+          />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
@@ -39,7 +49,7 @@ export default function Image() {
               display: "flex",
               fontSize: 96,
               fontWeight: 700,
-              color: "#f4f4f5",
+              color: "#1c1a17",
             }}
           >
             Issa Ahmed
@@ -48,7 +58,7 @@ export default function Image() {
             style={{
               display: "flex",
               fontSize: 30,
-              color: "#a1a1aa",
+              color: "#5f5a52",
             }}
           >
             Autonomous robots · applied ML · full-stack systems
@@ -58,7 +68,7 @@ export default function Image() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            color: "#82828c",
+            color: "#7d786e",
             fontSize: 22,
           }}
         >

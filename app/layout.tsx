@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Chakra_Petch } from "next/font/google";
+import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,19 +12,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Chakra Petch is a non-variable font, so explicit weights are required.
-const chakraPetch = Chakra_Petch({
-  variable: "--font-chakra",
+// Fraunces is a variable font — warm, editorial display face for the light gallery.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
 });
 
 // TODO: switch to https://issaahmed.com once the custom domain is wired up
 const SITE_URL = "https://issaahmed-com.vercel.app";
 
 export const viewport: Viewport = {
-  themeColor: "#09090b",
-  colorScheme: "dark",
+  themeColor: "#faf9f7",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -72,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${chakraPetch.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
