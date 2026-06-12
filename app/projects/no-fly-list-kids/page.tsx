@@ -65,11 +65,23 @@ export default function Page() {
         <ArtifactRow>
           <Artifact
             href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
+            logo={{
+              src: "/press/toronto-star.svg",
+              alt: "Toronto Star",
+              width: 955,
+              height: 110,
+            }}
             label="Toronto Star op-ed"
             detail="“Grounded: What it’s like to be a No Fly List kid”"
           />
           <Artifact
             href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
+            logo={{
+              src: "/press/huffpost.svg",
+              alt: "HuffPost",
+              width: 720,
+              height: 84,
+            }}
             label="HuffPost Canada — Bill C-59 passage"
             detail="Quoted + photographed at the Library of Parliament · June 2019"
           />

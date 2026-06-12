@@ -159,10 +159,12 @@ export function Artifact({
   href,
   label,
   detail,
+  logo,
 }: {
   href: string;
   label: string;
   detail?: string;
+  logo?: { src: string; alt: string; width: number; height: number };
 }) {
   return (
     <a
@@ -172,6 +174,16 @@ export function Artifact({
       className="glass rounded-xl p-4 group flex items-center justify-between transition-colors hover:border-accent/40"
     >
       <span>
+        {logo ? (
+          <Image
+            src={logo.src}
+            alt={logo.alt}
+            width={logo.width}
+            height={logo.height}
+            unoptimized
+            className="mb-2 h-5 w-auto"
+          />
+        ) : null}
         <span className="block text-sm font-medium">{label}</span>
         {detail ? (
           <span className="block text-xs text-muted">{detail}</span>
