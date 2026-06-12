@@ -3,7 +3,7 @@ export const PROFILE = {
   tagline:
     "Mechatronics & AI Systems Engineering student at Western University. I build autonomous robots, applied ML systems, and full-stack tools.",
   currentLine:
-    "Currently Product Engineer at Scooty Mobility, building an AI-powered transit companion app in pilot conversations with municipalities across the GTHA.",
+    "Currently Product Engineer at Scooty Mobility — building an AI transit companion app, in pilot conversations with GTHA municipalities.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -34,7 +34,8 @@ export const PROJECTS: {
     blurb:
       "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
     highlight:
-      "+0.246 EPSA vs +0.042 NBA player baseline · 116,928 possessions · 631 games",
+      "+0.273 EPSA vs +0.044 player baseline · 116,928 possessions · 631 games",
+    stats: ["+0.273 EPSA", "116,928 possessions", "631 games"],
   },
   {
     slug: "tha-pain-prediction",
@@ -109,10 +110,8 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "Nav2",
       "SLAM Toolbox",
       "MoveIt2",
-      "micro-ROS",
       "Jetson Orin NX",
       "OAK-D / DepthAI",
-      "RPLIDAR",
       "SolidWorks",
     ],
   },
@@ -123,11 +122,9 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "scikit-learn",
       "XGBoost",
       "OpenCV",
-      "Roboflow",
       "YOLOv8",
       "TensorRT",
       "Gymnasium",
-      "Streamlit",
     ],
   },
   {
@@ -139,9 +136,7 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "React",
       "Next.js",
       "FastAPI",
-      "RESTful APIs",
       "SQL",
-      "VBA",
     ],
   },
   {
@@ -153,7 +148,6 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "Docker",
       "n8n",
       "Jira",
-      "SAP",
     ],
   },
 ];

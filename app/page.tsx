@@ -85,8 +85,7 @@ function Intro() {
         {PROFILE.tagline}
       </p>
       <p className="animate-rise mt-4 max-w-2xl text-base leading-relaxed text-muted [animation-delay:140ms]">
-        Currently Product Engineer at Scooty Mobility — building an AI transit
-        companion app, in pilot conversations with GTHA municipalities.
+        {PROFILE.currentLine}
       </p>
       <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:200ms]">
         <ButtonLink href="#projects" variant="primary">
@@ -103,23 +102,60 @@ function Intro() {
         </ButtonLink>
         {/* TODO: re-add resume CTA once /public/resume.pdf is added */}
       </div>
+      <ul className="animate-rise mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-xs text-muted [animation-delay:260ms]">
+        <li>
+          <Link
+            href="/projects/tha-pain-prediction"
+            className="transition-colors hover:text-accent"
+          >
+            Published · J. Arthroplasty
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <Link
+            href="/projects/reclaim"
+            className="transition-colors hover:text-accent"
+          >
+            3rd-place autonomous robot
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <Link
+            href="/projects/no-fly-list-kids"
+            className="transition-colors hover:text-accent"
+          >
+            Bill C-59 · $81M
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <a href="#projects" className="transition-colors hover:text-accent">
+            2 live demos
+          </a>
+        </li>
+      </ul>
     </section>
   );
 }
 
 /* Per-tile presentation, keyed by slug. Category + metric chips are drawn from
-   canonical numbers; media is rendered by ProjectMedia below. */
+   canonical numbers; media is rendered by ProjectMedia below. liveDemo, when
+   present, surfaces a "Live demo ↗" action on the tile. */
 const TILE: Record<
   string,
-  { category: string; chips: string[] }
+  { category: string; chips: string[]; liveDemo?: string }
 > = {
   reclaim: {
     category: "Robotics · ROS2",
     chips: ["15/15 nav missions", "30 FPS perception", "3rd place"],
+    liveDemo: "https://reclaim-nav-sim.vercel.app",
   },
   "nba-shot-selection": {
     category: "Reinforcement Learning",
-    chips: ["+0.246 EPSA", "116,928 possessions", "Dueling DQN"],
+    chips: ["+0.273 EPSA", "116,928 possessions", "Dueling DQN"],
+    liveDemo: "https://nba-rl-sim.vercel.app",
   },
   "tha-pain-prediction": {
     category: "Clinical ML · Published",
@@ -145,15 +181,13 @@ function ProjectMedia({ slug }: { slug: string }) {
   }
   if (slug === "nba-shot-selection") {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-white p-5">
-        <Image
-          src="/projects/nba-shot-selection/decision-maps.png"
-          alt="Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
-          width={4769}
-          height={1850}
-          className="h-auto max-h-full w-full object-contain"
-        />
-      </div>
+      <Image
+        src="/projects/nba-shot-selection/decision-maps-tile.png"
+        alt="Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
+        width={2330}
+        height={1850}
+        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+      />
     );
   }
   if (slug === "tha-pain-prediction") {
@@ -199,35 +233,56 @@ function Projects() {
           return (
             <li key={p.slug}>
               <Reveal delay={i * 60}>
-                <Link
-                  href={`/projects/${p.slug}`}
-                  className="group block h-full overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(28,26,23,0.04),0_8px_24px_-12px_rgba(28,26,23,0.10)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_2px_4px_rgba(28,26,23,0.05),0_16px_36px_-14px_rgba(28,26,23,0.18)]"
-                >
-                  <div className="aspect-[3/2] w-full overflow-hidden border-b border-border">
-                    <ProjectMedia slug={p.slug} />
-                  </div>
-                  <div className="p-6">
-                    <p className="eyebrow text-faint">{t.category}</p>
-                    <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
-                      {p.title}
-                    </h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-foreground/85">
-                      {p.blurb}
-                    </p>
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {t.chips.map((c) => (
-                        <Pill key={c}>{c}</Pill>
-                      ))}
-                    </ul>
-                    <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
-                      View case study
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(28,26,23,0.04),0_8px_24px_-12px_rgba(28,26,23,0.10)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_2px_4px_rgba(28,26,23,0.05),0_16px_36px_-14px_rgba(28,26,23,0.18)]">
+                  <Link
+                    href={`/projects/${p.slug}`}
+                    className="flex flex-1 flex-col"
+                  >
+                    <div className="aspect-[3/2] w-full overflow-hidden border-b border-border">
+                      <ProjectMedia slug={p.slug} />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6 pb-4">
+                      <p className="eyebrow text-faint">{t.category}</p>
+                      <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
+                        {p.title}
+                      </h3>
+                      <p className="mt-2 text-[15px] leading-relaxed text-foreground/85">
+                        {p.blurb}
+                      </p>
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {t.chips.map((c) => (
+                          <Pill key={c}>{c}</Pill>
+                        ))}
+                      </ul>
+                    </div>
+                  </Link>
+                  <div className="flex items-center gap-5 border-t border-border px-6 py-4">
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
+                    >
+                      Case study
                       <ArrowRight
                         size={15}
                         className="transition-transform group-hover:translate-x-1"
                       />
-                    </p>
+                    </Link>
+                    {t.liveDemo ? (
+                      <a
+                        href={t.liveDemo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
+                      >
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                        </span>
+                        Live demo ↗
+                      </a>
+                    ) : null}
                   </div>
-                </Link>
+                </div>
               </Reveal>
             </li>
           );
@@ -259,9 +314,9 @@ function About() {
             control stack on an award-placing autonomous waste-sorting capstone,
             and built offline RL agents that outperform real NBA player
             decisions on 100K+ tracking possessions. Outside engineering,
-            I&apos;ve been part of the No Fly List Kids federal advocacy
-            coalition since I was five; the campaign contributed to the passage
-            of Bill C-59 and an $81M federal redress budget.
+            I&apos;ve been flagged on Canada&apos;s no-fly list since I was five.
+            In 2017 I joined the No Fly List Kids coalition, whose campaign
+            contributed to Bill C-59 and an $81M federal redress budget.
           </p>
         </div>
         <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-faint">
