@@ -6,12 +6,19 @@ import {
   MetricGrid,
   Artifact,
   ArtifactRow,
+  StatusBadge,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
   title: "No Fly List Kids — Federal Advocacy",
   description:
-    "Long-running federal advocacy with the No Fly List Kids coalition. Toronto Star op-ed, multi-outlet media coverage, direct engagement with the PMO and federal Cabinet. Contributed to Bill C-59 + $81M federal redress budget.",
+    "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement — contributed to Bill C-59 and the $81M redress system.",
+  openGraph: {
+    title: "No Fly List Kids — Federal Advocacy",
+    description:
+      "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement — contributed to Bill C-59 and the $81M redress system.",
+    type: "article",
+  },
 };
 
 export default function Page() {
@@ -22,6 +29,13 @@ export default function Page() {
       tagline="A long-running federal advocacy campaign for Canadians wrongly flagged on the no-fly list — including me, since I was about five years old. The coalition I joined in 2017 contributed to the passage of Bill C-59 and an $81M federal budget allocation to build a redress system."
       meta="No Fly List Kids coalition · 2017 – present"
     >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-mono text-xs uppercase tracking-wider text-faint">
+          Toronto Star · CTV News · HuffPost Canada · Middle East Eye
+        </p>
+        <StatusBadge tone="accent">Bill C-59 — passed 2019</StatusBadge>
+      </div>
+
       <Section title="Headline">
         <MetricGrid>
           <Metric
@@ -127,6 +141,25 @@ export default function Page() {
         </p>
       </Section>
 
+      <Section title="Artifacts">
+        <ArtifactRow>
+          <Artifact
+            href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
+            label="Toronto Star op-ed"
+            detail="“Grounded: What it’s like to be a No Fly List kid”"
+          />
+          <Artifact
+            href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
+            label="HuffPost Canada — Bill C-59 passage"
+            detail="Quoted + photographed at the Library of Parliament · June 2019"
+          />
+        </ArtifactRow>
+        <p className="text-sm text-muted">
+          The campaign — including my family — has also been covered by CTV News and
+          Middle East Eye.
+        </p>
+      </Section>
+
       <Section title="Why this is on an engineering portfolio">
         <p>
           For technical roles the question this answers is: <em>does this person
@@ -137,31 +170,6 @@ export default function Page() {
           analysis on a publicly relevant problem — a complement to the more
           technically-heavy ML and robotics work elsewhere on this site.
         </p>
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
-            label="Toronto Star op-ed"
-            detail="“Grounded: What it’s like to be a No Fly List kid”"
-          />
-          <Artifact
-            href="#"
-            label="🛠 CTV News interview"
-            detail="URL coming — adding to this page as found"
-          />
-          <Artifact
-            href="#"
-            label="🛠 HuffPost Canada feature"
-            detail="URL coming"
-          />
-          <Artifact
-            href="#"
-            label="🛠 Middle East Eye coverage"
-            detail="URL coming"
-          />
-        </ArtifactRow>
       </Section>
     </CaseStudyShell>
   );
