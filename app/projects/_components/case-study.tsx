@@ -49,10 +49,10 @@ export function CaseStudyShell({
       <main className="mx-auto max-w-3xl px-6 sm:px-8">
         <header className="pt-20 pb-12 border-b border-border/60">
           <p className="eyebrow text-accent">{eyebrow}</p>
-          <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-[-0.025em] leading-[1.12]">
+          <h1 className="mt-4 font-display text-4xl sm:text-5xl tracking-[-0.02em] leading-[1.12]">
             {title}
           </h1>
-          <p className="mt-5 text-lg text-foreground/85 leading-relaxed">
+          <p className="mt-5 text-lg text-foreground/90 leading-relaxed">
             {tagline}
           </p>
           <p className="mt-4 font-mono text-xs text-faint">{meta}</p>
@@ -114,7 +114,7 @@ export function Section({
   return (
     <section>
       <h2 className="cs-section-title eyebrow text-accent">{title}</h2>
-      <div className="mt-5 space-y-4 text-[15px] sm:text-base text-foreground/80 leading-[1.75]">
+      <div className="mt-5 space-y-4 text-[15px] sm:text-base text-foreground/90 leading-[1.75]">
         {children}
       </div>
     </section>
@@ -136,7 +136,7 @@ export function Metric({
     <div className="glass rounded-xl p-4">
       <p className="eyebrow text-faint">{label}</p>
       <p
-        className={`mt-2 text-2xl font-semibold tracking-tight tabular-nums ${
+        className={`mt-2 font-display text-2xl font-semibold tracking-tight tabular-nums ${
           accent ? "text-accent" : ""
         }`}
       >
@@ -220,7 +220,7 @@ export function YouTubeEmbed({
           className="absolute inset-0 h-full w-full"
         />
       </div>
-      <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-faint">
+      <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-muted">
         <span className="text-foreground/90">{title}</span>
         {caption ? <span className="ml-1">— {caption}</span> : null}
       </figcaption>
@@ -263,7 +263,7 @@ export function Figure({
     <figure className="glass overflow-hidden rounded-xl">
       {plate ? <div className="bg-white">{image}</div> : image}
       {caption ? (
-        <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-faint">
+        <figcaption className="border-t border-border bg-white/[0.02] px-4 py-3 text-xs text-muted">
           {caption}
         </figcaption>
       ) : null}

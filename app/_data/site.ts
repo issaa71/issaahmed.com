@@ -15,6 +15,7 @@ export const PROJECTS: {
   codename: string;
   blurb: string;
   highlight: string;
+  stats?: string[];
 }[] = [
   {
     slug: "reclaim",
@@ -24,6 +25,7 @@ export const PROJECTS: {
       "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
     highlight:
       "15/15 nav missions on the re-baselined sim · 30 FPS perception on Jetson Orin NX · mAP50 0.693 → 0.826",
+    stats: ["15/15 missions", "99–100% coverage", "30 FPS"],
   },
   {
     slug: "nba-shot-selection",
