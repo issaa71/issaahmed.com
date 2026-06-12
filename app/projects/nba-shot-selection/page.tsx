@@ -9,6 +9,7 @@ import {
   TechRow,
   StatusBadge,
   Figure,
+  Artifact,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
@@ -95,6 +96,12 @@ export default function Page() {
           className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </a>
+
+      <Artifact
+        href="https://github.com/issaa71/nba-rl-sim"
+        label="Explorer source code · GitHub"
+        detail="TypeScript inference engine matching the Python pipeline to 1e-6 — 250-vector parity suite, MIT"
+      />
 
       <Figure
         src="/projects/nba-shot-selection/decision-maps.png"
