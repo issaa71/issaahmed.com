@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -14,6 +14,11 @@ const geistMono = Geist_Mono({
 
 // TODO: switch to https://issaahmed.com once the custom domain is wired up
 const SITE_URL = "https://issaahmed-com.vercel.app";
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -84,10 +89,16 @@ export default function RootLayout({
                 "Machine Learning",
                 "Full-stack engineering",
               ],
-              sameAs: ["https://github.com/issaa71"],
+              sameAs: [
+                "https://github.com/issaa71",
+                "https://www.linkedin.com/in/issa-ahmed-032490190/",
+              ],
             }),
           }}
         />
+        <noscript>
+          <style>{`.reveal-hidden{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
         {children}
       </body>
     </html>
