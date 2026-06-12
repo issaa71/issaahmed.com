@@ -71,8 +71,8 @@ export default function Page() {
               width: 955,
               height: 110,
             }}
-            label="Toronto Star op-ed"
-            detail="“Grounded: What it’s like to be a No Fly List kid”"
+            label="Toronto Star op-ed — written by me, age 16"
+            detail="“Grounded: What it’s like to be a No Fly List kid” · sole author"
           />
           <Artifact
             href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
