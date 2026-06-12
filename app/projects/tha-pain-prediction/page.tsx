@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import {
   CaseStudyShell,
   Section,
   Metric,
   MetricGrid,
-  Artifact,
-  ArtifactRow,
   TechRow,
   StatusBadge,
   Figure,
@@ -58,26 +58,37 @@ export default function Page() {
           <StatusBadge tone="accent">
             Published — The Journal of Arthroplasty · 2026
           </StatusBadge>
-          <StatusBadge tone="accent">Open-source clinical calculator</StatusBadge>
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
-          <a
-            href="https://doi.org/10.1016/j.arth.2026.04.023"
-            target="_blank"
-            rel="noreferrer"
-            className="text-accent underline-offset-4 hover:underline"
-          >
-            Read the paper ↗
-          </a>
-          <a
-            href="https://github.com/issaa71/GoodPatientPain"
-            target="_blank"
-            rel="noreferrer"
-            className="text-accent underline-offset-4 hover:underline"
-          >
-            View the code ↗
-          </a>
-        </div>
+        <a
+          href="https://doi.org/10.1016/j.arth.2026.04.023"
+          target="_blank"
+          rel="noreferrer"
+          className="glass rounded-xl p-4 group flex items-center gap-4 transition-colors hover:border-accent/40"
+        >
+          <Image
+            src="/projects/tha-pain-prediction/journal-cover.png"
+            alt="Cover of The Journal of Arthroplasty"
+            width={237}
+            height={298}
+            className="h-24 w-auto rounded-md border border-border"
+          />
+          <span className="min-w-0 flex-1">
+            <span className="eyebrow block text-faint">
+              The Journal of Arthroplasty · open access
+            </span>
+            <span className="mt-1 block font-display text-lg font-semibold tracking-tight sm:text-xl">
+              Machine Learning Using Preoperative Patient Factors Can Predict the
+              Severity of Pain Following Primary Total Hip Arthroplasty
+            </span>
+            <span className="mt-1 block text-xs text-muted">
+              DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors · Read the paper
+            </span>
+          </span>
+          <ArrowUpRight
+            size={16}
+            className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </a>
 
         <Section title="Headline">
           <MetricGrid>
@@ -127,21 +138,6 @@ export default function Page() {
           ]}
           caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72). Lower MSE is better; nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 figure is the class-imbalance artifact discussed in Results. Full 13-model tables (T3 + T5) in the publication."
         />
-      </Section>
-
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://doi.org/10.1016/j.arth.2026.04.023"
-            label="Published paper · J. Arthroplasty"
-            detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-          />
-          <Artifact
-            href="https://github.com/issaa71/GoodPatientPain"
-            label="Calculator source code · GitHub"
-            detail="The clinician-facing Streamlit calculator cited in the paper — models, app, training code"
-          />
-        </ArtifactRow>
       </Section>
 
       <Section title="Problem">
