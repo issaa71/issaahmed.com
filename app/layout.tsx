@@ -29,36 +29,35 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Issa Ahmed — Mechatronics & AI Systems Engineering",
+    default: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     template: "%s · Issa Ahmed",
   },
   description:
-    "Mechatronics & AI Systems Engineering student at Western University. I build autonomous robots, applied ML systems, and full-stack tools. Currently Product Engineer at Scooty Mobility.",
+    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with two running live in your browser.",
   keywords: [
     "Issa Ahmed",
-    "Mechatronics",
-    "AI Systems",
     "Robotics",
     "Reinforcement Learning",
     "ROS2",
     "Machine Learning",
-    "Western University",
+    "Computer Vision",
+    "Full-stack engineering",
   ],
   authors: [{ name: "Issa Ahmed" }],
   creator: "Issa Ahmed",
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Issa Ahmed — Mechatronics & AI Systems Engineering",
+    title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems. Western University · Class of 2026.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and two of them live in your browser.",
     siteName: "Issa Ahmed",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Issa Ahmed — Mechatronics & AI Systems Engineering",
+    title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems. Western University · Class of 2026.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and two of them live in your browser.",
   },
   robots: { index: true, follow: true },
 };
@@ -81,12 +80,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Issa Ahmed",
-              jobTitle: "Mechatronics & AI Systems Engineering Student",
               url: SITE_URL,
-              alumniOf: {
-                "@type": "CollegeOrUniversity",
-                name: "Western University",
-              },
               knowsAbout: [
                 "Robotics",
                 "ROS2",

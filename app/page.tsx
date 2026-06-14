@@ -4,13 +4,7 @@ import { ArrowUpRight, Mail, BadgeCheck, ArrowRight } from "lucide-react";
 import { Github, Linkedin } from "./_components/icons";
 import { Eyebrow, Pill, ButtonLink, GlassCard } from "./_components/ui";
 import { Reveal } from "./_components/reveal";
-import {
-  PROFILE,
-  PROJECTS,
-  EXPERIENCE,
-  SKILLS,
-  CERTIFICATIONS,
-} from "./_data/site";
+import { PROFILE, PROJECTS, SKILLS, CERTIFICATIONS } from "./_data/site";
 
 export default function Home() {
   return (
@@ -19,8 +13,6 @@ export default function Home() {
       <main className="mx-auto max-w-5xl px-6 sm:px-8">
         <Intro />
         <Projects />
-        <About />
-        <Experience />
         <Skills />
         <Contact />
       </main>
@@ -50,10 +42,10 @@ function Nav() {
           </li>
           <li>
             <a
-              href="#experience"
+              href="#skills"
               className="inline-flex items-center py-2 transition-colors hover:text-foreground"
             >
-              Experience
+              Skills
             </a>
           </li>
           <li className="hidden sm:block">
@@ -299,85 +291,6 @@ function Projects() {
   );
 }
 
-function About() {
-  return (
-    <section
-      id="about"
-      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
-    >
-      <Reveal>
-        <h2 className="eyebrow text-accent">About</h2>
-        <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
-          <p>
-            I&apos;m a Mechatronics Engineering with AI Specialization
-            undergraduate at Western University, graduating Spring 2026 (GPA
-            3.70, Dean&apos;s List 2022–2024). My work spans autonomous
-            robotics, applied ML, and full-stack systems — I build it, ship it,
-            and defend every number on it.
-          </p>
-          <p>
-            I&apos;m a co-author on a peer-reviewed publication in{" "}
-            <em>The Journal of Arthroplasty</em> (2026), led the perception and
-            control stack on an award-placing autonomous waste-sorting capstone,
-            and built offline RL agents that outperform real NBA player
-            decisions on 100K+ tracking possessions. Outside engineering,
-            I&apos;ve been flagged on Canada&apos;s no-fly list since I was five.
-            In 2017 I joined the No Fly List Kids coalition, whose campaign
-            contributed to Bill C-59 and an $81M federal redress budget.
-          </p>
-        </div>
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-faint">
-          <li>BESc Mechatronics + AI</li>
-          <li className="text-border">·</li>
-          <li>Graduating Spring 2026</li>
-          <li className="text-border">·</li>
-          <li>GPA 3.70 · Dean&apos;s List &apos;22–24</li>
-          <li className="text-border">·</li>
-          <li>Toronto, ON</li>
-        </ul>
-      </Reveal>
-    </section>
-  );
-}
-
-function Experience() {
-  return (
-    <section
-      id="experience"
-      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
-    >
-      <h2 className="eyebrow text-accent">Experience</h2>
-      <ol className="mt-10 space-y-12">
-        {EXPERIENCE.map((e) => (
-          <li key={e.role + e.org}>
-            <Reveal>
-              <div className="grid gap-2 sm:grid-cols-[160px_1fr] sm:gap-6">
-                <div className="pt-1 font-mono text-xs uppercase tracking-wider text-faint">
-                  {e.period}
-                </div>
-                <div>
-                  <h3 className="font-display text-lg font-semibold tracking-tight">
-                    {e.role} <span className="text-faint">·</span>{" "}
-                    <span className="text-muted">{e.org}</span>
-                  </h3>
-                  <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-foreground/85">
-                    {e.bullets.map((b, i) => (
-                      <li key={i} className="relative pl-4">
-                        <span className="absolute left-0 top-[0.6em] h-1 w-1 rounded-full bg-accent" />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
 function Skills() {
   return (
     <section
@@ -456,7 +369,7 @@ function Contact() {
           Get in touch
         </h2>
         <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
-          Open to new-grad full-time roles in robotics, AI / ML, and full-stack
+          Open to roles and collaborations in robotics, AI / ML, and full-stack
           engineering. Easiest way to reach me is email.
         </p>
         <a

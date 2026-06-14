@@ -1,9 +1,9 @@
 export const PROFILE = {
   name: "Issa Ahmed",
   tagline:
-    "Mechatronics & AI Systems Engineering student at Western University. I build autonomous robots, applied ML systems, and full-stack tools.",
+    "I build autonomous robots, applied ML systems, and full-stack tools.",
   currentLine:
-    "Currently Product Engineer at Scooty Mobility — building an AI transit companion app.",
+    "Everything here is something I designed, built, and shipped — and two of the projects run live, right in your browser.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -53,52 +53,6 @@ export const PROJECTS: {
     blurb:
       "Long-running federal advocacy via the No Fly List Kids coalition. Toronto Star op-ed, multiple media features, direct engagement with the PMO and federal Cabinet.",
     highlight: "Contributed to Bill C-59 + $81M federal redress budget",
-  },
-];
-
-export const EXPERIENCE: {
-  role: string;
-  org: string;
-  period: string;
-  bullets: string[];
-}[] = [
-  {
-    role: "Product Engineer",
-    org: "Scooty Mobility",
-    period: "May 2025 — Present",
-    bullets: [
-      "Building an AI-powered transit companion app for the GTHA — conversational trip planning and cross-agency routing across TTC, GO Transit, and MiWay. Currently in pilot conversations with municipalities.",
-      "Architecting serverless backend on AWS Lambda + API Gateway; developing Python RESTful APIs that simulate PRESTO card-based fare transactions.",
-      "Designed and delivered an AI in Finance training curriculum in partnership with Ontario Tech University — 5 weeks of materials, 80 participants, Microsoft SC-900 certification prep.",
-    ],
-  },
-  {
-    role: "Thermodynamics Engineering Intern",
-    org: "Bombardier Aerospace",
-    period: "Summers 2022 & 2023",
-    bullets: [
-      "Core developer on Global Companion — a finalist-award-winning AI chatbot that dynamically sequences aircraft testing procedures based on part availability.",
-      "Built automated data pipelines (Microsoft VBA) that transformed raw parameters into simulation-ready input files for thermal calculations.",
-      "Performed flight-test data analysis using SQL and Python to extract, clean, and validate temperature data across aircraft thermal systems.",
-    ],
-  },
-  {
-    role: "R&D Summer Intern",
-    org: "Glaukos Corporation",
-    period: "Aug — Sep 2021",
-    bullets: [
-      "Worked with the R&D team on medical-device and combination pharmaceutical product development; performed lab tests on a retinal drug implant using a Phantom high-speed camera, an Instron material-properties testing machine, and a Keyence dimensional inspection system.",
-      "Designed and reconfigured manufacturing process fixturing in SolidWorks — rapid-iterated with Formlabs SLA printing, then produced the first fixture on a Tormach CNC.",
-      "Iterated on eye-stent CAD drawings and models alongside R&D engineers.",
-    ],
-  },
-  {
-    role: "Engineering Summer Student",
-    org: "Thurber Engineering",
-    period: "Summers 2020 & 2021",
-    bullets: [
-      "Conducted standardized geotechnical lab testing and digitized technical engineering documentation systems.",
-    ],
   },
 ];
 
