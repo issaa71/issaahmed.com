@@ -44,14 +44,14 @@ function Nav() {
         </a>
         <ul className="flex items-center gap-5 text-sm text-muted max-sm:gap-4 max-sm:text-xs">
           <li>
-            <a href="#projects" className="transition-colors hover:text-foreground">
+            <a href="#projects" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
               Projects
             </a>
           </li>
           <li>
             <a
               href="#experience"
-              className="transition-colors hover:text-foreground"
+              className="inline-flex items-center py-2 transition-colors hover:text-foreground"
             >
               Experience
             </a>
@@ -59,13 +59,13 @@ function Nav() {
           <li className="hidden sm:block">
             <a
               href="#certifications"
-              className="transition-colors hover:text-foreground"
+              className="inline-flex items-center py-2 transition-colors hover:text-foreground"
             >
               Certifications
             </a>
           </li>
           <li>
-            <a href="#contact" className="transition-colors hover:text-foreground">
+            <a href="#contact" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
               Contact
             </a>
           </li>
@@ -94,13 +94,10 @@ function Intro() {
         <ButtonLink href={`mailto:${PROFILE.email}`} variant="ghost">
           <Mail size={15} /> Email
         </ButtonLink>
-        <ButtonLink href={PROFILE.github} variant="ghost" external>
-          <Github size={15} /> GitHub
-        </ButtonLink>
-        <ButtonLink href={PROFILE.linkedin} variant="ghost" external>
-          <Linkedin size={15} /> LinkedIn
-        </ButtonLink>
-        {/* TODO: re-add resume CTA once /public/resume.pdf is added */}
+        {/* GitHub + LinkedIn intentionally NOT repeated in the hero — a visitor
+            arriving from LinkedIn already has those surfaces; the hero leads with
+            the projects (what the resume can't show). They remain in Contact +
+            Footer. TODO: resume CTA once /public/resume.pdf is added. */}
       </div>
       <ul className="animate-rise mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-xs text-muted [animation-delay:260ms]">
         <li>
@@ -131,8 +128,13 @@ function Intro() {
         </li>
         <li aria-hidden className="text-border">·</li>
         <li>
-          <a href="#projects" className="transition-colors hover:text-accent">
-            2 live demos
+          <a
+            href="https://nba-rl-sim.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className="transition-colors hover:text-accent"
+          >
+            2 live demos ↗
           </a>
         </li>
       </ul>
@@ -256,7 +258,24 @@ function Projects() {
                       </ul>
                     </div>
                   </Link>
-                  <div className="flex items-center gap-5 border-t border-border px-6 py-4">
+                  <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border px-6 py-4">
+                    {/* The live demo is the resume-proof asset — lead with it
+                        (filled emerald), case study secondary. Tiles without a
+                        demo just show the case-study link. */}
+                    {t.liveDemo ? (
+                      <a
+                        href={t.liveDemo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 text-sm font-medium text-background transition-colors hover:bg-accent/90"
+                      >
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-background opacity-70" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-background" />
+                        </span>
+                        Try it live ↗
+                      </a>
+                    ) : null}
                     <Link
                       href={`/projects/${p.slug}`}
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
@@ -267,20 +286,6 @@ function Projects() {
                         className="transition-transform group-hover:translate-x-1"
                       />
                     </Link>
-                    {t.liveDemo ? (
-                      <a
-                        href={t.liveDemo}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
-                      >
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-                        </span>
-                        Live demo ↗
-                      </a>
-                    ) : null}
                   </div>
                 </div>
               </Reveal>

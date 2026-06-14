@@ -20,6 +20,16 @@ export function Reveal({
       setShown(true);
       return;
     }
+    // Reveal immediately if any part of the element is in the viewport ON MOUNT.
+    // Without this, content sitting at/just below the fold (notably the project
+    // tiles) never trips the IntersectionObserver threshold and stays invisible
+    // until the visitor scrolls — i.e. the page's whole point renders blank on
+    // first paint. Content genuinely below the fold still animates in on scroll.
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      // one-shot reveal of content already on screen at mount
+      setShown(true);
+      return;
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

@@ -114,11 +114,11 @@ export default function Page() {
             hint="YOLO26n + TensorRT FP16 on Jetson Orin NX"
           />
           <Metric
-            label="Live demo"
-            value="6 classes · 0 manual interventions"
-            hint="March 26, 2026 — full scan→detect→drive→pick→sort cycles"
+            label="Showcase run"
+            value="0 interventions"
+            hint="6 waste classes, full scan→detect→drive→pick→sort cycles — March 26, 2026"
           />
-          <Metric label="Placement" value="🥉 3rd place" hint="MSE 4499 cohort" />
+          <Metric label="Placement" value="3rd" hint="MSE 4499 capstone cohort" />
         </MetricGrid>
       </Section>
 
