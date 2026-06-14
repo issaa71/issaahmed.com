@@ -1,245 +1,31 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail, BadgeCheck } from "lucide-react";
-
-function Github({ size = 15 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  );
-}
-
-function Linkedin({ size = 15 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  );
-}
-
-const PROFILE = {
-  name: "Issa Ahmed",
-  tagline:
-    "Mechatronics & AI Systems Engineering student at Western University. I build autonomous robots, applied ML systems, and full-stack tools.",
-  currentLine:
-    "Currently Product Engineer at Scooty Mobility, building an AI-powered transit companion app in pilot conversations with municipalities across the GTHA.",
-  email: "issaahmed1@icloud.com",
-  github: "https://github.com/issaa71",
-  linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
-};
-
-const PROJECTS: {
-  slug: string;
-  title: string;
-  codename: string;
-  blurb: string;
-  highlight: string;
-}[] = [
-  {
-    slug: "reclaim",
-    title: "RECLAIM — Autonomous Waste-Sorting Robot",
-    codename: "Robotics · ROS2 · Computer Vision",
-    blurb:
-      "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
-    highlight:
-      "8.1 items/min · 30 FPS perception on Jetson Orin NX · mAP50 0.693 → 0.826",
-  },
-  {
-    slug: "nba-shot-selection",
-    title: "NBA Shot Selection — Offline RL",
-    codename: "Reinforcement Learning · PyTorch",
-    blurb:
-      "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
-    highlight:
-      "+0.246 EPSA vs +0.042 NBA player baseline · 116,928 possessions · 631 games",
-  },
-  {
-    slug: "tha-pain-prediction",
-    title: "Predicting Pain After Total Hip Arthroplasty",
-    codename: "Applied ML · Research · Streamlit",
-    blurb:
-      "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
-    highlight:
-      "J. Arthroplasty 2026 · KNN MSE 2.70 @ T3 · 85.9% buffer accuracy ±2",
-  },
-  {
-    slug: "no-fly-list-kids",
-    title: "No Fly List Kids — Federal Advocacy",
-    codename: "Policy · Communication · Coalition work",
-    blurb:
-      "Long-running federal advocacy via the No Fly List Kids coalition. Toronto Star op-ed, multiple media features, direct engagement with the PMO and federal Cabinet.",
-    highlight: "Contributed to Bill C-59 + $81M federal redress budget",
-  },
-];
-
-const EXPERIENCE: {
-  role: string;
-  org: string;
-  period: string;
-  bullets: string[];
-}[] = [
-  {
-    role: "Product Engineer",
-    org: "Scooty Mobility",
-    period: "May 2025 — Present",
-    bullets: [
-      "Building an AI-powered transit companion app for the GTHA — conversational trip planning and cross-agency routing across TTC, GO Transit, and MiWay. Currently in pilot conversations with municipalities.",
-      "Architecting serverless backend on AWS Lambda + API Gateway; developing Python RESTful APIs that simulate PRESTO card-based fare transactions.",
-      "Designed and delivered an AI in Finance training curriculum in partnership with Ontario Tech University — 5 weeks of materials, 80 participants, Microsoft SC-900 certification prep.",
-    ],
-  },
-  {
-    role: "Thermodynamics Engineering Intern",
-    org: "Bombardier Aerospace",
-    period: "Summers 2022 & 2023",
-    bullets: [
-      "Core developer on Global Companion — a finalist-award-winning AI chatbot that dynamically sequences aircraft testing procedures based on part availability.",
-      "Built automated data pipelines (Microsoft VBA) that transformed raw parameters into simulation-ready input files for thermal calculations.",
-      "Performed flight-test data analysis using SQL and Python to extract, clean, and validate temperature data across aircraft thermal systems.",
-    ],
-  },
-  {
-    role: "R&D Summer Intern",
-    org: "Glaukos Corporation",
-    period: "Aug — Sep 2021",
-    bullets: [
-      "Worked with the R&D team on medical-device and combination pharmaceutical product development; performed lab tests on a retinal drug implant using a Phantom high-speed camera, an Instron material-properties testing machine, and a Keyence dimensional inspection system.",
-      "Designed and reconfigured manufacturing process fixturing in SolidWorks — rapid-iterated with Formlabs SLA printing, then produced the first fixture on a Tormach CNC.",
-      "Iterated on eye-stent CAD drawings and models alongside R&D engineers.",
-    ],
-  },
-  {
-    role: "Engineering Summer Student",
-    org: "Thurber Engineering",
-    period: "Summers 2020 & 2021",
-    bullets: [
-      "Conducted standardized geotechnical lab testing and digitized technical engineering documentation systems.",
-    ],
-  },
-];
-
-const SKILLS: { group: string; items: string[] }[] = [
-  {
-    group: "Robotics",
-    items: [
-      "ROS2 Humble",
-      "Nav2",
-      "SLAM Toolbox",
-      "MoveIt2",
-      "micro-ROS",
-      "Jetson Orin NX",
-      "OAK-D / DepthAI",
-      "RPLIDAR",
-      "SolidWorks",
-    ],
-  },
-  {
-    group: "AI / ML",
-    items: [
-      "PyTorch",
-      "scikit-learn",
-      "XGBoost",
-      "OpenCV",
-      "Roboflow",
-      "YOLOv8",
-      "TensorRT",
-      "Gymnasium",
-      "Streamlit",
-    ],
-  },
-  {
-    group: "Software",
-    items: [
-      "Python",
-      "TypeScript",
-      "C",
-      "React",
-      "Next.js",
-      "FastAPI",
-      "RESTful APIs",
-      "SQL",
-      "VBA",
-    ],
-  },
-  {
-    group: "Cloud & Tools",
-    items: [
-      "AWS Lambda",
-      "AWS API Gateway",
-      "GCP",
-      "Docker",
-      "n8n",
-      "Jira",
-      "SAP",
-    ],
-  },
-];
-
-const CERTIFICATIONS: {
-  name: string;
-  code: string;
-  issuer: string;
-  year?: string;
-  verifyUrl?: string;
-}[] = [
-  {
-    name: "Azure AI Fundamentals",
-    code: "AI-900",
-    issuer: "Microsoft",
-    year: "2025",
-    verifyUrl:
-      "https://learn.microsoft.com/en-us/users/issaahmed-3571/credentials/ec72eb1f9331a5a9",
-  },
-  {
-    name: "Security, Compliance & Identity Fundamentals",
-    code: "SC-900",
-    issuer: "Microsoft",
-    year: "2025",
-    verifyUrl:
-      "https://learn.microsoft.com/en-us/users/issaahmed-3571/credentials/1978cdc579e763a4",
-  },
-  {
-    name: "SolidWorks Design Associate",
-    code: "CSWA",
-    issuer: "Dassault Systèmes",
-    year: "2021",
-    verifyUrl: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-79BYK8QFZ6",
-  },
-  {
-    name: "SolidWorks Simulation Associate",
-    code: "CSWA-S",
-    issuer: "Dassault Systèmes",
-    year: "2023",
-    verifyUrl: "https://cv.virtualtester.com/qr/?b=SLDWRKS&i=C-PY2M54RUNJ",
-  },
-];
+import Image from "next/image";
+import { ArrowUpRight, Mail, BadgeCheck, ArrowRight } from "lucide-react";
+import { Github, Linkedin } from "./_components/icons";
+import { Eyebrow, Pill, ButtonLink, GlassCard } from "./_components/ui";
+import { Reveal } from "./_components/reveal";
+import {
+  PROFILE,
+  PROJECTS,
+  EXPERIENCE,
+  SKILLS,
+  CERTIFICATIONS,
+} from "./_data/site";
 
 export default function Home() {
   return (
-    <div className="bg-background text-foreground">
+    <>
       <Nav />
-      <main className="mx-auto max-w-3xl px-6 sm:px-8">
-        <Hero />
-        <About />
+      <main className="mx-auto max-w-5xl px-6 sm:px-8">
+        <Intro />
         <Projects />
+        <About />
         <Experience />
         <Skills />
         <Contact />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 
@@ -247,33 +33,39 @@ function Nav() {
   return (
     <nav
       aria-label="Primary"
-      className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md"
+      className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6 sm:px-8">
         <a
           href="#top"
-          className="font-mono text-sm tracking-tight text-foreground hover:text-accent transition-colors"
+          className="font-display text-base font-semibold tracking-tight text-foreground"
         >
-          issa.ahmed
+          Issa Ahmed
         </a>
-        <ul className="flex items-center gap-5 text-sm text-muted">
+        <ul className="flex items-center gap-5 text-sm text-muted max-sm:gap-4 max-sm:text-xs">
           <li>
-            <a href="#projects" className="hover:text-foreground transition-colors">
+            <a href="#projects" className="transition-colors hover:text-foreground">
               Projects
             </a>
           </li>
           <li>
-            <a href="#experience" className="hover:text-foreground transition-colors">
+            <a
+              href="#experience"
+              className="transition-colors hover:text-foreground"
+            >
               Experience
             </a>
           </li>
-          <li>
-            <a href="#certifications" className="hover:text-foreground transition-colors">
+          <li className="hidden sm:block">
+            <a
+              href="#certifications"
+              className="transition-colors hover:text-foreground"
+            >
               Certifications
             </a>
           </li>
           <li>
-            <a href="#contact" className="hover:text-foreground transition-colors">
+            <a href="#contact" className="transition-colors hover:text-foreground">
               Contact
             </a>
           </li>
@@ -283,142 +75,295 @@ function Nav() {
   );
 }
 
-function Hero() {
+function Intro() {
   return (
-    <section id="top" className="pt-24 pb-20 sm:pt-32 sm:pb-28">
-      <p className="font-mono text-xs uppercase tracking-widest text-accent mb-5">
-        Mechatronics & AI Systems · Western University · 2026
-      </p>
-      <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.1]">
+    <section id="top" className="scroll-mt-24 pt-24 pb-16 sm:pt-32">
+      <h1 className="animate-rise font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl [animation-delay:0ms]">
         {PROFILE.name}
       </h1>
-      <p className="mt-6 text-lg sm:text-xl text-foreground/90 leading-relaxed max-w-2xl">
+      <p className="animate-rise mt-6 max-w-2xl text-xl leading-snug text-muted sm:text-2xl [animation-delay:80ms]">
         {PROFILE.tagline}
       </p>
-      <p className="mt-4 text-base text-muted leading-relaxed max-w-2xl">
+      <p className="animate-rise mt-4 max-w-2xl text-base leading-relaxed text-muted [animation-delay:140ms]">
         {PROFILE.currentLine}
       </p>
-      <div className="mt-10 flex flex-wrap items-center gap-3">
-        <a
-          href="#projects"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-medium text-background hover:opacity-90 transition-opacity"
-        >
+      <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:200ms]">
+        <ButtonLink href="#projects" variant="primary">
           See projects <ArrowUpRight size={16} />
-        </a>
-        <a
-          href={`mailto:${PROFILE.email}`}
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
+        </ButtonLink>
+        <ButtonLink href={`mailto:${PROFILE.email}`} variant="ghost">
           <Mail size={15} /> Email
-        </a>
-        <a
-          href={PROFILE.github}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
+        </ButtonLink>
+        <ButtonLink href={PROFILE.github} variant="ghost" external>
           <Github size={15} /> GitHub
-        </a>
-        <a
-          href={PROFILE.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
+        </ButtonLink>
+        <ButtonLink href={PROFILE.linkedin} variant="ghost" external>
           <Linkedin size={15} /> LinkedIn
-        </a>
+        </ButtonLink>
         {/* TODO: re-add resume CTA once /public/resume.pdf is added */}
       </div>
+      <ul className="animate-rise mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-xs text-muted [animation-delay:260ms]">
+        <li>
+          <Link
+            href="/projects/tha-pain-prediction"
+            className="transition-colors hover:text-accent"
+          >
+            Published · J. Arthroplasty
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <Link
+            href="/projects/reclaim"
+            className="transition-colors hover:text-accent"
+          >
+            3rd-place autonomous robot
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <Link
+            href="/projects/no-fly-list-kids"
+            className="transition-colors hover:text-accent"
+          >
+            Bill C-59 · $81M
+          </Link>
+        </li>
+        <li aria-hidden className="text-border">·</li>
+        <li>
+          <a href="#projects" className="transition-colors hover:text-accent">
+            2 live demos
+          </a>
+        </li>
+      </ul>
+    </section>
+  );
+}
+
+/* Per-tile presentation, keyed by slug. Category + metric chips are drawn from
+   canonical numbers; media is rendered by ProjectMedia below. liveDemo, when
+   present, surfaces a "Live demo ↗" action on the tile. */
+const TILE: Record<
+  string,
+  { category: string; chips: string[]; liveDemo?: string }
+> = {
+  reclaim: {
+    category: "Robotics · ROS2",
+    chips: ["15/15 nav missions", "30 FPS perception", "3rd place"],
+    liveDemo: "https://reclaim-nav-sim.vercel.app",
+  },
+  "nba-shot-selection": {
+    category: "Reinforcement Learning",
+    chips: ["+0.273 EPSA", "116,928 possessions", "Dueling DQN"],
+    liveDemo: "https://nba-rl-sim.vercel.app",
+  },
+  "tha-pain-prediction": {
+    category: "Clinical ML · Published",
+    chips: ["J. Arthroplasty 2026", "513 patients", "85.9% ±2 buffer"],
+  },
+  "no-fly-list-kids": {
+    category: "Advocacy · Policy",
+    chips: ["Bill C-59", "$81M redress", "Toronto Star op-ed"],
+  },
+};
+
+function ProjectMedia({ slug }: { slug: string }) {
+  if (slug === "reclaim") {
+    return (
+      <Image
+        src="/projects/reclaim/demo.jpg"
+        alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 6-DOF sorting arm"
+        width={768}
+        height={1024}
+        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+    );
+  }
+  if (slug === "nba-shot-selection") {
+    return (
+      <Image
+        src="/projects/nba-shot-selection/decision-maps-tile.png"
+        alt="Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
+        width={2330}
+        height={1850}
+        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+    );
+  }
+  if (slug === "tha-pain-prediction") {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center bg-accent-soft/60 p-6 text-center">
+        <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
+          85.9%
+        </p>
+        <p className="mt-3 text-sm text-muted">
+          buffer accuracy ±2 pts · 513 patients
+        </p>
+        <p className="eyebrow mt-3 text-faint">Published · J. Arthroplasty</p>
+      </div>
+    );
+  }
+  // no-fly-list-kids
+  return (
+    <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
+      <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
+        $81M
+      </p>
+      <p className="mt-3 text-sm text-muted">
+        federal redress funding · Bill C-59
+      </p>
+    </div>
+  );
+}
+
+function Projects() {
+  return (
+    <section
+      id="projects"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <h2 className="eyebrow text-accent">Selected Projects</h2>
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+        Four things I built and shipped — a robot, a research model, a clinical
+        tool, and a federal campaign. Open any one to read the full story.
+      </p>
+      <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+        {PROJECTS.map((p, i) => {
+          const t = TILE[p.slug];
+          return (
+            <li key={p.slug}>
+              <Reveal delay={i * 60}>
+                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(28,26,23,0.04),0_8px_24px_-12px_rgba(28,26,23,0.10)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_2px_4px_rgba(28,26,23,0.05),0_16px_36px_-14px_rgba(28,26,23,0.18)]">
+                  <Link
+                    href={`/projects/${p.slug}`}
+                    className="flex flex-1 flex-col"
+                  >
+                    <div className="aspect-[3/2] w-full overflow-hidden border-b border-border">
+                      <ProjectMedia slug={p.slug} />
+                    </div>
+                    <div className="flex flex-1 flex-col p-6 pb-4">
+                      <p className="eyebrow text-faint">{t.category}</p>
+                      <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
+                        {p.title}
+                      </h3>
+                      <p className="mt-2 text-[15px] leading-relaxed text-foreground/85">
+                        {p.blurb}
+                      </p>
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {t.chips.map((c) => (
+                          <Pill key={c}>{c}</Pill>
+                        ))}
+                      </ul>
+                    </div>
+                  </Link>
+                  <div className="flex items-center gap-5 border-t border-border px-6 py-4">
+                    <Link
+                      href={`/projects/${p.slug}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
+                    >
+                      Case study
+                      <ArrowRight
+                        size={15}
+                        className="transition-transform group-hover:translate-x-1"
+                      />
+                    </Link>
+                    {t.liveDemo ? (
+                      <a
+                        href={t.liveDemo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
+                      >
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                        </span>
+                        Live demo ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              </Reveal>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
 
 function About() {
   return (
-    <section id="about" className="py-12 border-t border-border/60">
-      <SectionLabel>About</SectionLabel>
-      <div className="mt-6 space-y-4 text-foreground/90 leading-relaxed">
-        <p>
-          I&apos;m a Mechatronics Engineering with AI Specialization undergraduate at
-          Western University, graduating Spring 2026 (GPA 3.70, Dean&apos;s List 2022–2024).
-          My work spans autonomous robotics, applied ML, and full-stack systems —
-          breadth I treat as the differentiator, not a hedge.
-        </p>
-        <p>
-          I&apos;m a co-author on a peer-reviewed publication in <em>The Journal of
-          Arthroplasty</em> (2026), led the perception and control stack on an
-          award-placing autonomous waste-sorting capstone, and built offline RL
-          agents that outperform real NBA player decisions on 100K+ tracking
-          possessions. Outside engineering, I&apos;ve been part of the No Fly List
-          Kids federal advocacy coalition since age ~5; the campaign contributed
-          to the passage of Bill C-59 and an $81M federal redress budget.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function Projects() {
-  return (
-    <section id="projects" className="py-16 border-t border-border/60">
-      <SectionLabel>Featured Projects</SectionLabel>
-      <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-        {PROJECTS.map((p) => (
-          <li key={p.slug}>
-            <Link
-              href={`/projects/${p.slug}`}
-              className="group block h-full rounded-xl border border-border p-5 hover:border-accent/60 transition-colors"
-            >
-              <p className="font-mono text-[11px] uppercase tracking-wider text-muted">
-                {p.codename}
-              </p>
-              <h3 className="mt-2 text-base font-semibold leading-snug">
-                {p.title}
-              </h3>
-              <p className="mt-2 text-sm text-foreground/80 leading-relaxed">
-                {p.blurb}
-              </p>
-              <p className="mt-3 font-mono text-[11px] text-accent">
-                {p.highlight}
-              </p>
-              <p className="mt-4 inline-flex items-center gap-1 text-[11px] uppercase tracking-wider text-muted group-hover:text-accent transition-colors">
-                Read case study <ArrowUpRight size={11} />
-              </p>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <section
+      id="about"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <Reveal>
+        <h2 className="eyebrow text-accent">About</h2>
+        <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
+          <p>
+            I&apos;m a Mechatronics Engineering with AI Specialization
+            undergraduate at Western University, graduating Spring 2026 (GPA
+            3.70, Dean&apos;s List 2022–2024). My work spans autonomous
+            robotics, applied ML, and full-stack systems — breadth I treat as
+            the differentiator, not a hedge.
+          </p>
+          <p>
+            I&apos;m a co-author on a peer-reviewed publication in{" "}
+            <em>The Journal of Arthroplasty</em> (2026), led the perception and
+            control stack on an award-placing autonomous waste-sorting capstone,
+            and built offline RL agents that outperform real NBA player
+            decisions on 100K+ tracking possessions. Outside engineering,
+            I&apos;ve been flagged on Canada&apos;s no-fly list since I was five.
+            In 2017 I joined the No Fly List Kids coalition, whose campaign
+            contributed to Bill C-59 and an $81M federal redress budget.
+          </p>
+        </div>
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-faint">
+          <li>BESc Mechatronics + AI</li>
+          <li className="text-border">·</li>
+          <li>Graduating Spring 2026</li>
+          <li className="text-border">·</li>
+          <li>GPA 3.70 · Dean&apos;s List &apos;22–24</li>
+          <li className="text-border">·</li>
+          <li>Toronto, ON</li>
+        </ul>
+      </Reveal>
     </section>
   );
 }
 
 function Experience() {
   return (
-    <section id="experience" className="py-16 border-t border-border/60">
-      <SectionLabel>Experience</SectionLabel>
-      <ol className="mt-8 space-y-10">
+    <section
+      id="experience"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <h2 className="eyebrow text-accent">Experience</h2>
+      <ol className="mt-10 space-y-12">
         {EXPERIENCE.map((e) => (
-          <li
-            key={e.role + e.org}
-            className="grid gap-2 sm:grid-cols-[160px_1fr] sm:gap-6"
-          >
-            <div className="font-mono text-xs uppercase tracking-wider text-muted pt-1">
-              {e.period}
-            </div>
-            <div>
-              <h3 className="text-base font-semibold leading-tight">
-                {e.role} <span className="text-muted">·</span>{" "}
-                <span className="text-foreground/90">{e.org}</span>
-              </h3>
-              <ul className="mt-3 space-y-2 text-sm text-foreground/80 leading-relaxed">
-                {e.bullets.map((b, i) => (
-                  <li key={i} className="relative pl-4">
-                    <span className="absolute left-0 top-[0.55em] h-1 w-1 rounded-full bg-accent" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <li key={e.role + e.org}>
+            <Reveal>
+              <div className="grid gap-2 sm:grid-cols-[160px_1fr] sm:gap-6">
+                <div className="pt-1 font-mono text-xs uppercase tracking-wider text-faint">
+                  {e.period}
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-semibold tracking-tight">
+                    {e.role} <span className="text-faint">·</span>{" "}
+                    <span className="text-muted">{e.org}</span>
+                  </h3>
+                  <ul className="mt-3 space-y-2 text-[15px] leading-relaxed text-foreground/85">
+                    {e.bullets.map((b, i) => (
+                      <li key={i} className="relative pl-4">
+                        <span className="absolute left-0 top-[0.6em] h-1 w-1 rounded-full bg-accent" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </Reveal>
           </li>
         ))}
       </ol>
@@ -428,33 +373,27 @@ function Experience() {
 
 function Skills() {
   return (
-    <section id="skills" className="py-16 border-t border-border/60">
-      <SectionLabel>Skills</SectionLabel>
-      <div className="mt-8 grid gap-8 sm:grid-cols-2">
+    <section
+      id="skills"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <h2 className="eyebrow text-accent">Skills</h2>
+      <div className="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {SKILLS.map((g) => (
           <div key={g.group}>
-            <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
-              {g.group}
-            </h3>
+            <p className="eyebrow text-faint">{g.group}</p>
             <ul className="mt-3 flex flex-wrap gap-2">
               {g.items.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full border border-border px-3 py-1 text-xs"
-                >
-                  {item}
-                </li>
+                <Pill key={item}>{item}</Pill>
               ))}
             </ul>
           </div>
         ))}
       </div>
 
-      <div id="certifications" className="mt-12 scroll-mt-24">
-        <h3 className="font-mono text-xs uppercase tracking-widest text-muted">
-          Certifications
-        </h3>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div id="certifications" className="mt-16 scroll-mt-24">
+        <Eyebrow>Certifications</Eyebrow>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
           {CERTIFICATIONS.map((c) => {
             const inner = (
               <>
@@ -462,7 +401,7 @@ function Skills() {
                 <div className="min-w-0">
                   <p className="text-sm font-medium leading-snug">
                     {c.name}{" "}
-                    <span className="font-mono text-[11px] text-muted">
+                    <span className="font-mono text-[11px] text-faint">
                       · {c.code}
                     </span>
                   </p>
@@ -479,18 +418,15 @@ function Skills() {
             return (
               <li key={c.code}>
                 {c.verifyUrl ? (
-                  <a
-                    href={c.verifyUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-start gap-3 rounded-lg border border-border p-3 hover:border-accent/60 transition-colors"
-                  >
-                    {inner}
+                  <a href={c.verifyUrl} target="_blank" rel="noreferrer">
+                    <GlassCard className="flex items-start gap-3 p-4 transition-colors hover:border-accent/40">
+                      {inner}
+                    </GlassCard>
                   </a>
                 ) : (
-                  <div className="flex items-start gap-3 rounded-lg border border-border p-3">
+                  <GlassCard className="flex items-start gap-3 p-4">
                     {inner}
-                  </div>
+                  </GlassCard>
                 )}
               </li>
             );
@@ -503,62 +439,76 @@ function Skills() {
 
 function Contact() {
   return (
-    <section id="contact" className="py-20 border-t border-border/60">
-      <SectionLabel>Contact</SectionLabel>
-      <h2 className="mt-5 text-2xl sm:text-3xl font-semibold tracking-tight">
-        Get in touch
-      </h2>
-      <p className="mt-3 text-foreground/85 max-w-xl leading-relaxed">
-        Open to new-grad full-time roles in robotics, AI / ML, and full-stack
-        engineering. Easiest way to reach me is email.
-      </p>
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+    <section
+      id="contact"
+      className="scroll-mt-24 border-t border-border py-20 sm:py-28"
+    >
+      <Reveal>
+        <Eyebrow>Contact</Eyebrow>
+        <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          Get in touch
+        </h2>
+        <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
+          Open to new-grad full-time roles in robotics, AI / ML, and full-stack
+          engineering. Easiest way to reach me is email.
+        </p>
         <a
           href={`mailto:${PROFILE.email}`}
-          className="inline-flex h-10 items-center gap-1.5 rounded-full bg-foreground px-4 text-sm font-medium text-background hover:opacity-90 transition-opacity"
+          className="mt-8 inline-block font-display text-2xl tracking-tight text-foreground underline decoration-accent/40 decoration-2 underline-offset-8 transition-colors hover:decoration-accent sm:text-3xl"
         >
-          <Mail size={15} /> {PROFILE.email}
+          {PROFILE.email}
         </a>
-        <a
-          href={PROFILE.github}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
-          <Github size={15} /> github.com/issaa71
-        </a>
-        <a
-          href={PROFILE.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-medium hover:border-accent hover:text-accent transition-colors"
-        >
-          <Linkedin size={15} /> LinkedIn
-        </a>
-      </div>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <ButtonLink href={PROFILE.github} variant="ghost" external>
+            <Github size={15} /> github.com/issaa71
+          </ButtonLink>
+          <ButtonLink href={PROFILE.linkedin} variant="ghost" external>
+            <Linkedin size={15} /> LinkedIn
+          </ButtonLink>
+        </div>
+      </Reveal>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="border-t border-border/60 mt-10">
-      <div className="mx-auto flex max-w-3xl flex-col gap-2 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <p className="text-xs text-muted">
-          © {new Date().getFullYear()} Issa Ahmed
-        </p>
-        <p className="font-mono text-xs text-muted">
-          Toronto, ON · Next.js + Vercel
-        </p>
+    <footer className="border-t border-border">
+      <div className="mx-auto max-w-5xl px-6 py-10 sm:px-8">
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          <a
+            href={`mailto:${PROFILE.email}`}
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
+          >
+            issaahmed1@icloud.com
+          </a>
+          <a
+            href={PROFILE.github}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
+          >
+            GitHub
+          </a>
+          <a
+            href={PROFILE.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            className="font-mono text-xs text-muted transition-colors hover:text-accent"
+          >
+            LinkedIn
+          </a>
+          {/* TODO: add resume link here too once /public/resume.pdf exists */}
+        </div>
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-relaxed text-faint">
+            © {new Date().getFullYear()} Issa Ahmed
+          </p>
+          <p className="font-mono text-xs text-faint">
+            Toronto, ON · Next.js + Vercel
+          </p>
+        </div>
       </div>
     </footer>
-  );
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="font-mono text-xs uppercase tracking-widest text-accent">
-      {children}
-    </p>
   );
 }

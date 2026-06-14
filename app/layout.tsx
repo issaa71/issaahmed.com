@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,8 +12,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Fraunces is a variable font — warm, editorial display face for the light gallery.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+});
+
 // TODO: switch to https://issaahmed.com once the custom domain is wired up
 const SITE_URL = "https://issaahmed-com.vercel.app";
+
+export const viewport: Viewport = {
+  themeColor: "#faf9f7",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -60,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script
@@ -84,10 +95,16 @@ export default function RootLayout({
                 "Machine Learning",
                 "Full-stack engineering",
               ],
-              sameAs: ["https://github.com/issaa71"],
+              sameAs: [
+                "https://github.com/issaa71",
+                "https://www.linkedin.com/in/issa-ahmed-032490190/",
+              ],
             }),
           }}
         />
+        <noscript>
+          <style>{`.reveal-hidden{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
         {children}
       </body>
     </html>

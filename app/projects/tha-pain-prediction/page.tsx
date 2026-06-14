@@ -1,53 +1,143 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import {
   CaseStudyShell,
   Section,
   Metric,
   MetricGrid,
-  Artifact,
-  ArtifactRow,
   TechRow,
+  StatusBadge,
+  Figure,
+  ComparisonTable,
 } from "../_components/case-study";
 
 export const metadata: Metadata = {
-  title: "Predicting Long-Term Pain after Total Hip Arthroplasty",
+  title: "THA Pain Prediction — Peer-Reviewed ML",
   description:
-    "Peer-reviewed ML pipeline (J. Arthroplasty 2026) comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
+    "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
+  openGraph: {
+    title: "THA Pain Prediction — Peer-Reviewed ML",
+    description:
+      "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
+    type: "article",
+  },
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline:
+    "Predicting Long-Term Pain After Total Hip Replacement",
+  sameAs: "https://doi.org/10.1016/j.arth.2026.04.023",
+  author: {
+    "@type": "Person",
+    name: "Issa Ahmed",
+  },
+  isPartOf: {
+    "@type": "Periodical",
+    name: "The Journal of Arthroplasty",
+  },
+  datePublished: "2026",
 };
 
 export default function Page() {
   return (
-    <CaseStudyShell
-      eyebrow="Applied ML · Peer-reviewed Research"
-      title="Predicting Long-Term Pain After Total Hip Replacement"
-      tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
-      meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-    >
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Best T3 MSE"
-            value="2.70"
-            hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <CaseStudyShell
+        eyebrow="Applied ML · Peer-reviewed Research"
+        title="Predicting Long-Term Pain After Total Hip Replacement"
+        tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
+        meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
+      >
+        <div className="flex flex-wrap gap-2">
+          <StatusBadge tone="accent">
+            Published — The Journal of Arthroplasty · 2026
+          </StatusBadge>
+        </div>
+        <a
+          href="https://doi.org/10.1016/j.arth.2026.04.023"
+          target="_blank"
+          rel="noreferrer"
+          className="glass rounded-xl p-4 group flex items-center gap-4 transition-colors hover:border-accent/40"
+        >
+          <Image
+            src="/projects/tha-pain-prediction/journal-cover.png"
+            alt="Cover of The Journal of Arthroplasty"
+            width={237}
+            height={298}
+            className="h-24 w-auto rounded-md border border-border"
           />
-          <Metric
-            label="Best T5 MSE"
-            value="4.11"
-            hint="CatBoost, 5-year follow-up"
+          <span className="min-w-0 flex-1">
+            <span className="eyebrow block text-faint">
+              The Journal of Arthroplasty · open access
+            </span>
+            <span className="mt-1 block font-display text-lg font-semibold tracking-tight sm:text-xl">
+              Machine Learning Using Preoperative Patient Factors Can Predict the
+              Severity of Pain Following Primary Total Hip Arthroplasty
+            </span>
+            <span className="mt-1 block text-xs text-muted">
+              DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors · Read the paper
+            </span>
+          </span>
+          <ArrowUpRight
+            size={16}
+            className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           />
-          <Metric
-            label="Buffer accuracy ±2"
-            value="85.9%"
-            hint="CatBoost at T3 — within 2 points of true pain"
+        </a>
+
+        <Section title="Headline">
+          <MetricGrid>
+            <Metric
+              label="Best T3 MSE"
+              value="2.70"
+              hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
+            />
+            <Metric
+              label="Buffer accuracy ±2"
+              value="85.9%"
+              hint="CatBoost at T3 — within 2 points of true pain"
+            />
+            <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
+            <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
+          </MetricGrid>
+        </Section>
+
+      <Section title="From the paper">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Figure
+            src="/projects/tha-pain-prediction/paper-fig4-catboost-importances.png"
+            alt="Bar charts of CatBoost top-10 feature importances at 3 and 5 years: preoperative pain-perception items, age, BMI, length of stay, and back/neck history dominate."
+            caption="Figure 4 of the paper — what actually drives long-term pain in the best-performing model (CatBoost): patient-reported pain-perception items, age, BMI, and length of stay."
+            width={1405}
+            height={2468}
+            plate
           />
-          <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
-          <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
-          <Metric
-            label="Classification accuracy"
-            value="90.1%"
-            hint="low / moderate / high pain (also reached by mean regressor — see Results)"
+          <Figure
+            src="/projects/tha-pain-prediction/paper-fig1-pain-distribution.png"
+            alt="Bar charts of the pain-score distribution at 3 and 5 years showing most patients report zero or near-zero pain."
+            caption="Figure 1 of the paper — the heavy skew toward zero pain. This class imbalance is why headline 'accuracy' flatters the baseline, and why the study leads with MSE and buffer accuracy."
+            width={1405}
+            height={1605}
+            plate
           />
-        </MetricGrid>
+        </div>
+        <ComparisonTable
+          columns={["Model", "MSE", "Buffer ±1", "Buffer ±2"]}
+          rows={[
+            { cells: ["KNN", "2.70", "63.4%", "83.1%"], highlight: true },
+            { cells: ["XGBoost", "2.77", "59.2%", "80.3%"] },
+            { cells: ["Random Forest", "2.79", "52.1%", "77.5%"] },
+            { cells: ["CatBoost", "2.83", "50.7%", "85.9%"] },
+            { cells: ["Linear Regression", "4.20", "42.3%", "70.4%"] },
+            { cells: ["Mean baseline", "3.07", "21.1%", "90.1%"] },
+          ]}
+          caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72). Lower MSE is better; nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 figure is the class-imbalance artifact discussed in Results. Full 13-model tables (T3 + T5) in the publication."
+        />
       </Section>
 
       <Section title="Problem">
@@ -172,21 +262,6 @@ export default function Page() {
         />
       </Section>
 
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://doi.org/10.1016/j.arth.2026.04.023"
-            label="Published paper · J. Arthroplasty"
-            detail="DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-          />
-          <Artifact
-            href="https://hippain-8ipnqvicztvdyk3cip7hfa.streamlit.app/"
-            label="Live calculator · Streamlit"
-            detail="Cited tool from the paper — Streamlit Community Cloud (cold start ~30s)"
-          />
-        </ArtifactRow>
-      </Section>
-
       <Section title="Reflection">
         <p>
           The most interesting engineering call was recognizing that the headline
@@ -199,6 +274,7 @@ export default function Page() {
           claim, but only if the dichotomization doesn&apos;t worsen the imbalance.
         </p>
       </Section>
-    </CaseStudyShell>
+      </CaseStudyShell>
+    </>
   );
 }
