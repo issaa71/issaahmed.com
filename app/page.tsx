@@ -186,16 +186,14 @@ function ProjectMedia({ slug }: { slug: string }) {
   }
   if (slug === "tha-pain-prediction") {
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center bg-accent-soft/60 p-6 text-center">
-        <p className="font-display text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
-          Peer-reviewed
-        </p>
-        <p className="mt-3 text-sm text-muted">
-          The Journal of Arthroplasty · 2026
-        </p>
-        <p className="eyebrow mt-3 text-faint">
-          513 patients · 13 models · 2nd of 7 authors
-        </p>
+      <div className="flex h-full w-full items-center justify-center bg-[#f1efe9] p-6">
+        <Image
+          src="/projects/tha-pain-prediction/journal-cover.png"
+          alt="Cover of The Journal of Arthroplasty — the 2026 issue featuring the peer-reviewed pain-prediction paper"
+          width={237}
+          height={298}
+          className="h-full max-h-[86%] w-auto rounded-md border border-border shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-300 group-hover:scale-[1.03]"
+        />
       </div>
     );
   }
