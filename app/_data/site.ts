@@ -3,7 +3,7 @@ export const PROFILE = {
   tagline:
     "Mechatronics & AI Systems Engineering student at Western University. I build autonomous robots, applied ML systems, and full-stack tools.",
   currentLine:
-    "Currently Product Engineer at Scooty Mobility — building an AI transit companion app, in pilot conversations with GTHA municipalities.",
+    "Currently Product Engineer at Scooty Mobility — building an AI transit companion app.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -44,7 +44,7 @@ export const PROJECTS: {
     blurb:
       "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
     highlight:
-      "J. Arthroplasty 2026 · KNN MSE 2.70 @ T3 · 85.9% buffer accuracy ±2",
+      "J. Arthroplasty 2026 · KNN MSE 2.70 vs 3.07 mean baseline @ T3 · 513 patients",
   },
   {
     slug: "no-fly-list-kids",

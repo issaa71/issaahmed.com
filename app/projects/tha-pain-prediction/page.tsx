@@ -95,15 +95,16 @@ export default function Page() {
             <Metric
               label="Best T3 MSE"
               value="2.70"
-              hint="KNN, 3-year follow-up — vs 3.07 mean baseline"
+              hint="KNN — beats the 3.07 mean baseline; nonlinear models won at both timepoints"
+              accent
             />
             <Metric
-              label="Buffer accuracy ±2"
-              value="85.9%"
-              hint="CatBoost at T3 — within 2 points of true pain"
+              label="Authorship"
+              value="2nd of 7"
+              hint="the only engineer among the MDs + PhDs — led the ML implementation end to end"
             />
-            <Metric label="Patients" value="513" hint="SAFE-T prospective cohort" />
-            <Metric label="Models compared" value="13" hint="linear · trees · neural nets" />
+            <Metric label="Patients" value="513" hint="SAFE-T prospective cohort, two academic hospitals" />
+            <Metric label="Models compared" value="13" hint="linear · tree ensembles · neural nets" />
           </MetricGrid>
         </Section>
 

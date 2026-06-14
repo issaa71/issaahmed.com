@@ -157,17 +157,6 @@ export default function Page() {
           years. My contribution was alongside theirs, not in place of them.
         </p>
       </Section>
-
-      <Section title="Why this is on an engineering portfolio">
-        <p>
-          For technical roles the question this answers is: <em>does this person
-          communicate well and operate under high stakes?</em> Op-eds, broadcast
-          interviews, and direct engagement with the PMO are real-world tests of being
-          able to explain a complicated system clearly under pressure — a
-          complement to the more technically-heavy ML and robotics work elsewhere
-          on this site.
-        </p>
-      </Section>
     </CaseStudyShell>
   );
 }

@@ -123,7 +123,7 @@ function Intro() {
             href="/projects/no-fly-list-kids"
             className="transition-colors hover:text-accent"
           >
-            Bill C-59 · $81M
+            No Fly List Kids · Toronto Star op-ed
           </Link>
         </li>
         <li aria-hidden className="text-border">·</li>
@@ -161,7 +161,7 @@ const TILE: Record<
   },
   "tha-pain-prediction": {
     category: "Clinical ML · Published",
-    chips: ["J. Arthroplasty 2026", "513 patients", "85.9% ±2 buffer"],
+    chips: ["J. Arthroplasty 2026", "2nd of 7 authors", "13 models compared"],
   },
   "no-fly-list-kids": {
     category: "Advocacy · Policy",
@@ -195,13 +195,15 @@ function ProjectMedia({ slug }: { slug: string }) {
   if (slug === "tha-pain-prediction") {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center bg-accent-soft/60 p-6 text-center">
-        <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
-          85.9%
+        <p className="font-display text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
+          Peer-reviewed
         </p>
         <p className="mt-3 text-sm text-muted">
-          buffer accuracy ±2 pts · 513 patients
+          The Journal of Arthroplasty · 2026
         </p>
-        <p className="eyebrow mt-3 text-faint">Published · J. Arthroplasty</p>
+        <p className="eyebrow mt-3 text-faint">
+          513 patients · 13 models · 2nd of 7 authors
+        </p>
       </div>
     );
   }
@@ -310,8 +312,8 @@ function About() {
             I&apos;m a Mechatronics Engineering with AI Specialization
             undergraduate at Western University, graduating Spring 2026 (GPA
             3.70, Dean&apos;s List 2022–2024). My work spans autonomous
-            robotics, applied ML, and full-stack systems — breadth I treat as
-            the differentiator, not a hedge.
+            robotics, applied ML, and full-stack systems — I build it, ship it,
+            and defend every number on it.
           </p>
           <p>
             I&apos;m a co-author on a peer-reviewed publication in{" "}
