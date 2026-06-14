@@ -53,11 +53,6 @@ export default function Page() {
             value="8+"
             hint="member of the coalition since 2017"
           />
-          <Metric
-            label="Original research"
-            value="50-name audit"
-            hint="cross-referenced known no-fly list names against the 411.ca public directory"
-          />
         </MetricGrid>
       </Section>
 
@@ -145,15 +140,6 @@ export default function Page() {
             Minister Bill Blair, Cabinet Ministers, and cross-party MPs across multiple
             Parliament Hill days.
           </li>
-          <li>
-            <strong>Original investigative work.</strong> Working with another coalition
-            member, Rayaan Kamal, I took 50 names known to be on the no-fly list (drawn
-            from public-domain articles) and cross-referenced them against the free{" "}
-            <code>411.ca</code> public directory to estimate how many ordinary
-            Canadians share names with flagged individuals. The exercise made the
-            scale of the false-positive problem concrete in a way that anecdotes
-            alone couldn&apos;t.
-          </li>
         </ul>
       </Section>
 
@@ -177,10 +163,9 @@ export default function Page() {
           For technical roles the question this answers is: <em>does this person
           communicate well and operate under high stakes?</em> Op-eds, broadcast
           interviews, and direct engagement with the PMO are real-world tests of being
-          able to explain a complicated system clearly under pressure. The
-          investigative work alongside Rayaan is also an honest exercise in data
-          analysis on a publicly relevant problem — a complement to the more
-          technically-heavy ML and robotics work elsewhere on this site.
+          able to explain a complicated system clearly under pressure — a
+          complement to the more technically-heavy ML and robotics work elsewhere
+          on this site.
         </p>
       </Section>
     </CaseStudyShell>
