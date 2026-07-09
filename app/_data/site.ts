@@ -3,7 +3,7 @@ export const PROFILE = {
   tagline:
     "I build autonomous robots, applied ML systems, and full-stack tools.",
   currentLine:
-    "Everything here is something I designed, built, and shipped — and two of the projects run live, right in your browser.",
+    "Everything here is something I designed, built, and shipped — and three of the projects run live, right in your browser.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -26,6 +26,13 @@ export const PROJECTS: {
       "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
   },
   {
+    slug: "assistive-wheelchair",
+    title: "Assistive Navigation Robot",
+    codename: "Robotics · ROS2 · Nav2",
+    blurb:
+      "A ROS2 robot that maps a home, localizes, and drives itself to a named room — planning around obstacles, flagging floor hazards with computer vision, and confirming arrival by QR code. A smart-wheelchair prototype.",
+  },
+  {
     slug: "nba-shot-selection",
     title: "NBA Shot Selection — Offline RL",
     codename: "Reinforcement Learning · PyTorch",
@@ -33,11 +40,25 @@ export const PROJECTS: {
       "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
   },
   {
+    slug: "rideguide",
+    title: "RideGuide — AI Transit Assistant",
+    codename: "Applied AI · Full-stack · GTFS-RT",
+    blurb:
+      "A natural-language transit assistant for the Greater Toronto & Hamilton Area — live arrivals, delays, and trip planning across 10 agencies, drawn from real-time GTFS-RT feeds and fronted by an LLM query pipeline.",
+  },
+  {
     slug: "tha-pain-prediction",
     title: "Predicting Pain After Total Hip Arthroplasty",
     codename: "Applied ML · Research · Streamlit",
     blurb:
       "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
+  },
+  {
+    slug: "glenoid-classifier",
+    title: "Glenoid Morphology Classifier",
+    codename: "Clinical ML · scikit-learn",
+    blurb:
+      "A three-tier ML pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification — with the real trained model running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
   },
   {
     slug: "no-fly-list-kids",

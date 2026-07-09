@@ -136,7 +136,7 @@ function Intro() {
             rel="noreferrer"
             className="transition-colors hover:text-accent"
           >
-            2 live demos ↗
+            3 live demos ↗
           </a>
         </li>
       </ul>
@@ -157,16 +157,33 @@ const TILE: Record<
     chips: ["15/15 nav missions", "30 FPS perception", "3rd · 1st in AI division"],
     liveDemo: "https://reclaim-nav-sim.vercel.app",
   },
+  "assistive-wheelchair": {
+    category: "Robotics · ROS2",
+    role: "Designed & built end-to-end",
+    chips: ["A* room-to-room nav", "10 Hz hazard detection", "QR arrival checks"],
+  },
   "nba-shot-selection": {
     category: "Reinforcement Learning",
     role: "Solo course project",
     chips: ["+0.273 EPSA", "~6× vs NBA players", "116,928 possessions"],
     liveDemo: "https://nba-rl-sim.vercel.app",
   },
+  rideguide: {
+    category: "Applied AI · Full-stack",
+    // CONFIRM: solo vs. collaborator (research flagged "Ahmed Naeem"). Byline is
+    // scope-based for now to avoid overclaiming team composition.
+    role: "Applied-AI · full-stack build",
+    chips: ["10 GTHA agencies", "GTFS-RT real-time", "GPT-4o-mini + Claude agent"],
+  },
   "tha-pain-prediction": {
     category: "Clinical ML · Published",
     role: "The only engineer of 7 co-authors",
     chips: ["J. Arthroplasty 2026", "2nd of 7 authors", "13 models compared"],
+  },
+  "glenoid-classifier": {
+    category: "Clinical ML",
+    role: "Solo project",
+    chips: ["Live in-browser tool", "~91% screen · AUC 0.98", "6 Walch classes"],
   },
   "no-fly-list-kids": {
     category: "Advocacy · Policy",
@@ -183,6 +200,17 @@ function ProjectMedia({ slug }: { slug: string }) {
         alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 4-DOF sorting arm"
         width={768}
         height={1024}
+        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+    );
+  }
+  if (slug === "assistive-wheelchair") {
+    return (
+      <Image
+        src="/projects/assistive-wheelchair/tile.jpg"
+        alt="The assistive-navigation robot on its taped test course, red-tape waypoint markers on a white foam-board floor"
+        width={1500}
+        height={1000}
         className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
       />
     );
@@ -211,6 +239,32 @@ function ProjectMedia({ slug }: { slug: string }) {
       </div>
     );
   }
+  if (slug === "rideguide") {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
+        <p className="font-display text-3xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-4xl">
+          “Is the 504
+          <br />
+          on time?”
+        </p>
+        <p className="mt-3 font-mono text-[11px] uppercase tracking-wider text-muted">
+          live GTFS-RT · 10 agencies
+        </p>
+      </div>
+    );
+  }
+  if (slug === "glenoid-classifier") {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
+        <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
+          A·B·E
+        </p>
+        <p className="mt-3 text-sm text-muted">
+          Walch glenoid types · 3-tier classifier
+        </p>
+      </div>
+    );
+  }
   // no-fly-list-kids
   return (
     <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
@@ -232,8 +286,9 @@ function Projects() {
     >
       <h2 className="eyebrow text-accent">Selected Projects</h2>
       <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-        Four things I built and shipped — a robot, a research model, a clinical
-        tool, and a federal campaign. Open any one to read the full story.
+        Seven projects I built and shipped — two autonomous robots, an
+        offline-RL agent, an AI transit assistant, two clinical ML tools, and a
+        federal advocacy campaign. Open any one to read the full story.
       </p>
       <ul className="mt-10 grid gap-6 sm:grid-cols-2">
         {PROJECTS.map((p, i) => {
