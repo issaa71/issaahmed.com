@@ -274,7 +274,7 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
     >
       {/* media */}
       <div
-        className={`aspect-[3/2] overflow-hidden lg:row-start-1 lg:aspect-auto ${
+        className={`relative aspect-[3/2] overflow-hidden lg:row-start-1 lg:aspect-auto ${
           flip ? "lg:col-start-2" : "lg:col-start-1"
         }`}
       >
@@ -371,26 +371,29 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
 function CardMedia({ slug }: { slug: string }) {
   const photo = PHOTO[slug];
   if (photo) {
+    // RECLAIM's source is portrait (768×1024) with the robot low in the frame;
+    // bias the crop downward so the arm + bins stay in view on the wide cell.
+    const position = slug === "reclaim" ? "object-[50%_70%]" : "object-center";
     return (
       <Image
         src={photo.src}
         alt={photo.alt}
         width={photo.width}
         height={photo.height}
-        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
+        className={`absolute inset-0 h-full w-full object-cover ${position} transition-transform duration-500 group-hover:scale-[1.015]`}
       />
     );
   }
 
   if (slug === "tha-pain-prediction") {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-paper-deep p-6">
+      <div className="absolute inset-0 flex items-center justify-center bg-paper-deep p-6">
         <Image
           src="/projects/tha-pain-prediction/journal-cover.png"
           alt="Cover of The Journal of Arthroplasty — the 2026 issue featuring the peer-reviewed pain-prediction paper"
           width={237}
           height={298}
-          className="h-auto max-h-[86%] w-auto border border-line shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-500 group-hover:scale-[1.03]"
+          className="h-[85%] max-h-[26rem] w-auto border border-line shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
     );
@@ -405,26 +408,16 @@ function CardMedia({ slug }: { slug: string }) {
 }
 
 /* Bespoke line-art "instrument face" for the live Walch classifier: a three-tier
-   decision tree (Screen → Type → Subtype) with the B2 route inked red, over six
-   control-input sliders. Fully decorative — the card's name comes from the link. */
+   decision tree (Screen → Type → Subtype) with the B2 route inked red. It fills
+   the panel-driven cell (contain, centered). Decorative — name comes from the link. */
 function GlenoidInstrument() {
-  const W = 132;
-  const sliders = [
-    { x: 24, y: 378, t: 0.42, red: true },
-    { x: 24, y: 398, t: 0.66, red: false },
-    { x: 24, y: 418, t: 0.5, red: false },
-    { x: 204, y: 378, t: 0.72, red: false },
-    { x: 204, y: 398, t: 0.36, red: false },
-    { x: 204, y: 418, t: 0.58, red: false },
-  ];
-
   return (
-    <div className="flex h-full w-full items-center justify-center bg-plate p-6">
+    <div className="absolute inset-0 flex items-center justify-center bg-plate p-6">
       <svg
-        viewBox="0 0 360 430"
+        viewBox="0 0 360 330"
         fill="none"
         aria-hidden
-        className="h-full w-full"
+        className="h-full w-auto max-w-full"
       >
         {/* tier headers */}
         <text
@@ -514,29 +507,6 @@ function GlenoidInstrument() {
         <text x="210" y="302" textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700} className="fill-ink font-struct">
           B3
         </text>
-
-        {/* control inputs */}
-        <line x1="16" y1="340" x2="344" y2="340" strokeWidth={1} className="stroke-line" />
-        <text x="16" y="360" fontSize={9} letterSpacing={1.4} className="fill-graphite font-anno">
-          CONTROL INPUTS
-        </text>
-        {sliders.map((s, i) => (
-          <g key={i}>
-            <line x1={s.x} y1={s.y} x2={s.x + W} y2={s.y} strokeWidth={1} className="stroke-line" />
-            <line x1={s.x + W * 0.25} y1={s.y - 2} x2={s.x + W * 0.25} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
-            <line x1={s.x + W * 0.5} y1={s.y - 2} x2={s.x + W * 0.5} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
-            <line x1={s.x + W * 0.75} y1={s.y - 2} x2={s.x + W * 0.75} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
-            <rect
-              x={s.x + s.t * W - 4.5}
-              y={s.y - 4.5}
-              width={9}
-              height={9}
-              rx={1}
-              strokeWidth={s.red ? 1.3 : 1}
-              className={s.red ? "fill-red-wash stroke-red" : "fill-plate stroke-ink/60"}
-            />
-          </g>
-        ))}
       </svg>
     </div>
   );
@@ -545,7 +515,7 @@ function GlenoidInstrument() {
 /* Typeset op-ed "clipping" standing in for a broadcast still. */
 function NflkClipping() {
   return (
-    <div className="flex h-full w-full items-center justify-center bg-paper-deep p-8">
+    <div className="absolute inset-0 flex items-center justify-center bg-paper-deep p-8">
       {/* SWAP CONTRACT: NFLK broadcast still to be issued. When Issa supplies the
           image, replace this typeset clipping with the broadcast still (add a
           descriptive alt); the newspaper-deck rules can stay as its caption. */}
