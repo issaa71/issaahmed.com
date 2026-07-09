@@ -17,15 +17,22 @@ import {
   ComparisonTable,
   Callout,
 } from "../_components/case-study";
+import {
+  VideoPlaceholder,
+  DiagramPlaceholder,
+  FlowDiagram,
+  FsmDiagram,
+  BeforeAfter,
+} from "../../_components/visuals";
 
 export const metadata: Metadata = {
   title: "RECLAIM — Autonomous Waste-Sorting Robot",
   description:
-    "Autonomous waste-sorting capstone robot (ROS2, Jetson Orin NX, 6-DOF arm) — 3rd place. Post-capstone, the navigation simulator was rebuilt to the real robot's calibrated specs and re-benchmarked: 15/15 missions complete vs the showcase algorithm's 6/15.",
+    "Autonomous waste-sorting capstone robot (ROS2, Jetson Orin NX, 4-DOF arm) — 3rd overall and 1st in the AI division. Post-capstone, I rebuilt the navigation simulator to the real robot's calibrated specs and re-benchmarked it: 15/15 missions complete vs the showcase algorithm's 6/15.",
   openGraph: {
     title: "RECLAIM — Autonomous Waste-Sorting Robot",
     description:
-      "Autonomous waste-sorting capstone robot (ROS2, Jetson Orin NX, 6-DOF arm) — 3rd place. Post-capstone, the navigation simulator was rebuilt to the real robot's calibrated specs and re-benchmarked: 15/15 missions complete vs the showcase algorithm's 6/15.",
+      "Autonomous waste-sorting capstone robot (ROS2, Jetson Orin NX, 4-DOF arm) — 3rd overall and 1st in the AI division. Post-capstone, I rebuilt the navigation simulator to the real robot's calibrated specs and re-benchmarked it: 15/15 missions complete vs the showcase algorithm's 6/15.",
     type: "article",
   },
 };
@@ -71,8 +78,8 @@ export default function Page() {
     <CaseStudyShell
       eyebrow="Robotics · ROS2 · Computer Vision"
       title="RECLAIM — Autonomous Indoor Waste-Sorting Robot"
-      tagline="An end-to-end robot for post-event venues that scans for litter, drives to it, picks it up with a 6-DOF arm, classifies it, and sorts it into the correct bin — fully autonomously."
-      meta="MSE 4499 Mechatronic Design Project · Western Engineering · 3rd place · Showcase March 2026 · Nav stack rebuilt + re-benchmarked June 2026"
+      tagline="An end-to-end robot for post-event venues that scans for litter, drives to it, picks it up with a 4-DOF arm, classifies it, and sorts it into the correct bin — fully autonomously."
+      meta="MSE 4499 Mechatronic Design Project · Western Engineering · 3rd overall + 1st in the AI division · Showcase March 2026 · Nav stack rebuilt + re-benchmarked June 2026"
     >
       <figure className="overflow-hidden rounded-xl border border-border">
         <Image
@@ -86,7 +93,7 @@ export default function Page() {
           className="w-full h-auto"
         />
         <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
-          Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place placement.
+          Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place overall — and 1st in the AI division.
         </figcaption>
       </figure>
 
@@ -106,7 +113,7 @@ export default function Page() {
           <Metric
             label="Perception mAP50"
             value="0.826"
-            hint="up from 0.693 via 7 training iterations + confusion-matrix-driven class elimination"
+            hint="up from 0.693 via three training cycles + confusion-matrix-driven class elimination (11 → 6 classes)"
           />
           <Metric
             label="Inference rate"
@@ -118,7 +125,12 @@ export default function Page() {
             value="0 interventions"
             hint="6 waste classes, full scan→detect→drive→pick→sort cycles — March 26, 2026"
           />
-          <Metric label="Placement" value="3rd" hint="MSE 4499 capstone cohort" />
+          <Metric
+            label="Placement"
+            value="3rd"
+            hint="overall — and 1st in the AI division · MSE 4499 capstone cohort"
+            accent
+          />
         </MetricGrid>
       </Section>
 
@@ -195,7 +207,15 @@ export default function Page() {
             ))}
           </div>
         </Section>
-      ) : null}
+      ) : (
+        <Section title="Inside the rebuilt simulator">
+          <DiagramPlaceholder
+            title="Four reclaim_v2 simulator stills"
+            shows="H-key clean screenshots: the cafeteria Held-Karp route, the frontier fog boundary, the behavior timeline, and the five-algorithm comparison dashboard"
+            caption="capture the 4 PNGs into /public/projects/reclaim/ — this section renders them automatically on the next build"
+          />
+        </Section>
+      )}
 
       <Section title="Results — the re-benchmarked navigation stack">
         <p>
@@ -210,7 +230,7 @@ export default function Page() {
               cells: [
                 "RECLAIM v2",
                 "15/15",
-                "447/450",
+                "867/870",
                 "99.0–100% verified coverage every run; 3 items declared unviewable, logged",
               ],
               highlight: true,
@@ -219,7 +239,7 @@ export default function Page() {
               cells: [
                 "Info-gain explorer",
                 "12/15",
-                "380/450",
+                "820/870",
                 "stalls out; leaves 3–10 items per run",
               ],
             },
@@ -227,15 +247,15 @@ export default function Page() {
               cells: [
                 "Nearest-neighbor",
                 "10/15",
-                "412/450",
-                "avg 602.8 m driven vs v2's 301.2 m",
+                "846/870",
+                "avg 655.1 m driven vs v2's 299.4 m",
               ],
             },
             {
               cells: [
                 "Full boustrophedon",
                 "6/15",
-                "318/450",
+                "810/870",
                 "rigid stripes fail in complex venues",
               ],
             },
@@ -243,12 +263,12 @@ export default function Page() {
               cells: [
                 "RECLAIM v1 (showcase algorithm)",
                 "6/15",
-                "246/450",
+                "808/870",
                 "self-declares done prematurely at ~95% fog",
               ],
             },
           ]}
-          caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70) × 3 seeds, calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
+          caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70 — 290 per seed × 3 seeds = 870 items per algorithm), calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed), regenerated straight from the headless harness (BENCHMARKS.txt). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
         />
         <Callout title="Flagship run — cafeteria, 80 items, seed 42">
           RECLAIM v2 collected 80/80 items in 179.1 m of driving. The nearest-neighbor
@@ -308,11 +328,22 @@ export default function Page() {
           owned the perception + control stack end-to-end: the Jetson Orin NX onboard
           computer and every Python ROS2 node running on it, the Teensy 4.1 firmware
           + pinout/wiring for actuators and encoders, the YOLO perception model design
-          and TensorRT export pipeline, and the URDF + servo work for the 6-DOF arm.
+          and TensorRT export pipeline, and the URDF + servo work for the 4-DOF prototype arm.
         </p>
       </Section>
 
       <Section title="System architecture">
+        <FlowDiagram
+          label="Autonomy loop"
+          steps={[
+            { label: "SCAN", sub: "LiDAR + frontier exploration" },
+            { label: "DETECT", sub: "YOLO26n · 30 FPS" },
+            { label: "DRIVE", sub: "pure-pursuit nav" },
+            { label: "PICK", sub: "4-DOF arm" },
+            { label: "SORT", sub: "3 waste streams" },
+          ]}
+          caption="The full autonomy loop, run once per item at the real robot's ~13 s stop-look-drive cadence. Every section below details one stage."
+        />
         <p>
           The product integrates five subsystems on a differential-drive platform: 24V
           E-S planetary gearmotors for locomotion, a 6-DOF arm for pick-and-place, an
@@ -320,7 +351,7 @@ export default function Page() {
           waste classes, a Livox Mid-360 3D LiDAR with SLAM Toolbox + a hybrid coverage
           algorithm for navigation, and an STM32F405 microcontroller for CAN-bus
           actuator control. The reduced-scope prototype used lower-cost substitutes —
-          OAK-D Lite, a hobby-servo arm with a LewanSoul claw, YOLO26n (6 classes),
+          OAK-D Lite, a 4-DOF hobby-servo arm with a LewanSoul claw, YOLO26n (6 classes),
           Teensy 4.1, and a vision-servo state machine, with an RPLIDAR A1M8 on the
           prototype — but exercised the full scan→detect→drive→pick→sort loop.
         </p>
@@ -335,14 +366,20 @@ export default function Page() {
       <Section title="Approach — perception">
         <p>
           YOLO26n trained on a combination of Roboflow + Kaggle waste datasets, refined
-          across 7 iterations using confusion-matrix-driven class elimination to remove
-          ambiguous classes. mAP50 improved from 0.693 to 0.826 across iterations.
+          across three training cycles (v3, v5, v6) using confusion-matrix-driven class
+          elimination to cut the class set from 11 to 6 and drop ambiguous categories. mAP50
+          improved from 0.693 to 0.826 across those cycles.
           Exported under TensorRT FP16 to hit 30 FPS on the Jetson Orin NX — sufficient
           to drive a vision-servo control loop without dropping frames.
         </p>
       </Section>
 
       <Section title="Approach — navigation (rebuilt post-capstone)">
+        <VideoPlaceholder
+          title="The benchmark I stopped trusting"
+          covers="why I rebuilt the simulator after the grade was in, and what re-benchmarking cost me"
+          lengthHint="≈ 60s"
+        />
         <p>
           The capstone shipped a robot — and a navigation benchmark I stopped trusting.
           The original simulator assumed an idealized 0.5 m/s robot with continuous
@@ -357,10 +394,50 @@ export default function Page() {
           showcase completes 6 of 15 missions on the calibrated simulator. The rewrite
           completes 15 of 15.
         </p>
+        <BeforeAfter
+          label="The re-baseline"
+          before={{
+            tag: "v1 · what I showed",
+            title: "Idealized simulator",
+            points: [
+              "0.5 m/s, continuous motion",
+              "the numbers that shipped in the report",
+            ],
+            metric: "6 / 15",
+            metricLabel: "missions complete",
+          }}
+          after={{
+            tag: "v2 · rebuilt June 2026",
+            title: "Calibrated to the real robot",
+            points: [
+              "0.3 m/s · 73° FOV · ~13 s / item",
+              "every navigation number on this page",
+            ],
+            metric: "15 / 15",
+            metricLabel: "missions complete",
+          }}
+          caption="Same algorithm family, honest dynamics — the re-baseline cost the headline number and bought one I can defend line by line."
+        />
         <p>
           reclaim_v2 is an event-driven executive over four behaviors — SCAN, COLLECT,
           SWEEP, DUMP — arbitrated by priority:
         </p>
+        <FsmDiagram
+          label="Nav executive"
+          states={[
+            { name: "SCAN", role: "frontier exploration" },
+            { name: "COLLECT", role: "route + pick items", via: "items detected" },
+            { name: "SWEEP", role: "close coverage gaps", via: "coverage ≥ 99%" },
+            { name: "DUMP", role: "empty the bin", via: "buffer full / final" },
+          ]}
+          events={[
+            "item picked → re-decide",
+            "scan finished → COLLECT",
+            "path blocked ×3 → requeue · ×6 → abandon",
+            "buffer full → DUMP → resume",
+          ]}
+          caption="Event-driven executive — it re-decides only on events (item picked, scan finished, path blocked), never per tick, so targets switch at plan boundaries instead of oscillating between goals. Transitions are priority-arbitrated; the primary path is shown."
+        />
         <ul className="space-y-3 pl-5 list-disc">
           <li>
             <strong>Commits, doesn&apos;t thrash.</strong> The executive re-decides only
@@ -408,11 +485,11 @@ export default function Page() {
 
       <Section title="Approach — manipulation">
         <p>
-          The product arm is a 4-DOF CubeMars BLDC arm with a Robotis parallel gripper
+          The product arm is a 6-DOF CubeMars BLDC arm with a Robotis parallel gripper
           driven by MoveIt2 motion planning. MATLAB inverse-dynamics confirmed adequate
           torque margins across all arm joints with a 500 g payload, and a computed
           torque controller achieved near-zero tracking error across pick-and-place
-          trajectories. The prototype substituted a hobby-servo arm with PI joint
+          trajectories. The prototype substituted a 4-DOF hobby-servo arm with PI joint
           control and a PI tracking controller for vision-servo approach behaviour.
         </p>
       </Section>
@@ -421,7 +498,8 @@ export default function Page() {
         <p>
           The prototype was demonstrated live, completing fully autonomous
           scan→detect→drive→pick→sort cycles across all six waste classes with no manual
-          intervention. The cohort awarded the project 3rd place.
+          intervention. The cohort awarded the project 3rd place overall, and 1st in the
+          AI division.
         </p>
         <figure className="mt-6 mx-auto max-w-md overflow-hidden rounded-xl border border-border">
           <Image

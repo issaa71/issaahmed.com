@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import {
   CaseStudyShell,
@@ -11,6 +12,11 @@ import {
   Figure,
   ComparisonTable,
 } from "../_components/case-study";
+import {
+  VideoPlaceholder,
+  DiagramPlaceholder,
+  FlowDiagram,
+} from "../../_components/visuals";
 
 export const metadata: Metadata = {
   title: "THA Pain Prediction — Peer-Reviewed ML",
@@ -113,7 +119,7 @@ export default function Page() {
           <Figure
             src="/projects/tha-pain-prediction/paper-fig4-catboost-importances.png"
             alt="Bar charts of CatBoost top-10 feature importances at 3 and 5 years: preoperative pain-perception items, age, BMI, length of stay, and back/neck history dominate."
-            caption="Figure 4 of the paper — what actually drives long-term pain in the best-performing model (CatBoost): patient-reported pain-perception items, age, BMI, and length of stay."
+            caption="Figure 4 of the paper — what drives long-term pain in CatBoost (strongest at 5 years, and the model carried into the calculator): patient-reported pain-perception items, age, BMI, and length of stay."
             width={1405}
             height={2468}
             plate
@@ -137,7 +143,7 @@ export default function Page() {
             { cells: ["Linear Regression", "4.20", "42.3%", "70.4%"] },
             { cells: ["Mean baseline", "3.07", "21.1%", "90.1%"] },
           ]}
-          caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72). Lower MSE is better; nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 figure is the class-imbalance artifact discussed in Results. Full 13-model tables (T3 + T5) in the publication."
+          caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72, the 20% held out of the 355 patients with a complete 3-year outcome). Lower MSE is better; buffer ±1 / ±2 is the share of predictions within 1 / 2 points of the true 0–10 pain score. Nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 (90.1%) is the class-imbalance artifact discussed in Results — predicting ‘near zero’ lands within 2 points for the many low-pain patients. Full 13-model tables (T3 + T5) in the publication."
         />
       </Section>
 
@@ -173,6 +179,17 @@ export default function Page() {
       </Section>
 
       <Section title="Approach">
+        <FlowDiagram
+          label="ML pipeline"
+          steps={[
+            { label: "513 patients", sub: "71 preop features" },
+            { label: "Impute + scale", sub: "iterative · robust-scale" },
+            { label: "13 models", sub: "linear · trees · neural" },
+            { label: "Select best", sub: "KNN / CatBoost", accent: true },
+            { label: "Calculator", sub: "Streamlit tool" },
+          ]}
+          caption="GridSearchCV ran inside the training set; the held-out test set was touched once, only after the hyperparameters were locked."
+        />
         <p>
           The dataset was Cohort 1 of the prospective SAFE-T study — 513 patients
           undergoing primary unilateral THA at two large academic hospitals, with data
@@ -190,17 +207,19 @@ export default function Page() {
           outliers; bounded scales were normalized to [0, 1].
         </p>
         <p>
-          <strong>Model family.</strong> 13 models across three families — linear
-          (logistic regression, elastic net, linear SVM, SGD), tree ensembles (decision
-          tree, random forest, AdaBoost, XGBoost, CatBoost, LightGBM, KNN), and neural
-          networks (scikit-learn MLP, PyTorch MLP). A mean regressor served as the
-          floor-comparison baseline.
+          <strong>Model family.</strong> 13 models spanning four families — linear
+          (linear regression, elastic net, linear SVM, SGD), tree ensembles (decision
+          tree, random forest, AdaBoost, XGBoost, CatBoost, LightGBM), an instance-based
+          method (KNN), and neural networks (scikit-learn MLP, PyTorch MLP). A mean
+          regressor served as the floor-comparison baseline.
         </p>
         <p>
-          <strong>Training protocol.</strong> Stratified 80/20 train/test split.
-          GridSearchCV inside the training set to minimize MSE; the held-out test set
-          was only touched once final hyperparameters were locked. Deep models used Adam
-          with batch size 128.
+          <strong>Training protocol.</strong> Stratified 80/20 train/test split, taken
+          within each timepoint&apos;s outcome-complete subset: of the 513 eligible
+          patients, the 3-year model used the 355 with a recorded T3 outcome (283 train /
+          72 test) and the 5-year model the 459 with a T5 outcome (366 / 93). GridSearchCV
+          inside the training set to minimize MSE; the held-out test set was only touched
+          once final hyperparameters were locked. Deep models used Adam with batch size 128.
         </p>
         <p>
           <strong>Feature importance.</strong> Four complementary methods (Spearman
@@ -213,19 +232,27 @@ export default function Page() {
       </Section>
 
       <Section title="Results">
+        <VideoPlaceholder
+          title="The 90.1% accuracy trap"
+          covers="why a mean baseline that learned nothing also scores 90.1% on this skewed data — and why we led with MSE (2.70 vs 3.07) instead"
+          lengthHint="≈ 50s"
+        />
         <p>
-          <strong>Non-linear models won decisively.</strong> CatBoost, Random Forest, and
-          KNN were the top three performers across both timepoints; linear models
-          (Linear Regression and Elastic Net) had higher MSE and weaker buffer accuracy
-          at both T3 and T5, consistent with prior orthopedic literature showing linear
-          methods struggle to capture the non-linear relationships in postoperative-pain
-          data.
+          <strong>Non-linear models won decisively at both timepoints.</strong> Across
+          all four metrics, CatBoost, Random Forest, and KNN were the most consistent top
+          performers — KNN took the lowest 3-year MSE (2.70), CatBoost the lowest at 5
+          years (4.11). Linear models (Linear Regression and Elastic Net) had higher MSE
+          and weaker buffer accuracy at both T3 and T5, consistent with prior orthopedic
+          literature showing linear methods struggle to capture the non-linear
+          relationships in postoperative-pain data.
         </p>
         <p>
           At T3, KNN achieved the lowest MSE (2.70) followed closely by XGBoost (2.77),
           Random Forest (2.79), and CatBoost (2.83) — all beating the 3.07 mean baseline.
-          CatBoost had the highest buffer-accuracy-within-±2 score at 85.9%. At T5,
-          CatBoost achieved the lowest MSE (4.11), with Random Forest second (4.30).
+          CatBoost had the highest ±2 buffer accuracy of any trained model at 85.9% (the
+          mean baseline&apos;s higher 90.1% is the class-imbalance artifact discussed below,
+          not skill). At T5, CatBoost achieved the lowest MSE (4.11), with Random Forest
+          second (4.30).
         </p>
         <p>
           <strong>An honest caveat on the 90.1% classification accuracy.</strong> The
@@ -241,9 +268,18 @@ export default function Page() {
         <p>
           Feature-importance analyses guided the input set for a web-based calculator
           that estimates expected pain severity from a small number of preoperative
-          inputs. The tool was built with Streamlit, deployed to Streamlit Community
-          Cloud, and is the version cited in the published paper.
+          inputs. KNN edged the field on 3-year MSE, but CatBoost is what drives the
+          calculator — strongest at the 5-year horizon, native handling of the categorical
+          inputs, and the most interpretable of the top models, so its feature importances
+          (Figure 4) are what made the input set clinically legible. The tool was built with
+          Streamlit, deployed to Streamlit Community Cloud, and is the version cited in the
+          published paper.
         </p>
+        <DiagramPlaceholder
+          title="The Streamlit clinician calculator"
+          shows="the deployed tool's UI — preoperative inputs (age, BMI, WOMAC / ICOAP items) and the predicted 3- and 5-year pain output"
+          caption="drop a screenshot of the live calculator into /public/projects/tha-pain-prediction/ and swap this for a Figure"
+        />
       </Section>
 
       <Section title="Tech stack">
@@ -270,7 +306,15 @@ export default function Page() {
           to lead the discussion with MSE and buffer accuracy instead. Class-imbalanced
           datasets in clinical ML reward this kind of skepticism: it&apos;s easy to
           present a high accuracy number that doesn&apos;t reflect what the model
-          actually learned. The future-work section of the paper flags this directly —
+          actually learned. It&apos;s the same call I made in my{" "}
+          <Link
+            href="/projects/nba-shot-selection"
+            className="text-accent underline-offset-4 hover:underline"
+          >
+            NBA shot-selection
+          </Link>{" "}
+          model — judging the agent on shot-quality EPSA and agreement, not one headline
+          number. The future-work section of the paper flags this directly —
           stratified or ordinal modeling approaches and AUC reporting would tighten the
           claim, but only if the dichotomization doesn&apos;t worsen the imbalance.
         </p>

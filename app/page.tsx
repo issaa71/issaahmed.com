@@ -13,6 +13,7 @@ export default function Home() {
       <main className="mx-auto max-w-5xl px-6 sm:px-8">
         <Intro />
         <Projects />
+        <Approach />
         <Skills />
         <Contact />
       </main>
@@ -38,6 +39,11 @@ function Nav() {
           <li>
             <a href="#projects" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
               Projects
+            </a>
+          </li>
+          <li>
+            <a href="#approach" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
+              Approach
             </a>
           </li>
           <li>
@@ -70,7 +76,11 @@ function Nav() {
 function Intro() {
   return (
     <section id="top" className="scroll-mt-24 pt-24 pb-16 sm:pt-32">
-      <h1 className="animate-rise font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl [animation-delay:0ms]">
+      <p className="animate-rise mb-6 flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-faint [animation-delay:0ms]">
+        <span aria-hidden className="inline-block h-3 w-px bg-accent" />
+        Robotics · Applied ML · Full-stack · Toronto
+      </p>
+      <h1 className="animate-rise font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl [animation-delay:70ms]">
         {PROFILE.name}
       </h1>
       <p className="animate-rise mt-6 max-w-2xl text-xl leading-snug text-muted sm:text-2xl [animation-delay:80ms]">
@@ -106,8 +116,8 @@ function Intro() {
             href="/projects/reclaim"
             className="transition-colors hover:text-accent"
           >
-            3rd-place autonomous robot
-          </Link>
+            AI-division-winning autonomous robot
+</Link>
         </li>
         <li aria-hidden className="text-border">·</li>
         <li>
@@ -139,24 +149,28 @@ function Intro() {
    present, surfaces a "Live demo ↗" action on the tile. */
 const TILE: Record<
   string,
-  { category: string; chips: string[]; liveDemo?: string }
+  { category: string; role: string; chips: string[]; liveDemo?: string }
 > = {
   reclaim: {
     category: "Robotics · ROS2",
-    chips: ["15/15 nav missions", "30 FPS perception", "3rd place"],
+    role: "Team of 4 — I owned perception + control",
+    chips: ["15/15 nav missions", "30 FPS perception", "3rd · 1st in AI division"],
     liveDemo: "https://reclaim-nav-sim.vercel.app",
   },
   "nba-shot-selection": {
     category: "Reinforcement Learning",
-    chips: ["+0.273 EPSA", "116,928 possessions", "Dueling DQN"],
+    role: "Solo course project",
+    chips: ["+0.273 EPSA", "~6× vs NBA players", "116,928 possessions"],
     liveDemo: "https://nba-rl-sim.vercel.app",
   },
   "tha-pain-prediction": {
     category: "Clinical ML · Published",
+    role: "The only engineer of 7 co-authors",
     chips: ["J. Arthroplasty 2026", "2nd of 7 authors", "13 models compared"],
   },
   "no-fly-list-kids": {
     category: "Advocacy · Policy",
+    role: "Coalition member since 2017",
     chips: ["Bill C-59", "$81M redress", "Toronto Star op-ed"],
   },
 };
@@ -166,7 +180,7 @@ function ProjectMedia({ slug }: { slug: string }) {
     return (
       <Image
         src="/projects/reclaim/demo.jpg"
-        alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 6-DOF sorting arm"
+        alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 4-DOF sorting arm"
         width={768}
         height={1024}
         className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
@@ -240,7 +254,10 @@ function Projects() {
                       <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
                         {p.title}
                       </h3>
-                      <p className="mt-2 text-[15px] leading-relaxed text-foreground/85">
+                      <p className="mt-1.5 font-mono text-[11px] uppercase tracking-wider text-accent/90">
+                        {t.role}
+                      </p>
+                      <p className="mt-2.5 text-[15px] leading-relaxed text-foreground/85">
                         {p.blurb}
                       </p>
                       <ul className="mt-4 flex flex-wrap gap-2">
@@ -285,6 +302,70 @@ function Projects() {
           );
         })}
       </ul>
+    </section>
+  );
+}
+
+/* The through-line across every project — stated as principles, each anchored
+   to concrete evidence on a case study (not generic "values"). This is the
+   "I think, and I can show my work" frame the projects then prove. */
+const PRINCIPLES = [
+  {
+    title: "Calibrate to reality",
+    body: "After the capstone I stopped trusting my own navigation benchmark, rebuilt the simulator to the real robot's measured specs, and published that the algorithm I demoed completes only 6 of 15 missions on it. The rewrite does 15/15.",
+    evidence: "RECLAIM · the re-baseline",
+    href: "/projects/reclaim",
+  },
+  {
+    title: "Pick the honest metric",
+    body: "A model can hit 90.1% “accuracy” by predicting the average on skewed data. I lead with the measures that reflect what was actually learned — MSE, shot-quality, buffer accuracy — and flag the trap out loud.",
+    evidence: "THA · the accuracy trap",
+    href: "/projects/tha-pain-prediction",
+  },
+  {
+    title: "Ship it so you can check",
+    body: "Two of these projects run live in your browser, and the NBA explorer's in-browser network reproduces the Python pipeline to within 1e-6 on every feature, checked by a 250-vector parity suite. Claims you can poke at beat claims you take on faith.",
+    evidence: "NBA · the live explorer",
+    href: "/projects/nba-shot-selection",
+  },
+];
+
+function Approach() {
+  return (
+    <section
+      id="approach"
+      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+    >
+      <h2 className="eyebrow text-accent">How I work</h2>
+      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground/85">
+        One instinct runs through everything here: build the real thing, then be
+        honest about exactly what it does — and make it checkable.
+      </p>
+      <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3">
+        {PRINCIPLES.map((p, i) => (
+          <li key={p.title} className="flex flex-col bg-surface p-6">
+            <span className="font-display text-sm font-semibold tabular-nums text-accent">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 className="mt-3 font-display text-xl font-semibold tracking-tight">
+              {p.title}
+            </h3>
+            <p className="mt-2.5 flex-1 text-[14px] leading-relaxed text-foreground/80">
+              {p.body}
+            </p>
+            <Link
+              href={p.href}
+              className="group mt-5 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-accent transition-colors hover:text-accent/75"
+            >
+              {p.evidence}
+              <ArrowRight
+                size={13}
+                className="transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }

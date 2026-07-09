@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Issa Ahmed — Mechatronics & AI Systems Engineering";
+export const alt = "Issa Ahmed — Robotics, ML & Full-Stack Projects";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -32,7 +32,7 @@ export default function Image() {
           }}
         >
           <div style={{ display: "flex" }}>
-            MECHATRONICS &amp; AI SYSTEMS · WESTERN 2026
+            ROBOTICS · APPLIED ML · FULL-STACK · TORONTO
           </div>
           <div
             style={{
@@ -73,7 +73,9 @@ export default function Image() {
           }}
         >
           <div style={{ display: "flex" }}>{HOSTNAME}</div>
-          <div style={{ display: "flex" }}>robotics / ai-ml / software / cloud</div>
+          <div style={{ display: "flex" }}>
+            Published research · AI-division-winning robot · 2 live demos
+          </div>
         </div>
       </div>
     ),

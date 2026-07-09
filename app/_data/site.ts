@@ -9,13 +9,14 @@ export const PROFILE = {
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
 };
 
+// Tile presentation (category, role, chips, liveDemo) lives in app/page.tsx's
+// TILE map, which is the single source of truth for home-page headline numbers.
+// Keep this list to title/blurb only so numbers can't drift between two copies.
 export const PROJECTS: {
   slug: string;
   title: string;
   codename: string;
   blurb: string;
-  highlight: string;
-  stats?: string[];
 }[] = [
   {
     slug: "reclaim",
@@ -23,9 +24,6 @@ export const PROJECTS: {
     codename: "Robotics · ROS2 · Computer Vision",
     blurb:
       "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
-    highlight:
-      "15/15 nav missions on the re-baselined sim · 30 FPS perception on Jetson Orin NX · mAP50 0.693 → 0.826",
-    stats: ["15/15 missions", "99–100% coverage", "30 FPS"],
   },
   {
     slug: "nba-shot-selection",
@@ -33,9 +31,6 @@ export const PROJECTS: {
     codename: "Reinforcement Learning · PyTorch",
     blurb:
       "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
-    highlight:
-      "+0.273 EPSA vs +0.044 player baseline · 116,928 possessions · 631 games",
-    stats: ["+0.273 EPSA", "116,928 possessions", "631 games"],
   },
   {
     slug: "tha-pain-prediction",
@@ -43,8 +38,6 @@ export const PROJECTS: {
     codename: "Applied ML · Research · Streamlit",
     blurb:
       "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
-    highlight:
-      "J. Arthroplasty 2026 · KNN MSE 2.70 vs 3.07 mean baseline @ T3 · 513 patients",
   },
   {
     slug: "no-fly-list-kids",
@@ -52,7 +45,6 @@ export const PROJECTS: {
     codename: "Policy · Communication · Coalition work",
     blurb:
       "Long-running federal advocacy via the No Fly List Kids coalition. Toronto Star op-ed, multiple media features, direct engagement with the PMO and federal Cabinet.",
-    highlight: "Contributed to Bill C-59 + $81M federal redress budget",
   },
 ];
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   CaseStudyShell,
   Section,
@@ -8,6 +9,7 @@ import {
   ArtifactRow,
   StatusBadge,
 } from "../_components/case-study";
+import { VideoPlaceholder, Timeline } from "../../_components/visuals";
 
 export const metadata: Metadata = {
   title: "No Fly List Kids — Federal Advocacy",
@@ -30,11 +32,36 @@ export default function Page() {
       meta="No Fly List Kids coalition · 2017 – present"
     >
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-xs uppercase tracking-wider text-faint">
-          Toronto Star · CTV News · HuffPost Canada · Middle East Eye
-        </p>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="eyebrow text-faint">As featured in</span>
+          <Image
+            src="/press/toronto-star.svg"
+            alt="Toronto Star"
+            width={955}
+            height={110}
+            unoptimized
+            className="h-4 w-auto opacity-70"
+          />
+          <Image
+            src="/press/huffpost.svg"
+            alt="HuffPost"
+            width={720}
+            height={84}
+            unoptimized
+            className="h-4 w-auto opacity-70"
+          />
+          <span className="font-mono text-xs uppercase tracking-wider text-faint">
+            CTV News · Middle East Eye
+          </span>
+        </div>
         <StatusBadge tone="accent">Bill C-59 — passed 2019</StatusBadge>
       </div>
+
+      <VideoPlaceholder
+        title="Grounded — flagged since age five"
+        covers="first-person: what it's like to be wrongly on Canada's no-fly list as a kid, the Toronto Star op-ed I wrote at 16, and how the coalition won Bill C-59 and $81M in redress"
+        lengthHint="≈ 75s"
+      />
 
       <Section title="Headline">
         <MetricGrid>
@@ -54,6 +81,47 @@ export default function Page() {
             hint="member of the coalition since 2017"
           />
         </MetricGrid>
+      </Section>
+
+      <Section title="How it unfolded">
+        <Timeline
+          label="Advocacy timeline"
+          items={[
+            {
+              year: "2016",
+              title: "No Fly List Kids coalition founded",
+              detail:
+                "Sulemaan Ahmed and Khadija Cajee, after their son Adam was flagged — collective work that carried the campaign for years.",
+            },
+            {
+              year: "2017",
+              title: "I joined the coalition",
+              detail:
+                "Flagged on the list myself since around age five, along with my two brothers.",
+            },
+            {
+              year: "Age 16",
+              title: "Toronto Star op-ed — “Grounded”",
+              detail:
+                "Sole author, on what it’s like to be a No Fly List kid. Broadcast and print interviews on CTV, HuffPost, and Middle East Eye followed.",
+            },
+            {
+              year: "2018",
+              title: "$81.4M federal redress budget",
+              detail:
+                "Allocated over five years to build a redress system — $8M in the first year.",
+              accent: true,
+            },
+            {
+              year: "2019",
+              title: "Bill C-59 passes",
+              detail:
+                "National Security Act, 2017 — with explicit provisions to support the redress system. Coalition photographed at the Library of Parliament.",
+              accent: true,
+            },
+          ]}
+          caption="Collective work — my contribution was alongside many families and members, not in place of them."
+        />
       </Section>
 
       <Section title="Artifacts">
