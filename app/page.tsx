@@ -5,23 +5,20 @@ import {
   TopBar,
   TitleBlockFooter,
   DimensionedName,
-  LiveBar,
   Stamp,
-  PulseDot,
 } from "./_components/drafting";
 import { PROFILE, PROJECTS, SKILLS, CERTIFICATIONS } from "./_data/site";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE home — the general-arrangement sheet with a sheet index.
-   TopBar → Hero → Witness tests → Sheet index + 6 sheet cards → Pending strip
-   → General notes → Equipment & certifications → Contact → title block.
+   REDLINE home — the general-arrangement sheet. The six sheet cards ARE the
+   index: TopBar → Hero → Sheet index (6 cards) + Pending strip → General notes
+   → Equipment & certifications → Contact → title block.
    Every fact/number is carried from app/_data/site.ts + the current page (spec
    §6/§8). Presentation chrome (SHT NN, tier labels, stamps) is decorative.
    ────────────────────────────────────────────────────────────────────────── */
 
 type Spec = { label: string; value: string };
 type CardStamp = { label: string; tone: "red" | "ink"; pulse?: boolean };
-type Status = "live" | "published" | "asbuilt" | "ongoing";
 
 type Sheet = {
   no: string;
@@ -31,7 +28,6 @@ type Sheet = {
   specs: Spec[];
   stamps: CardStamp[];
   live?: string; // RUN LIVE target — external when it starts with http
-  status: Status;
   flip: boolean; // on lg, photo moves to the right on flipped rows
 };
 
@@ -55,7 +51,6 @@ const SHEETS: Sheet[] = [
       { label: "Live", tone: "red", pulse: true },
     ],
     live: "https://reclaim-nav-sim.vercel.app",
-    status: "live",
     flip: false,
   },
   {
@@ -69,7 +64,6 @@ const SHEETS: Sheet[] = [
       { label: "Arrival", value: "QR-verified" },
     ],
     stamps: [{ label: "As built", tone: "ink" }],
-    status: "asbuilt",
     flip: true,
   },
   {
@@ -87,7 +81,6 @@ const SHEETS: Sheet[] = [
       { label: "Live", tone: "red", pulse: true },
     ],
     live: "https://nba-rl-sim.vercel.app",
-    status: "live",
     flip: false,
   },
   {
@@ -105,7 +98,6 @@ const SHEETS: Sheet[] = [
       { label: "In-browser model", tone: "ink" },
     ],
     live: "/projects/glenoid-classifier#calculator",
-    status: "live",
     flip: true,
   },
   {
@@ -119,7 +111,6 @@ const SHEETS: Sheet[] = [
       { label: "Patients", value: "513 (SAFE-T cohort)" },
     ],
     stamps: [{ label: "Published", tone: "red" }],
-    status: "published",
     flip: false,
   },
   {
@@ -133,7 +124,6 @@ const SHEETS: Sheet[] = [
       { label: "Op-ed", value: "Toronto Star · sole author" },
     ],
     stamps: [{ label: "Ongoing", tone: "ink" }],
-    status: "ongoing",
     flip: true,
   },
 ];
@@ -169,7 +159,6 @@ export default function Home() {
       <TopBar variant="home" />
       <main className="mx-auto w-full max-w-[72rem] flex-1 px-6 lg:px-10">
         <Hero />
-        <Witness />
         <SheetIndex />
         <GeneralNotes />
         <Equipment />
@@ -180,17 +169,12 @@ export default function Home() {
   );
 }
 
-/* Hero — mono locator, the dimensioned name, thesis, proof links. The name's
-   dimension chrome floats ~24px above the h1, so pt-20 + the mt-10 gap keep it
-   clear of the sticky TopBar and the locator row (spec §6). */
+/* Hero — the dimensioned name, thesis, proof links. The name's dimension chrome
+   floats ~24px above the h1; the section pt plus the mt-10 gap keep it clear of
+   the sticky TopBar (spec §6). */
 function Hero() {
   return (
-    <section className="pb-14 pt-20">
-      <div className="flex items-center justify-between gap-4">
-        <span className="anno-red">DWG Package · Issa Ahmed</span>
-        <span className="anno">Toronto, ON</span>
-      </div>
-
+    <section className="pb-10 pt-14">
       <DimensionedName className="mt-10" />
 
       <p className="mt-8 max-w-2xl font-prose text-[22px] leading-snug text-ink sm:text-[24px]">
@@ -235,7 +219,7 @@ function Hero() {
           ·
         </li>
         <li>
-          <a href="#witness" className="transition-colors hover:text-red">
+          <a href="#index" className="transition-colors hover:text-red">
             3 live demos →
           </a>
         </li>
@@ -244,47 +228,8 @@ function Hero() {
   );
 }
 
-/* Witness tests — three claims you can run in your own browser (spec §6). */
-function Witness() {
-  return (
-    <section
-      id="witness"
-      className="scroll-mt-20 border-t border-line py-14 sm:py-16"
-    >
-      <h2 className="anno-red">Witness tests — claims you can check</h2>
-      <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
-        {
-          "Three of these systems run live in your browser. Don't take the numbers on faith — go poke them."
-        }
-      </p>
-
-      <div className="mt-8 space-y-4">
-        <LiveBar
-          kicker="Witness test 01"
-          title="RECLAIM navigation simulator"
-          sub="Watch the 15/15 stack race four baselines in 3D"
-          href="https://reclaim-nav-sim.vercel.app"
-        />
-        <LiveBar
-          kicker="Witness test 02"
-          title="NBA possession explorer"
-          sub="Drag a defender and watch the agent change its mind"
-          href="https://nba-rl-sim.vercel.app"
-        />
-        <LiveBar
-          kicker="Witness test 03"
-          title="Glenoid Walch classifier"
-          sub="The trained model, running in-page — no server"
-          href="/projects/glenoid-classifier#calculator"
-          cta="Run →"
-        />
-      </div>
-    </section>
-  );
-}
-
-/* Sheet index — the borderless mono table, then the six full-width cards, then
-   the pending SHT 07 strip. */
+/* Sheet index — the six full-width sheet cards (they ARE the index), then the
+   pending SHT 07 strip. */
 function SheetIndex() {
   return (
     <section
@@ -298,9 +243,7 @@ function SheetIndex() {
         sheet for the full story.
       </p>
 
-      <IndexTable />
-
-      <div className="mt-12 space-y-10">
+      <div className="mt-8 space-y-10">
         {SHEETS.map((s) => (
           <SheetCard key={s.slug} sheet={s} />
         ))}
@@ -308,74 +251,6 @@ function SheetIndex() {
 
       <PendingStrip />
     </section>
-  );
-}
-
-function IndexTable() {
-  return (
-    <div className="mt-8">
-      <div className="grid grid-cols-[2.5rem_1fr_auto] gap-3 border-b border-line pb-2 sm:grid-cols-[2.5rem_1fr_10rem_7rem]">
-        <span className="anno">No.</span>
-        <span className="anno">Title</span>
-        <span className="anno hidden sm:block">Category</span>
-        <span className="anno justify-self-end sm:justify-self-start">
-          Status
-        </span>
-      </div>
-
-      {SHEETS.map((s) => {
-        const proj = PROJECTS.find((p) => p.slug === s.slug);
-        if (!proj) return null;
-        return (
-          <Link
-            key={s.slug}
-            href={`/projects/${s.slug}`}
-            className="group grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b border-line py-3 sm:grid-cols-[2.5rem_1fr_10rem_7rem]"
-          >
-            <span className="font-anno text-[11px] tabular-nums text-graphite">
-              {s.no}
-            </span>
-            <span className="inline-flex min-w-0 items-center gap-2 font-struct text-[14px] font-medium text-ink transition-colors group-hover:text-red">
-              {proj.title}
-              <span
-                aria-hidden
-                className="shrink-0 text-red opacity-0 transition-opacity group-hover:opacity-100"
-              >
-                →
-              </span>
-            </span>
-            <span className="hidden font-anno text-[10.5px] uppercase tracking-[0.14em] text-graphite sm:block">
-              {s.category}
-            </span>
-            <span className="justify-self-end sm:justify-self-start">
-              <IndexStatus status={s.status} />
-            </span>
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
-
-function IndexStatus({ status }: { status: Status }) {
-  if (status === "live") {
-    return (
-      <span className="inline-flex items-center gap-1.5 font-anno text-[10.5px] uppercase tracking-[0.16em] text-red">
-        Live
-        <PulseDot />
-      </span>
-    );
-  }
-  const label =
-    status === "published"
-      ? "Published"
-      : status === "asbuilt"
-        ? "As built"
-        : "Ongoing";
-  return (
-    <span className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-graphite">
-      {label}
-    </span>
   );
 }
 
@@ -399,7 +274,7 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
     >
       {/* media */}
       <div
-        className={`aspect-[3/2] overflow-hidden lg:aspect-auto ${
+        className={`aspect-[3/2] overflow-hidden lg:row-start-1 lg:aspect-auto ${
           flip ? "lg:col-start-2" : "lg:col-start-1"
         }`}
       >
@@ -408,7 +283,7 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
 
       {/* spec sheet */}
       <div
-        className={`flex flex-col border-t border-line p-7 lg:border-t-0 ${
+        className={`flex flex-col border-t border-line p-7 lg:row-start-1 lg:border-t-0 ${
           flip ? "lg:col-start-1 lg:border-r" : "lg:col-start-2 lg:border-l"
         }`}
       >

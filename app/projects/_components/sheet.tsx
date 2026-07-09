@@ -50,7 +50,7 @@ export function SheetShell({
             </span>
           </div>
           <h1
-            className="wide mt-6 font-struct text-[clamp(2rem,5.5vw,3.3rem)] uppercase leading-[1.02] text-ink"
+            className="mt-6 font-struct text-[clamp(2rem,5.5vw,3.3rem)] leading-[1.02] text-ink"
             style={{ fontWeight: 750 }}
           >
             {title}

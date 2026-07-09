@@ -211,7 +211,7 @@ export function GlenoidCalculator() {
           ) : (
             <>
               <div key={result.label} className="animate-rise">
-                <p className="wide font-struct text-[34px] font-extrabold leading-[1.02] tracking-tight text-red sm:text-[38px]">
+                <p className="font-struct text-[34px] font-extrabold leading-[1.02] tracking-tight text-red sm:text-[38px]">
                   {info.name}
                 </p>
                 {info.desc ? (

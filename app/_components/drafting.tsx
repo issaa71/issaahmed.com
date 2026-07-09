@@ -186,7 +186,7 @@ export function TitleBlockFooter({ sheet }: { sheet: string }) {
           <TBCell label="Checked by">You — run the live demos</TBCell>
         </div>
         <p className="mt-3 font-anno text-[10px] text-graphite">
-          © {year} Issa Ahmed · Next.js + Vercel
+          © {year} · Toronto, ON · Next.js + Vercel
         </p>
       </div>
     </footer>
@@ -308,7 +308,7 @@ export function DimensionedName({ className }: { className?: string }) {
         </span>
       </div>
 
-      <h1 className="wide font-struct text-[clamp(2.05rem,10.5vw,7rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-ink">
+      <h1 className="font-struct text-[clamp(2.05rem,10.5vw,7rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-ink">
         Issa Ahmed
       </h1>
 
