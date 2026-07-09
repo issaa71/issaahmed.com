@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "reclaim",
     "assistive-wheelchair",
     "nba-shot-selection",
-    "rideguide",
     "tha-pain-prediction",
     "glenoid-classifier",
     "no-fly-list-kids",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { PulseDot, Stamp } from "../../_components/drafting";
 
 /* ── Model types (matches public/projects/glenoid-classifier/model.json) ──
    Each forest is a set of decision trees. Leaves hold a normalized class-
@@ -91,6 +92,13 @@ const WALCH: Record<string, { name: string; desc: string }> = {
   E3: { name: "Walch E3", desc: "Advanced superior / global erosion." },
 };
 
+/* UI-only: is the live input vector exactly one of the reference cases? Pure
+   value-equality against PRESETS — derives the active chip without any state
+   that could touch inference. */
+function sameInputs(a: Inputs, b: Inputs): boolean {
+  return FIELDS.every((f) => a[f.key] === b[f.key]);
+}
+
 export function GlenoidCalculator() {
   const [model, setModel] = useState<Model | null>(null);
   const [err, setErr] = useState(false);
@@ -111,45 +119,64 @@ export function GlenoidCalculator() {
   const info = result ? WALCH[result.label] ?? { name: result.label, desc: "" } : null;
 
   return (
-    <figure className="glass overflow-hidden rounded-2xl">
-      <div className="border-b border-border px-5 py-3.5 sm:px-6">
-        <p className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] text-accent">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+    <figure className="overflow-hidden rounded-[3px] border border-line bg-plate">
+      {/* header strip */}
+      <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3 sm:px-6">
+        <span className="flex items-center gap-2">
+          <PulseDot />
+          <span className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
+            Live model — runs entirely in your browser
           </span>
-          Live model · runs entirely in your browser
-        </p>
+        </span>
+        {model ? (
+          <span className="hidden shrink-0 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite sm:block">
+            RF · {model.meta.trees_per_forest}/stage
+          </span>
+        ) : null}
       </div>
 
-      <div className="grid gap-0 lg:grid-cols-[1.15fr_1fr]">
-        {/* Inputs */}
-        <div className="border-b border-border p-5 sm:p-6 lg:border-b-0 lg:border-r">
-          <div className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1.5">
-            <span className="mr-1 font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
-              Reference case:
+      <div className="grid lg:grid-cols-[1.15fr_1fr]">
+        {/* CONTROL INPUTS ------------------------------------------------- */}
+        <div className="border-b border-line p-5 sm:p-6 lg:border-b-0 lg:border-r">
+          <p className="anno mb-4">Control inputs</p>
+
+          <div className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-2">
+            <span className="mr-0.5 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite">
+              Reference case
             </span>
-            {PRESETS.map((p) => (
-              <button
-                key={p.tag}
-                type="button"
-                onClick={() => setInputs(p.v)}
-                className="rounded-full border border-border bg-surface px-2.5 py-0.5 font-mono text-[11px] text-muted transition-colors hover:border-accent/50 hover:text-accent"
-              >
-                {p.tag}
-              </button>
-            ))}
+            {PRESETS.map((p) => {
+              const active = sameInputs(inputs, p.v);
+              return (
+                <button
+                  key={p.tag}
+                  type="button"
+                  onClick={() => setInputs(p.v)}
+                  aria-pressed={active}
+                  className={`rounded-[2px] border px-2.5 py-1 font-anno text-[11px] uppercase tracking-[0.08em] transition-colors ${
+                    active
+                      ? "border-red text-red"
+                      : "border-line text-ink-soft hover:border-red hover:text-red"
+                  }`}
+                >
+                  {p.tag}
+                </button>
+              );
+            })}
           </div>
 
           <div className="space-y-4">
             {FIELDS.map((f) => (
               <label key={f.key} className="block">
-                <span className="flex items-baseline justify-between">
-                  <span className="text-[13px] font-medium text-foreground/90">
+                <span className="flex items-baseline justify-between gap-3">
+                  <span className="min-w-0 font-prose text-[13.5px] leading-tight text-ink">
                     {f.label}
-                    {f.unit ? <span className="ml-1 text-faint">{f.unit}</span> : null}
+                    {f.unit ? (
+                      <span className="ml-1.5 font-anno text-[10.5px] tracking-[0.02em] text-graphite">
+                        {f.unit}
+                      </span>
+                    ) : null}
                   </span>
-                  <span className="font-mono text-sm tabular-nums text-accent">
+                  <span className="w-16 shrink-0 rounded-[2px] border border-line bg-paper px-2 py-0.5 text-right font-anno text-[12px] tabular-nums text-red">
                     {inputs[f.key].toFixed(f.step < 1 ? 1 : 0)}
                   </span>
                 </span>
@@ -162,56 +189,95 @@ export function GlenoidCalculator() {
                   onChange={(e) =>
                     setInputs((s) => ({ ...s, [f.key]: parseFloat(e.target.value) }))
                   }
-                  className="mt-2 w-full cursor-pointer accent-[var(--accent)]"
+                  aria-label={f.label}
+                  className="rl-range mt-2.5"
                 />
               </label>
             ))}
           </div>
         </div>
 
-        {/* Result */}
+        {/* READOUT -------------------------------------------------------- */}
         <div className="flex flex-col p-5 sm:p-6">
+          <p className="anno mb-4">Readout</p>
           {err ? (
-            <p className="m-auto text-sm text-muted">Could not load the model.</p>
+            <p className="m-auto py-8 font-anno text-[12px] text-graphite">
+              Could not load the model.
+            </p>
           ) : !result || !info ? (
-            <p className="m-auto font-mono text-xs text-faint">loading model…</p>
+            <p className="m-auto py-8 font-anno text-[11px] uppercase tracking-[0.16em] text-graphite">
+              loading model…
+            </p>
           ) : (
             <>
-              <p className="eyebrow text-faint">Predicted classification</p>
-              <p className="mt-2 font-display text-4xl font-semibold tracking-tight text-accent sm:text-5xl">
-                {info.name}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/85">{info.desc}</p>
+              <div key={result.label} className="animate-rise">
+                <p className="wide font-struct text-[34px] font-extrabold leading-[1.02] tracking-tight text-red sm:text-[38px]">
+                  {info.name}
+                </p>
+                {info.desc ? (
+                  <p className="mt-2.5 font-prose text-[14.5px] leading-snug text-ink-soft">
+                    {info.desc}
+                  </p>
+                ) : null}
 
-              <div className="mt-5 space-y-2.5">
-                {result.path.map((s) => (
-                  <div key={s.tier} className="grid grid-cols-[5.5rem_1fr_auto] items-center gap-3">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
-                      {s.tier}
-                    </span>
-                    <span className="relative h-1 w-full overflow-hidden rounded-full bg-border">
-                      <span
-                        className="absolute left-0 top-0 h-full rounded-full bg-accent"
-                        style={{ width: `${Math.round(s.conf * 100)}%` }}
-                      />
-                    </span>
-                    <span className="text-right font-mono text-[11px] tabular-nums text-muted">
-                      {s.label} · {Math.round(s.conf * 100)}%
-                    </span>
-                  </div>
-                ))}
+                <div className="mt-6">
+                  <p className="anno mb-3">Decision path</p>
+                  {/* the inked route: a 2px red segment threads the tiers */}
+                  <ol className="relative space-y-3.5 border-l-2 border-red pl-5">
+                    {result.path.map((s) => {
+                      const pct = Math.round(s.conf * 100);
+                      return (
+                        <li
+                          key={s.tier}
+                          className="relative grid grid-cols-[3.75rem_1fr] items-center gap-x-3 gap-y-1 sm:grid-cols-[4.25rem_1fr_auto]"
+                        >
+                          <span
+                            aria-hidden
+                            className="absolute top-1/2 -left-6 h-1.5 w-1.5 -translate-y-1/2 rounded-[1px] border border-red bg-plate"
+                          />
+                          <span className="font-anno text-[10px] uppercase tracking-[0.12em] text-graphite">
+                            {s.tier}
+                          </span>
+                          <span className="relative block h-2 w-full border border-line bg-plate">
+                            <span
+                              aria-hidden
+                              className="absolute inset-0"
+                              style={{
+                                backgroundImage:
+                                  "repeating-linear-gradient(90deg, var(--line) 0, var(--line) 1px, transparent 1px, transparent 9px)",
+                              }}
+                            />
+                            <span
+                              className="absolute left-0 top-0 h-full bg-red motion-safe:transition-[width] motion-safe:duration-300"
+                              style={{ width: `${pct}%` }}
+                            />
+                          </span>
+                          <span className="col-start-2 justify-self-end text-right font-anno text-[11px] tabular-nums text-ink-soft sm:col-start-3 sm:w-[7.5rem]">
+                            {s.label} · {pct}%
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
               </div>
 
-              <p className="mt-auto pt-5 text-xs leading-relaxed text-faint">
-                Research prototype — <strong className="text-muted">not for clinical use.</strong>{" "}
-                Runs the actual trained Random Forest ({model?.meta.trees_per_forest} trees/stage) live
-                on your device; no data is sent anywhere. Honest cross-validated accuracy:{" "}
-                <span className="text-muted">
-                  ~{Math.round((model?.meta.cv_accuracy_screen ?? 0) * 100)}% healthy-vs-diseased screen,
-                  ~{Math.round((model?.meta.cv_accuracy_6way ?? 0) * 100)}% full 6-way subtype
-                </span>
-                .
-              </p>
+              <div className="mt-auto pt-6">
+                <p className="anno mb-2">Limits</p>
+                <p className="font-prose text-[12.5px] leading-relaxed text-ink-soft">
+                  Research prototype —{" "}
+                  <Stamp tone="ink" className="align-middle">
+                    not for clinical use
+                  </Stamp>
+                  . Runs the actual trained Random Forest ({model?.meta.trees_per_forest}{" "}
+                  trees/stage) live on your device; no data is sent anywhere. Honest
+                  cross-validated accuracy:{" "}
+                  <span className="text-ink">
+                    ~{Math.round((model?.meta.cv_accuracy_screen ?? 0) * 100)}% healthy-vs-diseased screen, ~{Math.round((model?.meta.cv_accuracy_6way ?? 0) * 100)}% full 6-way subtype
+                  </span>
+                  .
+                </p>
+              </div>
             </>
           )}
         </div>

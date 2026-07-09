@@ -1,142 +1,242 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Mail, BadgeCheck, ArrowRight } from "lucide-react";
-import { Github, Linkedin } from "./_components/icons";
-import { Eyebrow, Pill, ButtonLink, GlassCard } from "./_components/ui";
-import { Reveal } from "./_components/reveal";
+import {
+  TopBar,
+  TitleBlockFooter,
+  DimensionedName,
+  LiveBar,
+  Stamp,
+  PulseDot,
+} from "./_components/drafting";
 import { PROFILE, PROJECTS, SKILLS, CERTIFICATIONS } from "./_data/site";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   REDLINE home — the general-arrangement sheet with a sheet index.
+   TopBar → Hero → Witness tests → Sheet index + 6 sheet cards → Pending strip
+   → General notes → Equipment & certifications → Contact → title block.
+   Every fact/number is carried from app/_data/site.ts + the current page (spec
+   §6/§8). Presentation chrome (SHT NN, tier labels, stamps) is decorative.
+   ────────────────────────────────────────────────────────────────────────── */
+
+type Spec = { label: string; value: string };
+type CardStamp = { label: string; tone: "red" | "ink"; pulse?: boolean };
+type Status = "live" | "published" | "asbuilt" | "ongoing";
+
+type Sheet = {
+  no: string;
+  slug: string;
+  category: string;
+  role: string;
+  specs: Spec[];
+  stamps: CardStamp[];
+  live?: string; // RUN LIVE target — external when it starts with http
+  status: Status;
+  flip: boolean; // on lg, photo moves to the right on flipped rows
+};
+
+/* Ordered 01–06 to match the sheet numbering (spec §9). Titles + blurbs are
+   pulled verbatim from PROJECTS (site.ts) at render; everything here is the
+   §6 presentation layer. Spec-row values keep their exact case; labels/roles/
+   categories are up-cased by the mono utilities. */
+const SHEETS: Sheet[] = [
+  {
+    no: "01",
+    slug: "reclaim",
+    category: "Robotics · ROS2",
+    role: "Team of 4 — I owned perception + control",
+    specs: [
+      { label: "Nav missions", value: "15/15 (re-benchmark)" },
+      { label: "Perception", value: "30 FPS on Jetson" },
+      { label: "Placement", value: "3rd overall · 1st in AI division" },
+    ],
+    stamps: [
+      { label: "As built", tone: "ink" },
+      { label: "Live", tone: "red", pulse: true },
+    ],
+    live: "https://reclaim-nav-sim.vercel.app",
+    status: "live",
+    flip: false,
+  },
+  {
+    no: "02",
+    slug: "assistive-wheelchair",
+    category: "Robotics · ROS2 · Nav2",
+    role: "Designed & built end-to-end",
+    specs: [
+      { label: "Room-to-room", value: "A* over Nav2" },
+      { label: "Hazard detection", value: "10 Hz OpenCV" },
+      { label: "Arrival", value: "QR-verified" },
+    ],
+    stamps: [{ label: "As built", tone: "ink" }],
+    status: "asbuilt",
+    flip: true,
+  },
+  {
+    no: "03",
+    slug: "nba-shot-selection",
+    category: "Reinforcement learning",
+    role: "Solo course project",
+    specs: [
+      { label: "Vs NBA selection", value: "+0.19 to +0.32 PPS (real outcomes)" },
+      { label: "Shot-quality model", value: "AUC 0.733" },
+      { label: "Trained on", value: "116,928 possessions" },
+    ],
+    stamps: [
+      { label: "Audited & regrounded", tone: "ink" },
+      { label: "Live", tone: "red", pulse: true },
+    ],
+    live: "https://nba-rl-sim.vercel.app",
+    status: "live",
+    flip: false,
+  },
+  {
+    no: "04",
+    slug: "glenoid-classifier",
+    category: "Clinical ML",
+    role: "Solo project",
+    specs: [
+      { label: "Healthy-vs-diseased", value: "~91% · AUC 0.98" },
+      { label: "Walch classes", value: "6" },
+      { label: "End-to-end 6-way", value: "~63% (honest)" },
+    ],
+    stamps: [
+      { label: "Live", tone: "red", pulse: true },
+      { label: "In-browser model", tone: "ink" },
+    ],
+    live: "/projects/glenoid-classifier#calculator",
+    status: "live",
+    flip: true,
+  },
+  {
+    no: "05",
+    slug: "tha-pain-prediction",
+    category: "Clinical ML · Published",
+    role: "2nd of 7 authors — the only engineer",
+    specs: [
+      { label: "Journal", value: "J. Arthroplasty 2026" },
+      { label: "Best T3 MSE", value: "2.70 vs 3.07 baseline" },
+      { label: "Patients", value: "513 (SAFE-T cohort)" },
+    ],
+    stamps: [{ label: "Published", tone: "red" }],
+    status: "published",
+    flip: false,
+  },
+  {
+    no: "06",
+    slug: "no-fly-list-kids",
+    category: "Advocacy · Policy",
+    role: "Coalition member since 2017",
+    specs: [
+      { label: "Legislation", value: "Bill C-59 · passed 2019" },
+      { label: "Redress funding", value: "$81M (2018 budget)" },
+      { label: "Op-ed", value: "Toronto Star · sole author" },
+    ],
+    stamps: [{ label: "Ongoing", tone: "ink" }],
+    status: "ongoing",
+    flip: true,
+  },
+];
+
+/* Reused photography — alt text carried verbatim from the current page.tsx. */
+const PHOTO: Record<
+  string,
+  { src: string; alt: string; width: number; height: number }
+> = {
+  reclaim: {
+    src: "/projects/reclaim/demo.jpg",
+    alt: "The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 4-DOF sorting arm",
+    width: 768,
+    height: 1024,
+  },
+  "assistive-wheelchair": {
+    src: "/projects/assistive-wheelchair/tile.jpg",
+    alt: "The assistive-navigation robot on its taped test course, red-tape waypoint markers on a white foam-board floor",
+    width: 1500,
+    height: 1000,
+  },
+  "nba-shot-selection": {
+    src: "/projects/nba-shot-selection/decision-maps-tile.png",
+    alt: "Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range",
+    width: 2330,
+    height: 1850,
+  },
+};
 
 export default function Home() {
   return (
     <>
-      <Nav />
-      <main className="mx-auto max-w-5xl px-6 sm:px-8">
-        <Intro />
-        <Projects />
-        <Approach />
-        <Skills />
+      <TopBar variant="home" />
+      <main className="mx-auto w-full max-w-[72rem] flex-1 px-6 lg:px-10">
+        <Hero />
+        <Witness />
+        <SheetIndex />
+        <GeneralNotes />
+        <Equipment />
         <Contact />
       </main>
-      <Footer />
+      <TitleBlockFooter sheet="INDEX" />
     </>
   );
 }
 
-function Nav() {
+/* Hero — mono locator, the dimensioned name, thesis, proof links. The name's
+   dimension chrome floats ~24px above the h1, so pt-20 + the mt-10 gap keep it
+   clear of the sticky TopBar and the locator row (spec §6). */
+function Hero() {
   return (
-    <nav
-      aria-label="Primary"
-      className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md"
-    >
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6 sm:px-8">
-        <a
-          href="#top"
-          className="font-display text-base font-semibold tracking-tight text-foreground"
-        >
-          Issa Ahmed
-        </a>
-        <ul className="flex items-center gap-5 text-sm text-muted max-sm:gap-4 max-sm:text-xs">
-          <li>
-            <a href="#projects" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="#approach" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
-              Approach
-            </a>
-          </li>
-          <li>
-            <a
-              href="#skills"
-              className="inline-flex items-center py-2 transition-colors hover:text-foreground"
-            >
-              Skills
-            </a>
-          </li>
-          <li className="hidden sm:block">
-            <a
-              href="#certifications"
-              className="inline-flex items-center py-2 transition-colors hover:text-foreground"
-            >
-              Certifications
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="inline-flex items-center py-2 transition-colors hover:text-foreground">
-              Contact
-            </a>
-          </li>
-        </ul>
+    <section className="pb-14 pt-20">
+      <div className="flex items-center justify-between gap-4">
+        <span className="anno-red">DWG Package · Issa Ahmed</span>
+        <span className="anno">Toronto, ON</span>
       </div>
-    </nav>
-  );
-}
 
-function Intro() {
-  return (
-    <section id="top" className="scroll-mt-24 pt-24 pb-16 sm:pt-32">
-      <p className="animate-rise mb-6 flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-faint [animation-delay:0ms]">
-        <span aria-hidden className="inline-block h-3 w-px bg-accent" />
-        Robotics · Applied ML · Full-stack · Toronto
-      </p>
-      <h1 className="animate-rise font-display text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl [animation-delay:70ms]">
-        {PROFILE.name}
-      </h1>
-      <p className="animate-rise mt-6 max-w-2xl text-xl leading-snug text-muted sm:text-2xl [animation-delay:80ms]">
+      <DimensionedName className="mt-10" />
+
+      <p className="mt-8 max-w-2xl font-prose text-[22px] leading-snug text-ink sm:text-[24px]">
         {PROFILE.tagline}
       </p>
-      <p className="animate-rise mt-4 max-w-2xl text-base leading-relaxed text-muted [animation-delay:140ms]">
+      <p className="mt-4 max-w-2xl font-prose text-[15.5px] leading-relaxed text-ink-soft">
         {PROFILE.currentLine}
       </p>
-      <div className="animate-rise mt-9 flex flex-wrap gap-3 [animation-delay:200ms]">
-        <ButtonLink href="#projects" variant="primary">
-          See projects <ArrowUpRight size={16} />
-        </ButtonLink>
-        <ButtonLink href={`mailto:${PROFILE.email}`} variant="ghost">
-          <Mail size={15} /> Email
-        </ButtonLink>
-        {/* GitHub + LinkedIn intentionally NOT repeated in the hero — a visitor
-            arriving from LinkedIn already has those surfaces; the hero leads with
-            the projects (what the resume can't show). They remain in Contact +
-            Footer. TODO: resume CTA once /public/resume.pdf is added. */}
-      </div>
-      <ul className="animate-rise mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-mono text-xs text-muted [animation-delay:260ms]">
+
+      <ul className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 font-anno text-[11.5px] text-ink-soft">
         <li>
           <Link
             href="/projects/tha-pain-prediction"
-            className="transition-colors hover:text-accent"
+            className="transition-colors hover:text-red"
           >
             Published · J. Arthroplasty
           </Link>
         </li>
-        <li aria-hidden className="text-border">·</li>
+        <li aria-hidden className="text-line">
+          ·
+        </li>
         <li>
           <Link
             href="/projects/reclaim"
-            className="transition-colors hover:text-accent"
+            className="transition-colors hover:text-red"
           >
-            AI-division-winning autonomous robot
-</Link>
+            AI-division-winning robot
+          </Link>
         </li>
-        <li aria-hidden className="text-border">·</li>
+        <li aria-hidden className="text-line">
+          ·
+        </li>
         <li>
           <Link
             href="/projects/no-fly-list-kids"
-            className="transition-colors hover:text-accent"
+            className="transition-colors hover:text-red"
           >
-            No Fly List Kids · Toronto Star op-ed
+            Toronto Star op-ed
           </Link>
         </li>
-        <li aria-hidden className="text-border">·</li>
+        <li aria-hidden className="text-line">
+          ·
+        </li>
         <li>
-          <a
-            href="https://nba-rl-sim.vercel.app"
-            target="_blank"
-            rel="noreferrer"
-            className="transition-colors hover:text-accent"
-          >
-            3 live demos ↗
+          <a href="#witness" className="transition-colors hover:text-red">
+            3 live demos →
           </a>
         </li>
       </ul>
@@ -144,227 +244,470 @@ function Intro() {
   );
 }
 
-/* Per-tile presentation, keyed by slug. Category + metric chips are drawn from
-   canonical numbers; media is rendered by ProjectMedia below. liveDemo, when
-   present, surfaces a "Live demo ↗" action on the tile. */
-const TILE: Record<
-  string,
-  { category: string; role: string; chips: string[]; liveDemo?: string }
-> = {
-  reclaim: {
-    category: "Robotics · ROS2",
-    role: "Team of 4 — I owned perception + control",
-    chips: ["15/15 nav missions", "30 FPS perception", "3rd · 1st in AI division"],
-    liveDemo: "https://reclaim-nav-sim.vercel.app",
-  },
-  "assistive-wheelchair": {
-    category: "Robotics · ROS2",
-    role: "Designed & built end-to-end",
-    chips: ["A* room-to-room nav", "10 Hz hazard detection", "QR arrival checks"],
-  },
-  "nba-shot-selection": {
-    category: "Reinforcement Learning",
-    role: "Solo course project",
-    chips: ["+0.273 EPSA", "~6× vs NBA players", "116,928 possessions"],
-    liveDemo: "https://nba-rl-sim.vercel.app",
-  },
-  rideguide: {
-    category: "Applied AI · Full-stack",
-    // CONFIRM: solo vs. collaborator (research flagged "Ahmed Naeem"). Byline is
-    // scope-based for now to avoid overclaiming team composition.
-    role: "Applied-AI · full-stack build",
-    chips: ["10 GTHA agencies", "GTFS-RT real-time", "GPT-4o-mini + Claude agent"],
-  },
-  "tha-pain-prediction": {
-    category: "Clinical ML · Published",
-    role: "The only engineer of 7 co-authors",
-    chips: ["J. Arthroplasty 2026", "2nd of 7 authors", "13 models compared"],
-  },
-  "glenoid-classifier": {
-    category: "Clinical ML",
-    role: "Solo project",
-    chips: ["Live in-browser tool", "~91% screen · AUC 0.98", "6 Walch classes"],
-  },
-  "no-fly-list-kids": {
-    category: "Advocacy · Policy",
-    role: "Coalition member since 2017",
-    chips: ["Bill C-59", "$81M redress", "Toronto Star op-ed"],
-  },
-};
+/* Witness tests — three claims you can run in your own browser (spec §6). */
+function Witness() {
+  return (
+    <section
+      id="witness"
+      className="scroll-mt-20 border-t border-line py-14 sm:py-16"
+    >
+      <h2 className="anno-red">Witness tests — claims you can check</h2>
+      <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
+        {
+          "Three of these systems run live in your browser. Don't take the numbers on faith — go poke them."
+        }
+      </p>
 
-function ProjectMedia({ slug }: { slug: string }) {
-  if (slug === "reclaim") {
+      <div className="mt-8 space-y-4">
+        <LiveBar
+          kicker="Witness test 01"
+          title="RECLAIM navigation simulator"
+          sub="Watch the 15/15 stack race four baselines in 3D"
+          href="https://reclaim-nav-sim.vercel.app"
+        />
+        <LiveBar
+          kicker="Witness test 02"
+          title="NBA possession explorer"
+          sub="Drag a defender and watch the agent change its mind"
+          href="https://nba-rl-sim.vercel.app"
+        />
+        <LiveBar
+          kicker="Witness test 03"
+          title="Glenoid Walch classifier"
+          sub="The trained model, running in-page — no server"
+          href="/projects/glenoid-classifier#calculator"
+          cta="Run →"
+        />
+      </div>
+    </section>
+  );
+}
+
+/* Sheet index — the borderless mono table, then the six full-width cards, then
+   the pending SHT 07 strip. */
+function SheetIndex() {
+  return (
+    <section
+      id="index"
+      className="scroll-mt-20 border-t border-line py-14 sm:py-16"
+    >
+      <h2 className="anno-red">Sheet index</h2>
+      <p className="mt-3 max-w-2xl font-prose text-[15.5px] leading-relaxed text-ink-soft">
+        Six projects I built and shipped — two autonomous robots, an offline-RL
+        agent, two clinical ML tools, and a federal advocacy campaign. Open any
+        sheet for the full story.
+      </p>
+
+      <IndexTable />
+
+      <div className="mt-12 space-y-10">
+        {SHEETS.map((s) => (
+          <SheetCard key={s.slug} sheet={s} />
+        ))}
+      </div>
+
+      <PendingStrip />
+    </section>
+  );
+}
+
+function IndexTable() {
+  return (
+    <div className="mt-8">
+      <div className="grid grid-cols-[2.5rem_1fr_auto] gap-3 border-b border-line pb-2 sm:grid-cols-[2.5rem_1fr_10rem_7rem]">
+        <span className="anno">No.</span>
+        <span className="anno">Title</span>
+        <span className="anno hidden sm:block">Category</span>
+        <span className="anno justify-self-end sm:justify-self-start">
+          Status
+        </span>
+      </div>
+
+      {SHEETS.map((s) => {
+        const proj = PROJECTS.find((p) => p.slug === s.slug);
+        if (!proj) return null;
+        return (
+          <Link
+            key={s.slug}
+            href={`/projects/${s.slug}`}
+            className="group grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 border-b border-line py-3 sm:grid-cols-[2.5rem_1fr_10rem_7rem]"
+          >
+            <span className="font-anno text-[11px] tabular-nums text-graphite">
+              {s.no}
+            </span>
+            <span className="inline-flex min-w-0 items-center gap-2 font-struct text-[14px] font-medium text-ink transition-colors group-hover:text-red">
+              {proj.title}
+              <span
+                aria-hidden
+                className="shrink-0 text-red opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                →
+              </span>
+            </span>
+            <span className="hidden font-anno text-[10.5px] uppercase tracking-[0.14em] text-graphite sm:block">
+              {s.category}
+            </span>
+            <span className="justify-self-end sm:justify-self-start">
+              <IndexStatus status={s.status} />
+            </span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+function IndexStatus({ status }: { status: Status }) {
+  if (status === "live") {
+    return (
+      <span className="inline-flex items-center gap-1.5 font-anno text-[10.5px] uppercase tracking-[0.16em] text-red">
+        Live
+        <PulseDot />
+      </span>
+    );
+  }
+  const label =
+    status === "published"
+      ? "Published"
+      : status === "asbuilt"
+        ? "As built"
+        : "Ongoing";
+  return (
+    <span className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-graphite">
+      {label}
+    </span>
+  );
+}
+
+/* A full-width sheet card: photo one side, spec sheet the other. The whole card
+   links to the case page via the OPEN SHEET link's inset-0 ::after overlay; the
+   external RUN LIVE button rides above it on z-10 (spec §6). */
+function SheetCard({ sheet }: { sheet: Sheet }) {
+  const proj = PROJECTS.find((p) => p.slug === sheet.slug);
+  if (!proj) return null;
+  const { no, slug, category, role, specs, stamps, live, flip } = sheet;
+  const external = live ? /^https?:/.test(live) : false;
+
+  const runLiveClass =
+    "relative z-10 inline-flex items-center gap-1.5 rounded-[2px] border-[1.5px] border-red px-3 py-1.5 font-anno text-[10.5px] uppercase tracking-[0.12em] text-red transition-colors hover:bg-red-wash";
+
+  return (
+    <article
+      className={`group relative grid border border-line bg-plate lg:min-h-[26rem] ${
+        flip ? "lg:grid-cols-[5fr_7fr]" : "lg:grid-cols-[7fr_5fr]"
+      }`}
+    >
+      {/* media */}
+      <div
+        className={`aspect-[3/2] overflow-hidden lg:aspect-auto ${
+          flip ? "lg:col-start-2" : "lg:col-start-1"
+        }`}
+      >
+        <CardMedia slug={slug} />
+      </div>
+
+      {/* spec sheet */}
+      <div
+        className={`flex flex-col border-t border-line p-7 lg:border-t-0 ${
+          flip ? "lg:col-start-1 lg:border-r" : "lg:col-start-2 lg:border-l"
+        }`}
+      >
+        <p className="flex flex-wrap items-center gap-x-2">
+          <span className="anno-red">SHT {no}</span>
+          <span aria-hidden className="text-line">
+            ·
+          </span>
+          <span className="anno">{category}</span>
+        </p>
+
+        <h3 className="mt-3 font-struct text-[26px] font-bold leading-[1.1] tracking-tight text-ink sm:text-[28px]">
+          {proj.title}
+        </h3>
+        <p className="mt-1.5 font-anno text-[10.5px] uppercase tracking-[0.14em] text-red">
+          {role}
+        </p>
+        <p className="mt-3 font-prose text-[15px] leading-relaxed text-ink-soft/95">
+          {proj.blurb}
+        </p>
+
+        <div className="mt-auto pt-6">
+          <dl className="border-t border-line">
+            {specs.map((s) => (
+              <div
+                key={s.label}
+                className="flex items-baseline justify-between gap-4 border-b border-line py-2 last:border-b-0"
+              >
+                <dt className="shrink-0 font-anno text-[11px] uppercase tracking-[0.12em] text-graphite">
+                  {s.label}
+                </dt>
+                <dd className="text-right font-anno text-[11px] tabular-nums text-ink">
+                  {s.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            {stamps.map((s) => (
+              <Stamp key={s.label} tone={s.tone} pulse={s.pulse}>
+                {s.label}
+              </Stamp>
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <Link
+              href={`/projects/${slug}`}
+              className="font-anno text-[10.5px] uppercase tracking-[0.14em] text-ink transition-colors after:absolute after:inset-0 after:content-[''] hover:text-red"
+            >
+              <span className="sr-only">{proj.title} — </span>
+              Open sheet
+              <span
+                aria-hidden
+                className="ml-1 inline-block transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
+
+            {live ? (
+              external ? (
+                <a
+                  href={live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={runLiveClass}
+                >
+                  Run live ↗
+                </a>
+              ) : (
+                <Link href={live} className={runLiveClass}>
+                  Run live →
+                </Link>
+              )
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function CardMedia({ slug }: { slug: string }) {
+  const photo = PHOTO[slug];
+  if (photo) {
     return (
       <Image
-        src="/projects/reclaim/demo.jpg"
-        alt="The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 4-DOF sorting arm"
-        width={768}
-        height={1024}
-        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
       />
     );
   }
-  if (slug === "assistive-wheelchair") {
-    return (
-      <Image
-        src="/projects/assistive-wheelchair/tile.jpg"
-        alt="The assistive-navigation robot on its taped test course, red-tape waypoint markers on a white foam-board floor"
-        width={1500}
-        height={1000}
-        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
-      />
-    );
-  }
-  if (slug === "nba-shot-selection") {
-    return (
-      <Image
-        src="/projects/nba-shot-selection/decision-maps-tile.png"
-        alt="Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range"
-        width={2330}
-        height={1850}
-        className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
-      />
-    );
-  }
+
   if (slug === "tha-pain-prediction") {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-[#f1efe9] p-6">
+      <div className="flex h-full w-full items-center justify-center bg-paper-deep p-6">
         <Image
           src="/projects/tha-pain-prediction/journal-cover.png"
           alt="Cover of The Journal of Arthroplasty — the 2026 issue featuring the peer-reviewed pain-prediction paper"
           width={237}
           height={298}
-          className="h-full max-h-[86%] w-auto rounded-md border border-border shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-300 group-hover:scale-[1.03]"
+          className="h-auto max-h-[86%] w-auto border border-line shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-500 group-hover:scale-[1.03]"
         />
       </div>
     );
   }
-  if (slug === "rideguide") {
-    return (
-      <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
-        <p className="font-display text-3xl font-semibold leading-[1.15] tracking-tight text-foreground sm:text-4xl">
-          “Is the 504
-          <br />
-          on time?”
-        </p>
-        <p className="mt-3 font-mono text-[11px] uppercase tracking-wider text-muted">
-          live GTFS-RT · 10 agencies
-        </p>
-      </div>
-    );
-  }
+
   if (slug === "glenoid-classifier") {
-    return (
-      <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
-        <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
-          A·B·E
-        </p>
-        <p className="mt-3 text-sm text-muted">
-          Walch glenoid types · 3-tier classifier
-        </p>
-      </div>
-    );
+    return <GlenoidInstrument />;
   }
+
   // no-fly-list-kids
+  return <NflkClipping />;
+}
+
+/* Bespoke line-art "instrument face" for the live Walch classifier: a three-tier
+   decision tree (Screen → Type → Subtype) with the B2 route inked red, over six
+   control-input sliders. Fully decorative — the card's name comes from the link. */
+function GlenoidInstrument() {
+  const W = 132;
+  const sliders = [
+    { x: 24, y: 378, t: 0.42, red: true },
+    { x: 24, y: 398, t: 0.66, red: false },
+    { x: 24, y: 418, t: 0.5, red: false },
+    { x: 204, y: 378, t: 0.72, red: false },
+    { x: 204, y: 398, t: 0.36, red: false },
+    { x: 204, y: 418, t: 0.58, red: false },
+  ];
+
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center bg-[#f1efe9] p-6 text-center">
-      <p className="font-display text-6xl font-semibold tracking-tight text-foreground sm:text-7xl">
-        $81M
+    <div className="flex h-full w-full items-center justify-center bg-plate p-6">
+      <svg
+        viewBox="0 0 360 430"
+        fill="none"
+        aria-hidden
+        className="h-full w-full"
+      >
+        {/* tier headers */}
+        <text
+          x="16"
+          y="34"
+          fontSize={9}
+          letterSpacing={1.4}
+          className="fill-graphite font-anno"
+        >
+          SCREEN
+        </text>
+        <text
+          x="16"
+          y="166"
+          fontSize={9}
+          letterSpacing={1.4}
+          className="fill-graphite font-anno"
+        >
+          TYPE
+        </text>
+        <text
+          x="16"
+          y="276"
+          fontSize={9}
+          letterSpacing={1.4}
+          className="fill-graphite font-anno"
+        >
+          SUBTYPE
+        </text>
+
+        {/* connectors — ink */}
+        <g strokeLinecap="round">
+          <line x1="106" y1="84" x2="180" y2="84" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="106" y1="84" x2="106" y2="100" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="84" y1="152" x2="180" y2="152" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="254" y1="152" x2="276" y2="152" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="84" y1="152" x2="84" y2="178" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="276" y1="152" x2="276" y2="178" strokeWidth={1} className="stroke-ink/45" />
+          {/* B → B3 (ink child), rail spans only B's two children */}
+          <line x1="180" y1="246" x2="210" y2="246" strokeWidth={1} className="stroke-ink/45" />
+          <line x1="210" y1="246" x2="210" y2="288" strokeWidth={1} className="stroke-ink/45" />
+        </g>
+
+        {/* connectors — red route (Screen → Diseased → B → B2) */}
+        <g strokeLinecap="round">
+          <line x1="180" y1="68" x2="180" y2="84" strokeWidth={1.5} className="stroke-red" />
+          <line x1="180" y1="84" x2="254" y2="84" strokeWidth={1.5} className="stroke-red" />
+          <line x1="254" y1="84" x2="254" y2="100" strokeWidth={1.5} className="stroke-red" />
+          <line x1="254" y1="126" x2="254" y2="152" strokeWidth={1.5} className="stroke-red" />
+          <line x1="180" y1="152" x2="254" y2="152" strokeWidth={1.5} className="stroke-red" />
+          <line x1="180" y1="152" x2="180" y2="178" strokeWidth={1.5} className="stroke-red" />
+          <line x1="180" y1="204" x2="180" y2="246" strokeWidth={1.5} className="stroke-red" />
+          {/* fork left to B2 (the selected child) */}
+          <line x1="150" y1="246" x2="180" y2="246" strokeWidth={1.5} className="stroke-red" />
+          <line x1="150" y1="246" x2="150" y2="288" strokeWidth={1.5} className="stroke-red" />
+        </g>
+
+        {/* nodes */}
+        <rect x="150" y="44" width="60" height="24" rx={2} strokeWidth={1} className="fill-none stroke-ink/55" />
+        <rect x="64" y="100" width="84" height="26" rx={2} strokeWidth={1} className="fill-none stroke-ink/55" />
+        <rect x="212" y="100" width="84" height="26" rx={2} strokeWidth={1.3} className="fill-none stroke-red" />
+        <rect x="60" y="178" width="48" height="26" rx={2} strokeWidth={1} className="fill-none stroke-ink/55" />
+        <rect x="156" y="178" width="48" height="26" rx={2} strokeWidth={1.3} className="fill-none stroke-red" />
+        <rect x="252" y="178" width="48" height="26" rx={2} strokeWidth={1} className="fill-none stroke-ink/55" />
+        <rect x="124" y="288" width="52" height="28" rx={2} strokeWidth={1.5} className="fill-red-wash stroke-red" />
+        <rect x="184" y="288" width="52" height="28" rx={2} strokeWidth={1} className="fill-none stroke-ink/55" />
+
+        {/* node labels */}
+        <text x="106" y="113" textAnchor="middle" dominantBaseline="central" fontSize={8} letterSpacing={0.8} className="fill-graphite font-anno">
+          HEALTHY
+        </text>
+        <text x="254" y="113" textAnchor="middle" dominantBaseline="central" fontSize={8} letterSpacing={0.8} className="fill-red font-anno">
+          DISEASED
+        </text>
+        <text x="84" y="191" textAnchor="middle" dominantBaseline="central" fontSize={14} fontWeight={700} className="fill-ink font-struct">
+          A
+        </text>
+        <text x="180" y="191" textAnchor="middle" dominantBaseline="central" fontSize={14} fontWeight={700} className="fill-red font-struct">
+          B
+        </text>
+        <text x="276" y="191" textAnchor="middle" dominantBaseline="central" fontSize={14} fontWeight={700} className="fill-ink font-struct">
+          E
+        </text>
+        <text x="150" y="302" textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700} className="fill-red font-struct">
+          B2
+        </text>
+        <text x="210" y="302" textAnchor="middle" dominantBaseline="central" fontSize={12} fontWeight={700} className="fill-ink font-struct">
+          B3
+        </text>
+
+        {/* control inputs */}
+        <line x1="16" y1="340" x2="344" y2="340" strokeWidth={1} className="stroke-line" />
+        <text x="16" y="360" fontSize={9} letterSpacing={1.4} className="fill-graphite font-anno">
+          CONTROL INPUTS
+        </text>
+        {sliders.map((s, i) => (
+          <g key={i}>
+            <line x1={s.x} y1={s.y} x2={s.x + W} y2={s.y} strokeWidth={1} className="stroke-line" />
+            <line x1={s.x + W * 0.25} y1={s.y - 2} x2={s.x + W * 0.25} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
+            <line x1={s.x + W * 0.5} y1={s.y - 2} x2={s.x + W * 0.5} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
+            <line x1={s.x + W * 0.75} y1={s.y - 2} x2={s.x + W * 0.75} y2={s.y + 2} strokeWidth={1} className="stroke-line" />
+            <rect
+              x={s.x + s.t * W - 4.5}
+              y={s.y - 4.5}
+              width={9}
+              height={9}
+              rx={1}
+              strokeWidth={s.red ? 1.3 : 1}
+              className={s.red ? "fill-red-wash stroke-red" : "fill-plate stroke-ink/60"}
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+/* Typeset op-ed "clipping" standing in for a broadcast still. */
+function NflkClipping() {
+  return (
+    <div className="flex h-full w-full items-center justify-center bg-paper-deep p-8">
+      {/* SWAP CONTRACT: NFLK broadcast still to be issued. When Issa supplies the
+          image, replace this typeset clipping with the broadcast still (add a
+          descriptive alt); the newspaper-deck rules can stay as its caption. */}
+      <figure className="w-full max-w-[22rem]">
+        <div aria-hidden className="border-t border-ink/25" />
+        <figcaption className="mt-3 font-anno text-[9.5px] uppercase tracking-[0.18em] text-graphite">
+          Toronto Star · Op-ed · Sole author
+        </figcaption>
+        <p className="mt-2 font-prose text-[22px] italic leading-[1.25] text-ink">
+          {"Grounded: what it’s like to be a No Fly List kid"}
+        </p>
+        <div aria-hidden className="mt-3 border-b border-ink/25" />
+      </figure>
+    </div>
+  );
+}
+
+/* Pending SHT 07 — RideGuide, in preparation. Blueprint construction-line
+   treatment, intentionally NOT linked (no rideguide route on the home index). */
+function PendingStrip() {
+  return (
+    <div className="mt-10 border-b border-t border-dashed border-blueprint-line py-6">
+      <p className="font-anno text-[10px] uppercase tracking-[0.16em] text-blueprint">
+        In preparation — SHT 07
       </p>
-      <p className="mt-3 text-sm text-muted">
-        federal redress funding · Bill C-59
+      <p className="mt-2 max-w-3xl font-prose text-[15px] leading-relaxed text-ink-soft">
+        {
+          "RideGuide — an AI transit assistant for the Greater Toronto & Hamilton Area: live arrivals, delays, and trip planning across 10 agencies, drawn from real-time GTFS-RT feeds and fronted by an LLM query pipeline. Full write-up on the way — more sheets to follow."
+        }
       </p>
     </div>
   );
 }
 
-function Projects() {
-  return (
-    <section
-      id="projects"
-      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
-    >
-      <h2 className="eyebrow text-accent">Selected Projects</h2>
-      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-        Seven projects I built and shipped — two autonomous robots, an
-        offline-RL agent, an AI transit assistant, two clinical ML tools, and a
-        federal advocacy campaign. Open any one to read the full story.
-      </p>
-      <ul className="mt-10 grid gap-6 sm:grid-cols-2">
-        {PROJECTS.map((p, i) => {
-          const t = TILE[p.slug];
-          return (
-            <li key={p.slug}>
-              <Reveal delay={i * 60}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_1px_2px_rgba(28,26,23,0.04),0_8px_24px_-12px_rgba(28,26,23,0.10)] transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-[0_2px_4px_rgba(28,26,23,0.05),0_16px_36px_-14px_rgba(28,26,23,0.18)]">
-                  <Link
-                    href={`/projects/${p.slug}`}
-                    className="flex flex-1 flex-col"
-                  >
-                    <div className="aspect-[3/2] w-full overflow-hidden border-b border-border">
-                      <ProjectMedia slug={p.slug} />
-                    </div>
-                    <div className="flex flex-1 flex-col p-6 pb-4">
-                      <p className="eyebrow text-faint">{t.category}</p>
-                      <h3 className="mt-2 font-display text-2xl font-semibold tracking-tight">
-                        {p.title}
-                      </h3>
-                      <p className="mt-1.5 font-mono text-[11px] uppercase tracking-wider text-accent/90">
-                        {t.role}
-                      </p>
-                      <p className="mt-2.5 text-[15px] leading-relaxed text-foreground/85">
-                        {p.blurb}
-                      </p>
-                      <ul className="mt-4 flex flex-wrap gap-2">
-                        {t.chips.map((c) => (
-                          <Pill key={c}>{c}</Pill>
-                        ))}
-                      </ul>
-                    </div>
-                  </Link>
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-border px-6 py-4">
-                    {/* The live demo is the resume-proof asset — lead with it
-                        (filled emerald), case study secondary. Tiles without a
-                        demo just show the case-study link. */}
-                    {t.liveDemo ? (
-                      <a
-                        href={t.liveDemo}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-accent px-3.5 py-1.5 text-sm font-medium text-background transition-colors hover:bg-accent/90"
-                      >
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-background opacity-70" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-background" />
-                        </span>
-                        Try it live ↗
-                      </a>
-                    ) : null}
-                    <Link
-                      href={`/projects/${p.slug}`}
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent/80"
-                    >
-                      Case study
-                      <ArrowRight
-                        size={15}
-                        className="transition-transform group-hover:translate-x-1"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </Reveal>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
-  );
-}
-
-/* The through-line across every project — stated as principles, each anchored
-   to concrete evidence on a case study (not generic "values"). This is the
-   "I think, and I can show my work" frame the projects then prove. */
-const PRINCIPLES = [
+/* General notes — the through-line, stated as revision-note style principles,
+   each anchored to a sheet (bodies verbatim from the current PRINCIPLES, spec §8.3). */
+const NOTES = [
   {
     title: "Calibrate to reality",
     body: "After the capstone I stopped trusting my own navigation benchmark, rebuilt the simulator to the real robot's measured specs, and published that the algorithm I demoed completes only 6 of 15 missions on it. The rewrite does 15/15.",
@@ -379,45 +722,53 @@ const PRINCIPLES = [
   },
   {
     title: "Ship it so you can check",
-    body: "Two of these projects run live in your browser, and the NBA explorer's in-browser network reproduces the Python pipeline to within 1e-6 on every feature, checked by a 250-vector parity suite. Claims you can poke at beat claims you take on faith.",
+    body: "Three of these projects run live in your browser, and the NBA explorer's in-browser network reproduces the Python pipeline to within 1e-6 on every feature, checked by a 250-vector parity suite. Claims you can poke at beat claims you take on faith.",
     evidence: "NBA · the live explorer",
     href: "/projects/nba-shot-selection",
   },
 ];
 
-function Approach() {
+function GeneralNotes() {
   return (
     <section
-      id="approach"
-      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+      id="notes"
+      className="scroll-mt-20 border-t border-line py-14 sm:py-16"
     >
-      <h2 className="eyebrow text-accent">How I work</h2>
-      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground/85">
+      <h2 className="anno-red">General notes — how I work</h2>
+      <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
         One instinct runs through everything here: build the real thing, then be
         honest about exactly what it does — and make it checkable.
       </p>
-      <ol className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3">
-        {PRINCIPLES.map((p, i) => (
-          <li key={p.title} className="flex flex-col bg-surface p-6">
-            <span className="font-display text-sm font-semibold tabular-nums text-accent">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3 className="mt-3 font-display text-xl font-semibold tracking-tight">
-              {p.title}
-            </h3>
-            <p className="mt-2.5 flex-1 text-[14px] leading-relaxed text-foreground/80">
-              {p.body}
+
+      <ol className="mt-8 border-t border-line">
+        {NOTES.map((n, i) => (
+          <li
+            key={n.title}
+            className="grid gap-2 border-b border-line py-6 sm:grid-cols-[7rem_1fr] sm:gap-8"
+          >
+            <p className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-red">
+              Note {i + 1}
             </p>
-            <Link
-              href={p.href}
-              className="group mt-5 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-accent transition-colors hover:text-accent/75"
-            >
-              {p.evidence}
-              <ArrowRight
-                size={13}
-                className="transition-transform group-hover:translate-x-0.5"
-              />
-            </Link>
+            <div>
+              <h3 className="font-struct text-[18px] font-semibold text-ink">
+                {n.title}
+              </h3>
+              <p className="mt-2 font-prose text-[15.5px] leading-relaxed text-ink-soft">
+                {n.body}
+              </p>
+              <Link
+                href={n.href}
+                className="group mt-3 inline-flex items-center gap-1.5 font-anno text-[10.5px] uppercase tracking-[0.14em] text-graphite transition-colors hover:text-red"
+              >
+                {n.evidence}
+                <span
+                  aria-hidden
+                  className="inline-block transition-transform group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
+            </div>
           </li>
         ))}
       </ol>
@@ -425,67 +776,79 @@ function Approach() {
   );
 }
 
-function Skills() {
+/* Equipment & methods — the skills as a spec table, then certification stamps. */
+function Equipment() {
   return (
     <section
-      id="skills"
-      className="scroll-mt-24 border-t border-border py-16 sm:py-20"
+      id="equipment"
+      className="scroll-mt-20 border-t border-line py-14 sm:py-16"
     >
-      <h2 className="eyebrow text-accent">Skills</h2>
-      <div className="mt-8 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      <h2 className="anno-red">{"Equipment & methods"}</h2>
+
+      <div className="mt-8 border-t border-line">
         {SKILLS.map((g) => (
-          <div key={g.group}>
-            <p className="eyebrow text-faint">{g.group}</p>
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {g.items.map((item) => (
-                <Pill key={item}>{item}</Pill>
+          <div
+            key={g.group}
+            className="grid gap-1 border-b border-line py-3 sm:grid-cols-[11rem_1fr] sm:gap-6"
+          >
+            <div className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-graphite">
+              {g.group}
+            </div>
+            <div className="font-anno text-[12.5px] leading-relaxed text-ink">
+              {g.items.map((it, i) => (
+                <Fragment key={it}>
+                  {i > 0 ? <span className="text-line"> · </span> : null}
+                  {it}
+                </Fragment>
               ))}
-            </ul>
+            </div>
           </div>
         ))}
       </div>
 
-      <div id="certifications" className="mt-16 scroll-mt-24">
-        <Eyebrow>Certifications</Eyebrow>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="mt-12">
+        <h3 className="anno">Certifications</h3>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {CERTIFICATIONS.map((c) => {
             const inner = (
               <>
-                <BadgeCheck size={16} className="mt-0.5 shrink-0 text-accent" />
-                <div className="min-w-0">
-                  <p className="text-sm font-medium leading-snug">
-                    {c.name}{" "}
-                    <span className="font-mono text-[11px] text-faint">
-                      · {c.code}
-                    </span>
-                  </p>
-                  <p className="mt-0.5 text-xs text-muted">
-                    {c.issuer}
-                    {c.year ? ` · ${c.year}` : ""}
-                    {c.verifyUrl ? (
-                      <span className="ml-1 text-accent">· Verify ↗</span>
-                    ) : null}
-                  </p>
+                <div className="font-struct text-[15px] font-bold tabular-nums text-ink">
+                  {c.code}
                 </div>
+                <div className="mt-1 font-prose text-[13px] leading-snug text-ink">
+                  {c.name}
+                </div>
+                <div className="mt-2 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite">
+                  {c.issuer}
+                  {c.year ? ` · ${c.year}` : ""}
+                </div>
+                {c.verifyUrl ? (
+                  <div className="mt-2 font-anno text-[10px] uppercase tracking-[0.14em] text-red">
+                    Verify ↗
+                  </div>
+                ) : null}
               </>
             );
-            return (
-              <li key={c.code}>
-                {c.verifyUrl ? (
-                  <a href={c.verifyUrl} target="_blank" rel="noreferrer">
-                    <GlassCard className="flex items-start gap-3 p-4 transition-colors hover:border-accent/40">
-                      {inner}
-                    </GlassCard>
-                  </a>
-                ) : (
-                  <GlassCard className="flex items-start gap-3 p-4">
-                    {inner}
-                  </GlassCard>
-                )}
-              </li>
+            return c.verifyUrl ? (
+              <a
+                key={c.code}
+                href={c.verifyUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-4 transition-colors hover:border-red"
+              >
+                {inner}
+              </a>
+            ) : (
+              <div
+                key={c.code}
+                className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-4"
+              >
+                {inner}
+              </div>
             );
           })}
-        </ul>
+        </div>
       </div>
     </section>
   );
@@ -493,76 +856,39 @@ function Skills() {
 
 function Contact() {
   return (
-    <section
-      id="contact"
-      className="scroll-mt-24 border-t border-border py-20 sm:py-28"
-    >
-      <Reveal>
-        <Eyebrow>Contact</Eyebrow>
-        <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Get in touch
-        </h2>
-        <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-foreground/85 sm:text-base">
-          Open to roles and collaborations in robotics, AI / ML, and full-stack
-          engineering. Easiest way to reach me is email.
-        </p>
+    <section id="contact" className="scroll-mt-20 border-t border-line py-16">
+      <h2 className="anno-red">Contact</h2>
+      <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
+        Open to roles and collaborations in robotics, AI / ML, and full-stack
+        engineering. Easiest way to reach me is email.
+      </p>
+      <a
+        href={`mailto:${PROFILE.email}`}
+        className="mt-8 inline-block font-prose text-[24px] leading-tight text-ink underline decoration-red/50 decoration-2 underline-offset-[6px] transition-colors hover:decoration-red sm:text-[30px]"
+      >
+        {PROFILE.email}
+      </a>
+      <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 font-anno text-[11px] text-graphite">
         <a
-          href={`mailto:${PROFILE.email}`}
-          className="mt-8 inline-block font-display text-2xl tracking-tight text-foreground underline decoration-accent/40 decoration-2 underline-offset-8 transition-colors hover:decoration-accent sm:text-3xl"
+          href={PROFILE.github}
+          target="_blank"
+          rel="noreferrer"
+          className="uppercase tracking-[0.12em] transition-colors hover:text-red"
         >
-          {PROFILE.email}
+          GitHub ↗
         </a>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href={PROFILE.github} variant="ghost" external>
-            <Github size={15} /> github.com/issaa71
-          </ButtonLink>
-          <ButtonLink href={PROFILE.linkedin} variant="ghost" external>
-            <Linkedin size={15} /> LinkedIn
-          </ButtonLink>
-        </div>
-      </Reveal>
+        <span aria-hidden className="text-line">
+          ·
+        </span>
+        <a
+          href={PROFILE.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          className="uppercase tracking-[0.12em] transition-colors hover:text-red"
+        >
+          LinkedIn ↗
+        </a>
+      </p>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-5xl px-6 py-10 sm:px-8">
-        <div className="flex flex-wrap gap-x-5 gap-y-2">
-          <a
-            href={`mailto:${PROFILE.email}`}
-            className="font-mono text-xs text-muted transition-colors hover:text-accent"
-          >
-            issaahmed1@icloud.com
-          </a>
-          <a
-            href={PROFILE.github}
-            target="_blank"
-            rel="noreferrer"
-            className="font-mono text-xs text-muted transition-colors hover:text-accent"
-          >
-            GitHub
-          </a>
-          <a
-            href={PROFILE.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            className="font-mono text-xs text-muted transition-colors hover:text-accent"
-          >
-            LinkedIn
-          </a>
-          {/* TODO: add resume link here too once /public/resume.pdf exists */}
-        </div>
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs leading-relaxed text-faint">
-            © {new Date().getFullYear()} Issa Ahmed
-          </p>
-          <p className="font-mono text-xs text-faint">
-            Toronto, ON · Next.js + Vercel
-          </p>
-        </div>
-      </div>
-    </footer>
   );
 }

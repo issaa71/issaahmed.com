@@ -37,14 +37,7 @@ export const PROJECTS: {
     title: "NBA Shot Selection — Offline RL",
     codename: "Reinforcement Learning · PyTorch",
     blurb:
-      "Dueling DQN with per-entity Deep Sets architecture and PBRS reward shaping that learns shoot-or-pass policies from real SportVU tracking data.",
-  },
-  {
-    slug: "rideguide",
-    title: "RideGuide — AI Transit Assistant",
-    codename: "Applied AI · Full-stack · GTFS-RT",
-    blurb:
-      "A natural-language transit assistant for the Greater Toronto & Hamilton Area — live arrivals, delays, and trip planning across 10 agencies, drawn from real-time GTFS-RT feeds and fronted by an LLM query pipeline.",
+      "A Dueling DQN with a per-entity Deep Sets architecture, trained on real SportVU tracking to call shoot-or-pass — then audited until its own headline metric broke, and regrounded on real shot outcomes.",
   },
   {
     slug: "tha-pain-prediction",

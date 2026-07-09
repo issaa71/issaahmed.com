@@ -1,28 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Fraunces } from "next/font/google";
+import { Archivo, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { SheetFrame } from "./_components/drafting";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Archivo — structure/display face. The `wdth` axis powers the extended
+// (.wide) treatment on the hero name and sheet titles.
+const archivo = Archivo({
   subsets: ["latin"],
+  variable: "--font-archivo",
+  axes: ["wdth"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Source Serif 4 — body prose. `opsz` optical-size axis for large display prose.
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
+  variable: "--font-source-serif",
+  axes: ["opsz"],
 });
 
-// Fraunces is a variable font — warm, editorial display face for the light gallery.
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// IBM Plex Mono — annotations, labels, data tables (non-variable → weights).
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex-mono",
 });
 
 // TODO: switch to https://issaahmed.com once the custom domain is wired up
 const SITE_URL = "https://issaahmed-com.vercel.app";
 
 export const viewport: Viewport = {
-  themeColor: "#faf9f7",
+  themeColor: "#faf7f0",
   colorScheme: "light",
 };
 
@@ -33,7 +40,7 @@ export const metadata: Metadata = {
     template: "%s · Issa Ahmed",
   },
   description:
-    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with two running live in your browser.",
+    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with three running live in your browser.",
   keywords: [
     "Issa Ahmed",
     "Robotics",
@@ -50,14 +57,14 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and two of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and three of them live in your browser.",
     siteName: "Issa Ahmed",
   },
   twitter: {
     card: "summary_large_image",
     title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and two of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and three of them live in your browser.",
   },
   robots: { index: true, follow: true },
 };
@@ -70,9 +77,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${archivo.variable} ${sourceSerif.variable} ${plexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -96,9 +103,7 @@ export default function RootLayout({
             }),
           }}
         />
-        <noscript>
-          <style>{`.reveal-hidden{opacity:1 !important;transform:none !important}`}</style>
-        </noscript>
+        <SheetFrame />
         {children}
       </body>
     </html>

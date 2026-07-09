@@ -1,29 +1,25 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
-import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import {
-  CaseStudyShell,
+  SheetShell,
   Section,
-  Metric,
-  MetricGrid,
-  Artifact,
-  ArtifactRow,
-  TechRow,
-  YouTubeEmbed,
-  VideoGrid,
-  Figure,
-  ComparisonTable,
+  CalloutStrip,
   Callout,
-} from "../_components/case-study";
-import {
-  VideoPlaceholder,
-  DiagramPlaceholder,
+  LiveBar,
+  Reel,
+  VideoGrid,
+  FigurePlate,
+  DataTable,
+  NoteBlock,
+  RevBlock,
+  RefRow,
+  Ref,
+  EquipList,
   FlowDiagram,
   FsmDiagram,
-  BeforeAfter,
-} from "../../_components/visuals";
+  PlaceholderPlate,
+} from "../_components/sheet";
 
 export const metadata: Metadata = {
   title: "RECLAIM — Autonomous Waste-Sorting Robot",
@@ -40,8 +36,8 @@ export const metadata: Metadata = {
 // Stills from reclaim_v2's clean-screenshot (H-key) mode. These 4 PNGs are
 // captured later and dropped into public/projects/reclaim/. The section below
 // renders automatically once all four files are present and the site rebuilds —
-// until then it is omitted entirely, so the page is never placeholder-free nor
-// shows broken images.
+// until then it shows a blueprint placeholder plate, so the page is never
+// placeholder-free nor shows broken images.
 const STILLS = [
   {
     src: "/projects/reclaim/sim-route-cafeteria.png",
@@ -75,88 +71,71 @@ const stillsReady = STILLS.every((s) =>
 
 export default function Page() {
   return (
-    <CaseStudyShell
+    <SheetShell
+      sheetNo="01"
+      sheetCount="06"
       eyebrow="Robotics · ROS2 · Computer Vision"
       title="RECLAIM — Autonomous Indoor Waste-Sorting Robot"
       tagline="An end-to-end robot for post-event venues that scans for litter, drives to it, picks it up with a 4-DOF arm, classifies it, and sorts it into the correct bin — fully autonomously."
       meta="MSE 4499 Mechatronic Design Project · Western Engineering · 3rd overall + 1st in the AI division · Showcase March 2026 · Nav stack rebuilt + re-benchmarked June 2026"
+      status={[
+        { label: "3rd overall · 1st in AI division", tone: "red" },
+        { label: "Live sim", tone: "red", pulse: true },
+      ]}
     >
-      <figure className="overflow-hidden rounded-xl border border-border">
-        <Image
-          src="/projects/reclaim/team.jpg"
-          alt="The RECLAIM capstone team with the prototype at the Western Engineering MSE 4499 showcase."
-          width={1024}
-          height={768}
-          priority
-          quality={60}
-          sizes="(max-width: 768px) 100vw, 672px"
-          className="w-full h-auto"
+      <FigurePlate
+        src="/projects/reclaim/team.jpg"
+        alt="The RECLAIM capstone team with the prototype at the Western Engineering MSE 4499 showcase."
+        caption="Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place overall — and 1st in the AI division."
+        width={1024}
+        height={768}
+        priority
+        className="breakout"
+      />
+
+      <CalloutStrip>
+        <Callout
+          label="Mission completion"
+          value="15/15"
+          hint="navigation re-benchmark on a sim calibrated to the real robot (June 2026) — 5 venue presets × 3 seeds, all complete; best baseline: 12/15"
+          accent
         />
-        <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
-          Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place overall — and 1st in the AI division.
-        </figcaption>
-      </figure>
+        <Callout
+          label="Per-meter efficiency"
+          value="5.2×"
+          hint="cafeteria flagship: 80/80 items in 179.1 m vs nearest-neighbor's 75/80 in 929.5 m"
+        />
+        <Callout
+          label="Perception mAP50"
+          value="0.826"
+          hint="up from 0.693 via three training cycles + confusion-matrix-driven class elimination (11 → 6 classes)"
+        />
+        <Callout
+          label="Inference rate"
+          value="30 FPS"
+          hint="YOLO26n + TensorRT FP16 on Jetson Orin NX"
+        />
+        <Callout
+          label="Showcase run"
+          value="0 interventions"
+          hint="6 waste classes, full scan→detect→drive→pick→sort cycles — March 26, 2026"
+        />
+        <Callout
+          label="Placement"
+          value="3rd"
+          hint="overall — and 1st in the AI division · MSE 4499 capstone cohort"
+          accent
+        />
+      </CalloutStrip>
 
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Mission completion"
-            value="15/15"
-            hint="navigation re-benchmark on a sim calibrated to the real robot (June 2026) — 5 venue presets × 3 seeds, all complete; best baseline: 12/15"
-            accent
-          />
-          <Metric
-            label="Per-meter efficiency"
-            value="5.2×"
-            hint="cafeteria flagship: 80/80 items in 179.1 m vs nearest-neighbor's 75/80 in 929.5 m"
-          />
-          <Metric
-            label="Perception mAP50"
-            value="0.826"
-            hint="up from 0.693 via three training cycles + confusion-matrix-driven class elimination (11 → 6 classes)"
-          />
-          <Metric
-            label="Inference rate"
-            value="30 FPS"
-            hint="YOLO26n + TensorRT FP16 on Jetson Orin NX"
-          />
-          <Metric
-            label="Showcase run"
-            value="0 interventions"
-            hint="6 waste classes, full scan→detect→drive→pick→sort cycles — March 26, 2026"
-          />
-          <Metric
-            label="Placement"
-            value="3rd"
-            hint="overall — and 1st in the AI division · MSE 4499 capstone cohort"
-            accent
-          />
-        </MetricGrid>
-      </Section>
-
-      <a
+      {/* Interactive 3D simulator — runs live in the visitor's browser. */}
+      <LiveBar
         href="https://reclaim-nav-sim.vercel.app"
-        target="_blank"
-        rel="noreferrer"
-        className="glass rounded-xl p-4 group flex items-center gap-4 transition-colors hover:border-accent/40"
-      >
-        <span className="min-w-0 flex-1">
-          <span className="eyebrow block text-faint">
-            Interactive 3D simulator · runs in your browser
-          </span>
-          <span className="mt-1 block font-display text-lg font-semibold tracking-tight sm:text-xl">
-            Watch the 15/15 navigation stack run — pick a venue and seed, race it
-            against four baselines
-          </span>
-          <span className="mt-1 block font-mono text-xs text-muted">
-            reclaim_v2 · deterministic replays · comparison dashboard
-          </span>
-        </span>
-        <ArrowUpRight
-          size={16}
-          className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        />
-      </a>
+        kicker="Interactive 3D simulator · runs in your browser"
+        title="Watch the 15/15 navigation stack run — pick a venue and seed, race it against four baselines"
+        sub="reclaim_v2 · deterministic replays · comparison dashboard"
+        className="breakout"
+      />
 
       <Section title="Demo videos">
         <p>
@@ -165,18 +144,18 @@ export default function Page() {
           vision-servo loop: detect → approach → pick → sort. (The navigation
           re-benchmark above is post-capstone, in simulation.)
         </p>
-        <VideoGrid>
-          <YouTubeEmbed
+        <VideoGrid className="breakout">
+          <Reel
             id="_Bktd8VUelg"
             title="Pickup 1 — Tissue, then water bottle"
             caption="Two-item autonomous run from capstone prototype testing, March 2026: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
           />
-          <YouTubeEmbed
+          <Reel
             id="vifXLBFmasQ"
             title="Pickup 2 — Aluminum can"
             caption="Single-item run on a recyclable, March 2026 — the scan → detect → drive → pick → sort loop on the physical prototype."
           />
-          <YouTubeEmbed
+          <Reel
             id="jR9Q2AjDWao"
             title="Pickup 3 — Three-class sweep"
             caption="Showcase-period run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). Physical prototype, March 2026."
@@ -184,10 +163,6 @@ export default function Page() {
         </VideoGrid>
       </Section>
 
-      {/* Inside the rebuilt simulator — renders automatically once all four
-          H-key stills are dropped into public/projects/reclaim/ and the site
-          rebuilds. Until then the section is omitted (no placeholder, no broken
-          image). See STILLS above for the expected filenames. */}
       {stillsReady ? (
         <Section title="Inside the rebuilt simulator">
           <p>
@@ -196,7 +171,7 @@ export default function Page() {
           </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {STILLS.map((s) => (
-              <Figure
+              <FigurePlate
                 key={s.src}
                 src={s.src}
                 alt={s.alt}
@@ -209,10 +184,14 @@ export default function Page() {
         </Section>
       ) : (
         <Section title="Inside the rebuilt simulator">
-          <DiagramPlaceholder
+          {/* Renders the four H-key stills automatically once
+              sim-route-cafeteria.png, sim-frontier-fog.png, sim-timeline.png, and
+              sim-dashboard.png land in public/projects/reclaim/ on the next build. */}
+          <PlaceholderPlate
+            kind="FIGURE"
             title="Four reclaim_v2 simulator stills"
-            shows="H-key clean screenshots: the cafeteria Held-Karp route, the frontier fog boundary, the behavior timeline, and the five-algorithm comparison dashboard"
-            caption="capture the 4 PNGs into /public/projects/reclaim/ — this section renders them automatically on the next build"
+            covers="H-key clean screenshots: the cafeteria Held-Karp route, the frontier fog boundary, the behavior timeline, and the five-algorithm comparison dashboard"
+            note="capture the 4 PNGs into /public/projects/reclaim/ — this section renders them automatically on the next build"
           />
         </Section>
       )}
@@ -223,60 +202,62 @@ export default function Page() {
           completed every venue — from conference (30 items; seed 7: 1030.6 s, 130.3 m) to
           expo (70 items; seed 42: 3142 s, 508.4 m, 5 dump trips):
         </p>
-        <ComparisonTable
-          columns={["Algorithm", "Missions complete", "Items collected", "Notes"]}
-          rows={[
-            {
-              cells: [
-                "RECLAIM v2",
-                "15/15",
-                "867/870",
-                "99.0–100% verified coverage every run; 3 items declared unviewable, logged",
-              ],
-              highlight: true,
-            },
-            {
-              cells: [
-                "Info-gain explorer",
-                "12/15",
-                "820/870",
-                "stalls out; leaves 3–10 items per run",
-              ],
-            },
-            {
-              cells: [
-                "Nearest-neighbor",
-                "10/15",
-                "846/870",
-                "avg 655.1 m driven vs v2's 299.4 m",
-              ],
-            },
-            {
-              cells: [
-                "Full boustrophedon",
-                "6/15",
-                "810/870",
-                "rigid stripes fail in complex venues",
-              ],
-            },
-            {
-              cells: [
-                "RECLAIM v1 (showcase algorithm)",
-                "6/15",
-                "808/870",
-                "self-declares done prematurely at ~95% fog",
-              ],
-            },
-          ]}
-          caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70 — 290 per seed × 3 seeds = 870 items per algorithm), calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed), regenerated straight from the headless harness (BENCHMARKS.txt). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
-        />
-        <Callout title="Flagship run — cafeteria, 80 items, seed 42">
+        <div className="breakout">
+          <DataTable
+            columns={["Algorithm", "Missions complete", "Items collected", "Notes"]}
+            rows={[
+              {
+                cells: [
+                  "RECLAIM v2",
+                  "15/15",
+                  "867/870",
+                  "99.0–100% verified coverage every run; 3 items declared unviewable, logged",
+                ],
+                highlight: true,
+              },
+              {
+                cells: [
+                  "Info-gain explorer",
+                  "12/15",
+                  "820/870",
+                  "stalls out; leaves 3–10 items per run",
+                ],
+              },
+              {
+                cells: [
+                  "Nearest-neighbor",
+                  "10/15",
+                  "846/870",
+                  "avg 655.1 m driven vs v2's 299.4 m",
+                ],
+              },
+              {
+                cells: [
+                  "Full boustrophedon",
+                  "6/15",
+                  "810/870",
+                  "rigid stripes fail in complex venues",
+                ],
+              },
+              {
+                cells: [
+                  "RECLAIM v1 (showcase algorithm)",
+                  "6/15",
+                  "808/870",
+                  "self-declares done prematurely at ~95% fog",
+                ],
+              },
+            ]}
+            caption="5 venue presets (conference 30 items, banquet 60, gym 50, cafeteria 80, expo 70 — 290 per seed × 3 seeds = 870 items per algorithm), calibrated 0.3 m/s robot model. Deterministic — byte-identical replays per (preset, seed), regenerated straight from the headless harness (BENCHMARKS.txt). Supersedes the Appendix D benchmarks in the final report, which were measured on the idealized 0.5 m/s v1 simulator."
+          />
+        </div>
+        <NoteBlock title="Flagship run — cafeteria, 80 items, seed 42">
           RECLAIM v2 collected 80/80 items in 179.1 m of driving. The nearest-neighbor
           baseline drove 929.5 m — 5.2× farther — and still finished with 75/80. Per meter
           of travel, that&apos;s the difference between a robot that finishes the job and
           one that wanders.
-        </Callout>
-        <Callout title="Why items per minute is the wrong headline">
+        </NoteBlock>
+        <NoteBlock title="Why items per minute is the wrong headline">
           v2 posts lower items-per-minute than some baselines, and that&apos;s by
           construction. It models the real robot&apos;s stop-look-drive approach — TURN,
           DRIVE, ALIGN, roughly 13 seconds per item at calibrated speeds — while the
@@ -285,28 +266,26 @@ export default function Page() {
           dump; baselines quit at 90–96%. Throughput comparisons across that asymmetry would
           flatter the wrong side. The numbers that survive it are mission completion and
           distance per item collected — so those are the headlines.
-        </Callout>
+        </NoteBlock>
       </Section>
 
-      <Section title="Artifacts">
-        <ArtifactRow>
-          <Artifact
-            href="https://github.com/issaa71/CapstoneRECLAIM"
-            label="GitHub repository"
-            detail="5-package ROS2 monorepo — issaa71/CapstoneRECLAIM"
-          />
-          <Artifact
-            href="https://reclaim-nav-sim.vercel.app"
-            label="Interactive 3D navigation simulation"
-            detail="Live React + Three.js (reclaim_v2) — 5 seeded venue presets, comparison dashboard, behavior timeline, deterministic replays"
-          />
-          <Artifact
-            href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
-            label="Demo video · Three-class sweep"
-            detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
-          />
-        </ArtifactRow>
-      </Section>
+      <RefRow>
+        <Ref
+          href="https://github.com/issaa71/CapstoneRECLAIM"
+          label="GitHub repository"
+          detail="5-package ROS2 monorepo — issaa71/CapstoneRECLAIM"
+        />
+        <Ref
+          href="https://reclaim-nav-sim.vercel.app"
+          label="Interactive 3D navigation simulation"
+          detail="Live React + Three.js (reclaim_v2) — 5 seeded venue presets, comparison dashboard, behavior timeline, deterministic replays"
+        />
+        <Ref
+          href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
+          label="Demo video · Three-class sweep"
+          detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
+        />
+      </RefRow>
 
       <Section title="Problem">
         <p>
@@ -375,10 +354,12 @@ export default function Page() {
       </Section>
 
       <Section title="Approach — navigation (rebuilt post-capstone)">
-        <VideoPlaceholder
+        {/* TO BE ISSUED — a ≈60s screen-capture walking through the re-baseline. */}
+        <PlaceholderPlate
+          kind="VIDEO"
           title="The benchmark I stopped trusting"
           covers="why I rebuilt the simulator after the grade was in, and what re-benchmarking cost me"
-          lengthHint="≈ 60s"
+          note="≈ 60s"
         />
         <p>
           The capstone shipped a robot — and a navigation benchmark I stopped trusting.
@@ -394,29 +375,26 @@ export default function Page() {
           showcase completes 6 of 15 missions on the calibrated simulator. The rewrite
           completes 15 of 15.
         </p>
-        <BeforeAfter
-          label="The re-baseline"
-          before={{
-            tag: "v1 · what I showed",
-            title: "Idealized simulator",
-            points: [
-              "0.5 m/s, continuous motion",
-              "the numbers that shipped in the report",
-            ],
-            metric: "6 / 15",
-            metricLabel: "missions complete",
-          }}
-          after={{
-            tag: "v2 · rebuilt June 2026",
-            title: "Calibrated to the real robot",
-            points: [
-              "0.3 m/s · 73° FOV · ~13 s / item",
-              "every navigation number on this page",
-            ],
-            metric: "15 / 15",
-            metricLabel: "missions complete",
-          }}
+        <RevBlock
+          context="Navigation benchmark"
+          rows={[
+            {
+              rev: "A",
+              tone: "ink",
+              description:
+                "Idealized simulator — 0.5 m/s, continuous motion; the numbers that shipped in the report. 6 / 15 missions.",
+              date: "MAR 2026",
+            },
+            {
+              rev: "B",
+              tone: "red",
+              description:
+                "Rebuilt and calibrated to the real robot — 0.3 m/s, 73° FOV, ~13 s/item. Every navigation number on this page. 15 / 15 missions.",
+              date: "JUN 2026",
+            },
+          ]}
           caption="Same algorithm family, honest dynamics — the re-baseline cost the headline number and bought one I can defend line by line."
+          className="breakout"
         />
         <p>
           reclaim_v2 is an event-driven executive over four behaviors — SCAN, COLLECT,
@@ -438,7 +416,7 @@ export default function Page() {
           ]}
           caption="Event-driven executive — it re-decides only on events (item picked, scan finished, path blocked), never per tick, so targets switch at plan boundaries instead of oscillating between goals. Transitions are priority-arbitrated; the primary path is shown."
         />
-        <ul className="space-y-3 pl-5 list-disc">
+        <ul className="list-disc space-y-3 pl-5">
           <li>
             <strong>Commits, doesn&apos;t thrash.</strong> The executive re-decides only
             on events — item picked, scan finished, path blocked — never per-tick, so
@@ -475,7 +453,6 @@ export default function Page() {
             href="https://reclaim-nav-sim.vercel.app"
             target="_blank"
             rel="noreferrer"
-            className="text-accent underline-offset-4 hover:underline"
           >
             interactive 3D demo ↗
           </a>
@@ -501,22 +478,18 @@ export default function Page() {
           intervention. The cohort awarded the project 3rd place overall, and 1st in the
           AI division.
         </p>
-        <figure className="mt-6 mx-auto max-w-md overflow-hidden rounded-xl border border-border">
-          <Image
-            src="/projects/reclaim/demo.jpg"
-            alt="The RECLAIM prototype on the showcase floor with status monitors in the background showing the SCAN phase of the state machine."
-            width={768}
-            height={1024}
-            className="w-full h-auto"
-          />
-          <figcaption className="px-4 py-3 text-xs text-muted border-t border-border bg-background">
-            Prototype on the showcase floor. Status monitors (background) show the state machine in the SCAN phase.
-          </figcaption>
-        </figure>
+        <FigurePlate
+          src="/projects/reclaim/demo.jpg"
+          alt="The RECLAIM prototype on the showcase floor with status monitors in the background showing the SCAN phase of the state machine."
+          caption="Prototype on the showcase floor. Status monitors (background) show the state machine in the SCAN phase."
+          width={768}
+          height={1024}
+          className="mx-auto max-w-md"
+        />
       </Section>
 
       <Section title="Tech stack">
-        <TechRow
+        <EquipList
           items={[
             "ROS2 Humble",
             "Python",
@@ -560,6 +533,6 @@ export default function Page() {
           — cost me the headline number and bought a result I can defend line by line.
         </p>
       </Section>
-    </CaseStudyShell>
+    </SheetShell>
   );
 }

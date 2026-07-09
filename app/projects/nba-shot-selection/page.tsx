@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import {
-  CaseStudyShell,
+  SheetShell,
   Section,
-  Metric,
-  MetricGrid,
-  TechRow,
-  StatusBadge,
-  Figure,
-  Artifact,
+  CalloutStrip,
   Callout,
-} from "../_components/case-study";
-import {
-  VideoPlaceholder,
+  LiveBar,
+  RefRow,
+  Ref,
+  RevBlock,
+  Stamp,
+  NoteBlock,
+  EquipList,
+  FigurePlate,
+  PlaceholderPlate,
   DeepSetsDiagram,
   MetricBars,
-} from "../../_components/visuals";
+} from "../_components/sheet";
 
 export const metadata: Metadata = {
   title: "NBA Shot Selection — Offline RL (audited & regrounded)",
@@ -32,89 +32,74 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CaseStudyShell
+    <SheetShell
+      sheetNo="03"
+      sheetCount="06"
       eyebrow="Reinforcement Learning · PyTorch"
       title="NBA Shot Selection — Offline RL on Real Tracking Data"
       tagline="A Dueling Deep Q-Network with a per-entity Deep Sets architecture, trained on 116,928 real NBA possessions to call shoot-or-pass. It first looked ~6× better than NBA players — then I audited it until it broke: the headline metric was circular and the data was corrupt. Repaired and regrounded on real shot outcomes, the agent now out-selects NBA shot decisions by +0.19–0.32 points-per-shot on held-out games — a genuine, honestly-scoped result."
       meta="AISE 4030 Reinforcement Learning · Western Engineering · April 2026"
+      status={[
+        { label: "Course project — April 2026", tone: "ink" },
+        { label: "Live demo", tone: "red", pulse: true },
+      ]}
     >
-      <div className="flex flex-wrap gap-2">
-        <StatusBadge tone="neutral">Course project — completed April 2026</StatusBadge>
-        <StatusBadge tone="accent">Live demo</StatusBadge>
-      </div>
-
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Out-selects NBA by"
-            value="+0.19 to +0.32"
-            hint="points per shot, held-out real outcomes (19,944 shots, NBA PPP 1.023) — all 5 non-degenerate configs clear it"
-            accent
-          />
-          <Metric
-            label="Learned edge vs heuristic"
-            value="~+0.06 PPP"
-            hint="statistically significant over a 'shoot the best threes' rule in 4 of 5 configs (bootstrap CI excludes 0)"
-          />
-          <Metric
-            label="Shot-quality model AUC"
-            value="0.733"
-            hint="standalone supervised model, with play-by-play; 0.672 from tracking features alone"
-          />
-          <Metric
-            label="The flip"
-            value="anti → out-select"
-            hint="the original circular-reward agents anti-selected (−0.09) on real outcomes; the regrounded agents out-select"
-          />
-          <Metric
-            label="Possessions trained on"
-            value="116,928"
-            hint="636 games · 2015-16 SportVU · repaired 'v2' substrate"
-          />
-          <Metric
-            label="Evaluation"
-            value="One-sided, held-out"
-            hint="game-level split; realized PPP on shots the greedy policy would take vs NBA behavior — judges shot selection, not the pass counterfactual"
-          />
-        </MetricGrid>
-      </Section>
-
-      <a
-        href="https://nba-rl-sim.vercel.app"
-        target="_blank"
-        rel="noreferrer"
-        className="glass rounded-xl p-5 group flex items-center gap-4 transition-colors hover:border-accent/40"
-      >
-        <span className="min-w-0 flex-1">
-          <span className="eyebrow block text-accent">
-            Live possession explorer · runs in your browser
-          </span>
-          <span className="mt-1.5 block font-display text-lg font-semibold tracking-tight sm:text-xl">
-            Watch the agent call shoot-or-pass on real NBA possessions — then drag
-            a defender and watch it change its mind
-          </span>
-          <span className="mt-1.5 block font-mono text-xs text-muted">
-            held-out possessions · what-if mode · the trained network runs
-            client-side
-          </span>
-        </span>
-        <ArrowUpRight
-          size={16}
-          className="shrink-0 text-faint transition-all group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+      <CalloutStrip className="breakout">
+        <Callout
+          label="Out-selects NBA by"
+          value="+0.19 to +0.32"
+          hint="points per shot, held-out real outcomes (19,944 shots, NBA PPP 1.023) — all 5 non-degenerate configs clear it"
+          accent
         />
-      </a>
+        <Callout
+          label="Learned edge vs heuristic"
+          value="~+0.06 PPP"
+          hint="statistically significant over a 'shoot the best threes' rule in 4 of 5 configs (bootstrap CI excludes 0)"
+        />
+        <Callout
+          label="Shot-quality model AUC"
+          value="0.733"
+          hint="standalone supervised model, with play-by-play; 0.672 from tracking features alone"
+        />
+        <Callout
+          label="The flip"
+          value="anti → out-select"
+          hint="the original circular-reward agents anti-selected (−0.09) on real outcomes; the regrounded agents out-select"
+        />
+        <Callout
+          label="Possessions trained on"
+          value="116,928"
+          hint="636 games · 2015-16 SportVU · repaired 'v2' substrate"
+        />
+        <Callout
+          label="Evaluation"
+          value="One-sided, held-out"
+          hint="game-level split; realized PPP on shots the greedy policy would take vs NBA behavior — judges shot selection, not the pass counterfactual"
+        />
+      </CalloutStrip>
 
-      <VideoPlaceholder
+      <LiveBar
+        href="https://nba-rl-sim.vercel.app"
+        kicker="Live possession explorer · runs in your browser"
+        title="Watch the agent call shoot-or-pass on real NBA possessions — then drag a defender and watch it change its mind"
+        sub="held-out possessions · what-if mode · the trained network runs client-side"
+      />
+
+      {/* swap for: screen recording of the nba-rl-sim what-if mode (defender drag → Q(shoot) collapses to a pass) */}
+      <PlaceholderPlate
+        kind="VIDEO"
         title="Drag a defender, watch it change its mind"
         covers="screen-capture of the what-if mode — slide a defender onto the ball-handler and Q(shoot) collapses to a pass, live in the browser"
-        lengthHint="≈ 55s"
+        note="≈ 55s"
       />
 
-      <Artifact
-        href="https://github.com/issaa71/nba-rl-sim"
-        label="Explorer source code · GitHub"
-        detail="TypeScript inference engine matching the Python pipeline within 1e-6 on features and 1e-4 on Q-values — 250-vector parity suite, MIT"
-      />
+      <RefRow>
+        <Ref
+          href="https://github.com/issaa71/nba-rl-sim"
+          label="Explorer source code · GitHub"
+          detail="TypeScript inference engine matching the Python pipeline within 1e-6 on features and 1e-4 on Q-values — 250-vector parity suite, MIT"
+        />
+      </RefRow>
 
       <Section title="Problem">
         <p>
@@ -168,14 +153,42 @@ export default function Page() {
           <em>worse</em> than the players&apos; own choices (−0.09 PPP). The 6× win was
           an artifact, top to bottom.
         </p>
-        <Figure
-          src="/projects/nba-shot-selection/final-performance.png"
-          alt="Bar chart of the retired shot-quality EPSA metric: random and always-shoot near zero, NBA players slightly positive, baseline DQN higher, Dueling DQN highest"
-          caption="The retired headline. On the circular EPSA metric the agent looked ~6× better than NBA players (+0.273 vs +0.044) — but EPSA reused the same EPV proxy the agent was trained on, so it couldn't falsify the policy. Re-scored on real shot outcomes, these same agents anti-selected (−0.09). This chart is kept only to show what the audit threw out; the outcome-grounded results below replace it."
-          width={3000}
-          height={1800}
-          plate
+        {/* RevBlock added in the redesign — the two row descriptions are the only new
+            strings on this page; every fact is drawn verbatim from the prose above + tagline. */}
+        <RevBlock
+          context="Headline metric"
+          rows={[
+            {
+              rev: "A",
+              tone: "ink",
+              description:
+                "EPSA +0.273 vs +0.044 — ~6× NBA players. Circular: scored by the same EPV proxy the agent was trained on. Retired.",
+              date: "APR 2026",
+            },
+            {
+              rev: "B",
+              tone: "red",
+              description:
+                "Regrounded on real shot outcomes: out-selects NBA shot decisions by +0.19–0.32 points per shot on held-out games.",
+            },
+          ]}
         />
+        <div className="relative breakout">
+          <FigurePlate
+            src="/projects/nba-shot-selection/final-performance.png"
+            alt="Bar chart of the retired shot-quality EPSA metric: random and always-shoot near zero, NBA players slightly positive, baseline DQN higher, Dueling DQN highest"
+            caption="The retired headline. On the circular EPSA metric the agent looked ~6× better than NBA players (+0.273 vs +0.044) — but EPSA reused the same EPV proxy the agent was trained on, so it couldn't falsify the policy. Re-scored on real shot outcomes, these same agents anti-selected (−0.09). This chart is kept only to show what the audit threw out; the outcome-grounded results below replace it."
+            width={3000}
+            height={1800}
+            plate
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-3 top-3 z-10 rotate-[-6deg]"
+          >
+            <Stamp tone="red">Superseded</Stamp>
+          </span>
+        </div>
       </Section>
 
       <Section title="The repair — clean data substrate + an outcome-grounded reward">
@@ -242,17 +255,19 @@ export default function Page() {
       </Section>
 
       <Section title="Results — re-evaluated on real outcomes">
-        <MetricBars
-          title="Out-selection over NBA — gap in points per shot (held-out)"
-          bars={[
-            { label: "NBA players (behavior baseline)", value: 0.0, display: "1.023 PPP" },
-            { label: "Dueling — model reward", value: 0.206, display: "+0.206" },
-            { label: "Dueling — outcome reward (100K)", value: 0.247, display: "+0.247" },
-            { label: "DQN — outcome reward (100K)", value: 0.251, display: "+0.251" },
-            { label: "Dueling — high selectivity bar", value: 0.324, display: "+0.324", accent: true },
-          ]}
-          caption="Realized points-per-shot on the shots each agent's greedy policy would take, minus NBA behavior PPP (1.023), over 19,944 held-out shots — game-level bootstrap with a select/confirm holdout. All five non-degenerate configs out-select NBA behavior (+0.19 to +0.32), a clean flip from the old circular-reward agents that anti-selected (−0.09). This is one-sided: the pass counterfactual is unobservable offline, so it judges shot selection, not pass or teammate choice."
-        />
+        <div className="breakout">
+          <MetricBars
+            title="Out-selection over NBA — gap in points per shot (held-out)"
+            bars={[
+              { label: "NBA players (behavior baseline)", value: 0.0, display: "1.023 PPP" },
+              { label: "Dueling — model reward", value: 0.206, display: "+0.206" },
+              { label: "Dueling — outcome reward (100K)", value: 0.247, display: "+0.247" },
+              { label: "DQN — outcome reward (100K)", value: 0.251, display: "+0.251" },
+              { label: "Dueling — high selectivity bar", value: 0.324, display: "+0.324", accent: true },
+            ]}
+            caption="Realized points-per-shot on the shots each agent's greedy policy would take, minus NBA behavior PPP (1.023), over 19,944 held-out shots — game-level bootstrap with a select/confirm holdout. All five non-degenerate configs out-select NBA behavior (+0.19 to +0.32), a clean flip from the old circular-reward agents that anti-selected (−0.09). This is one-sided: the pass counterfactual is unobservable offline, so it judges shot selection, not pass or teammate choice."
+          />
+        </div>
         <p>
           The honest follow-up question: is the agent doing anything cleverer than &quot;the
           three-pointer is worth more, so shoot more threes&quot;? Most of the +0.2 gap{" "}
@@ -264,7 +279,8 @@ export default function Page() {
           So there is a real, learned shot-selection edge beyond the trivial rule — modest,
           ~+0.06 PPP, but genuine and verified.
         </p>
-        <Figure
+        <FigurePlate
+          className="breakout"
           src="/projects/nba-shot-selection/decision-maps.png"
           alt="Heatmaps of learned shoot probability by court zone — high near the basket, suppressed in mid-range"
           caption="Decision maps from held-out test data — the agent concentrates shooting near the rim and on high-value threes while suppressing mid-range looks (15–30 ft, the worst EPV proposition in modern basketball), independently rediscovering modern shot-selection analytics."
@@ -289,7 +305,7 @@ export default function Page() {
         </p>
       </Section>
 
-      <Callout title="Honest caveats — what this is not">
+      <NoteBlock title="Honest caveats — what this is not">
         <ul className="space-y-2">
           <li>
             <strong>One-sided.</strong> The evaluation judges shot{" "}
@@ -312,10 +328,10 @@ export default function Page() {
             weights, and never trust a checkpoint the broken metric picked.
           </li>
         </ul>
-      </Callout>
+      </NoteBlock>
 
       <Section title="Tech stack">
-        <TechRow
+        <EquipList
           items={[
             "Python",
             "PyTorch",
@@ -336,10 +352,7 @@ export default function Page() {
           the audit. The most dangerous result in machine learning is the one that looks
           great, and the temptation to ship a single clean headline number (like the
           90.1% accuracy I&apos;d see clinical-ML papers cite — see the{" "}
-          <Link
-            href="/projects/tha-pain-prediction"
-            className="text-accent underline-offset-4 hover:underline"
-          >
+          <Link href="/projects/tha-pain-prediction">
             <em>THA Pain Prediction</em>
           </Link>{" "}
           case study for that one) is precisely when you should try hardest to falsify it.
@@ -355,6 +368,6 @@ export default function Page() {
           hype.
         </p>
       </Section>
-    </CaseStudyShell>
+    </SheetShell>
   );
 }

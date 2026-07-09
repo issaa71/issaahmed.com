@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import {
-  CaseStudyShell,
+  SheetShell,
   Section,
-  Metric,
-  MetricGrid,
-  Artifact,
-  ArtifactRow,
-  StatusBadge,
-} from "../_components/case-study";
-import { VideoPlaceholder, Timeline } from "../../_components/visuals";
+  CalloutStrip,
+  Callout,
+  Timeline,
+  RefRow,
+  Ref,
+  PlaceholderPlate,
+} from "../_components/sheet";
 
 export const metadata: Metadata = {
   title: "No Fly List Kids — Federal Advocacy",
@@ -25,63 +25,67 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CaseStudyShell
+    <SheetShell
+      sheetNo="06"
+      sheetCount="06"
       eyebrow="Policy · Communication · Coalition advocacy"
       title="No Fly List Kids — Federal Advocacy"
       tagline="A long-running federal advocacy campaign for Canadians wrongly flagged on the no-fly list — including me, since I was about five years old. The coalition I joined in 2017 contributed to the passage of Bill C-59 and an $81M federal budget allocation to build a redress system."
       meta="No Fly List Kids coalition · 2017 – present"
+      status={[{ label: "Bill C-59 — passed 2019", tone: "red" }]}
     >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="eyebrow text-faint">As featured in</span>
-          <Image
-            src="/press/toronto-star.svg"
-            alt="Toronto Star"
-            width={955}
-            height={110}
-            unoptimized
-            className="h-4 w-auto opacity-70"
-          />
-          <Image
-            src="/press/huffpost.svg"
-            alt="HuffPost"
-            width={720}
-            height={84}
-            unoptimized
-            className="h-4 w-auto opacity-70"
-          />
-          <span className="font-mono text-xs uppercase tracking-wider text-faint">
-            CTV News · Middle East Eye
-          </span>
-        </div>
-        <StatusBadge tone="accent">Bill C-59 — passed 2019</StatusBadge>
+      {/*
+        ASSET SWAP — when a broadcast still of Issa (a CTV / HuffPost interview
+        frame from the Bill C-59 coverage) is supplied, slot a <FigurePlate>
+        here, just below this press strip, in place of the placeholder video.
+      */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4">
+        <span className="anno">As featured in</span>
+        <Image
+          src="/press/toronto-star.svg"
+          alt="Toronto Star"
+          width={955}
+          height={110}
+          unoptimized
+          className="h-4 w-auto opacity-70"
+        />
+        <Image
+          src="/press/huffpost.svg"
+          alt="HuffPost"
+          width={720}
+          height={84}
+          unoptimized
+          className="h-4 w-auto opacity-70"
+        />
+        <span className="font-anno text-[11px] uppercase tracking-[0.14em] text-graphite">
+          CTV News · Middle East Eye
+        </span>
       </div>
 
-      <VideoPlaceholder
+      <PlaceholderPlate
+        kind="VIDEO"
         title="Grounded — flagged since age five"
         covers="first-person: what it's like to be wrongly on Canada's no-fly list as a kid, the Toronto Star op-ed I wrote at 16, and how the coalition won Bill C-59 and $81M in redress"
-        lengthHint="≈ 75s"
+        note="≈ 75s"
       />
 
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Legislation"
-            value="Bill C-59"
-            hint="Passed — National Security Act, 2017"
-          />
-          <Metric
-            label="Federal funding"
-            value="$81M"
-            hint="2018 budget — redress system build"
-          />
-          <Metric
-            label="Years of advocacy"
-            value="8+"
-            hint="member of the coalition since 2017"
-          />
-        </MetricGrid>
-      </Section>
+      <CalloutStrip>
+        <Callout
+          label="Legislation"
+          value="Bill C-59"
+          hint="Passed — National Security Act, 2017"
+        />
+        <Callout
+          label="Federal funding"
+          value="$81M"
+          hint="2018 budget — redress system build"
+        />
+        <Callout
+          label="Years of advocacy"
+          value="8+"
+          hint="member of the coalition since 2017"
+        />
+      </CalloutStrip>
 
       <Section title="How it unfolded">
         <Timeline
@@ -124,20 +128,20 @@ export default function Page() {
         />
       </Section>
 
-      <Section title="Artifacts">
-        <Artifact
-          href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
-          logo={{
-            src: "/press/toronto-star.svg",
-            alt: "Toronto Star",
-            width: 955,
-            height: 110,
-          }}
-          label="Toronto Star op-ed — written by me, age 16"
-          detail="“Grounded: What it’s like to be a No Fly List kid” · sole author"
-        />
-        <ArtifactRow>
-          <Artifact
+      <div>
+        <RefRow heading="Reference documents">
+          <Ref
+            href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
+            logo={{
+              src: "/press/toronto-star.svg",
+              alt: "Toronto Star",
+              width: 955,
+              height: 110,
+            }}
+            label="Toronto Star op-ed — written by me, age 16"
+            detail="“Grounded: What it’s like to be a No Fly List kid” · sole author"
+          />
+          <Ref
             href="https://www.huffpost.com/archive/ca/entry/no-fly-list-kids-bill-c59_ca_5d0b7fd8e4b06ad4d25c1077"
             logo={{
               src: "/press/huffpost.svg",
@@ -148,12 +152,12 @@ export default function Page() {
             label="HuffPost Canada — Bill C-59 passage"
             detail="Quoted + photographed at the Library of Parliament · June 2019"
           />
-        </ArtifactRow>
-        <p className="text-sm text-muted">
+        </RefRow>
+        <p className="mt-4 font-prose text-[13px] leading-relaxed text-ink-soft">
           The campaign — including my family — has also been covered by CTV News and
           Middle East Eye.
         </p>
-      </Section>
+      </div>
 
       <Section title="Context">
         <p>
@@ -225,6 +229,6 @@ export default function Page() {
           years. My contribution was alongside theirs, not in place of them.
         </p>
       </Section>
-    </CaseStudyShell>
+    </SheetShell>
   );
 }

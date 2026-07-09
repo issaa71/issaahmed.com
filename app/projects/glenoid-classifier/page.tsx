@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  CaseStudyShell,
+  SheetShell,
   Section,
-  Metric,
-  MetricGrid,
-  TechRow,
-  StatusBadge,
   Callout,
-  Figure,
-} from "../_components/case-study";
-import { FlowDiagram } from "../../_components/visuals";
+  CalloutStrip,
+  EquipList,
+  FigurePlate,
+  FlowDiagram,
+  NoteBlock,
+} from "../_components/sheet";
 import { GlenoidCalculator } from "./_calculator";
 
 export const metadata: Metadata = {
@@ -27,44 +26,47 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <CaseStudyShell
+    <SheetShell
+      sheetNo="04"
+      sheetCount="06"
       eyebrow="Clinical ML · Shoulder Orthopedics"
       title="Glenoid Morphology Classifier"
       tagline="A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification — the framework surgeons use to plan shoulder-replacement surgery. The trained model runs live, right here in your browser."
       meta="Solo project · 143 cases · Walch A/B/E types · Random Forest · runs client-side"
+      status={[
+        { label: "Live in-browser tool", tone: "red", pulse: true },
+        { label: "Research prototype — not for clinical use", tone: "ink" },
+      ]}
     >
-      <div className="flex flex-wrap gap-2">
-        <StatusBadge tone="accent">Live in-browser tool</StatusBadge>
-        <StatusBadge>Research prototype — not for clinical use</StatusBadge>
+      <CalloutStrip cols={4}>
+        <Callout
+          label="Healthy vs. diseased"
+          value="~91%"
+          hint="Normal-vs-Pathologic screen, AUC 0.98 — the robust, reproducible result"
+          accent
+        />
+        <Callout label="Labelled cases" value="143" hint="all six Walch classes represented" />
+        <Callout label="Walch classes" value="6" hint="Normal, A2, B2, B3, E2, E3" />
+        <Callout
+          label="Full 6-way (honest)"
+          value="~63%"
+          hint="end-to-end cross-validated; vs the report's 84% per-tier number — see Results"
+        />
+      </CalloutStrip>
+
+      <div id="calculator" className="scroll-mt-24">
+        <Section title="Try it — live Walch classifier">
+          <p>
+            This is the actual trained model, exported to run entirely in your browser — no server, no
+            upload, nothing leaves your device. Drag the six CT-derived measurements (or load a
+            reference case) and watch it walk the hierarchy: healthy-vs-diseased first, then the main
+            erosion type, then the subtype.
+          </p>
+          <div className="breakout">
+            <GlenoidCalculator />
+          </div>
+        </Section>
       </div>
-
-      <Section title="Headline">
-        <MetricGrid>
-          <Metric
-            label="Healthy vs. diseased"
-            value="~91%"
-            hint="Normal-vs-Pathologic screen, AUC 0.98 — the robust, reproducible result"
-            accent
-          />
-          <Metric label="Labelled cases" value="143" hint="all six Walch classes represented" />
-          <Metric label="Walch classes" value="6" hint="Normal, A2, B2, B3, E2, E3" />
-          <Metric
-            label="Full 6-way (honest)"
-            value="~63%"
-            hint="end-to-end cross-validated; vs the report's 84% per-tier number — see Results"
-          />
-        </MetricGrid>
-      </Section>
-
-      <Section title="Try it — live Walch classifier">
-        <p>
-          This is the actual trained model, exported to run entirely in your browser — no server, no
-          upload, nothing leaves your device. Drag the six CT-derived measurements (or load a
-          reference case) and watch it walk the hierarchy: healthy-vs-diseased first, then the main
-          erosion type, then the subtype.
-        </p>
-        <GlenoidCalculator />
-      </Section>
 
       <Section title="Problem">
         <p>
@@ -77,13 +79,8 @@ export default function Page() {
         </p>
         <p>
           It pairs naturally with my{" "}
-          <Link
-            href="/projects/tha-pain-prediction"
-            className="text-accent underline-offset-4 hover:underline"
-          >
-            peer-reviewed hip-arthroplasty work
-          </Link>{" "}
-          as a second musculoskeletal-ML piece — same instinct of turning clinical measurements into a
+          <Link href="/projects/tha-pain-prediction">peer-reviewed hip-arthroplasty work</Link> as a
+          second musculoskeletal-ML piece — same instinct of turning clinical measurements into a
           decision-support tool.
         </p>
       </Section>
@@ -125,7 +122,7 @@ export default function Page() {
           models the geometry a surgeon actually reads off the scan. An ANOVA confirmed subluxation and
           version were the most discriminative measurements (F ≈ 40, p &lt; 1e-18).
         </p>
-        <Figure
+        <FigurePlate
           src="/projects/glenoid-classifier/feature-importance-tier1.png"
           alt="Horizontal bar chart of Tier-1 feature importances: version highest, then the engineered area-to-radius ratio, then AP and SI subluxation."
           caption="What drives the healthy-vs-diseased screen: version leads, followed by the engineered area-to-radius ratio and the subluxation measures — confirming the geometry the feature engineering was built around."
@@ -142,7 +139,7 @@ export default function Page() {
           the tier I trust most, and it&apos;s the one a triage tool would lean on.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Figure
+          <FigurePlate
             src="/projects/glenoid-classifier/roc-tier1.png"
             alt="ROC curve for the Tier-1 Normal-vs-Pathologic classifier, area under the curve 0.98."
             caption="Tier 1 — Normal vs Pathologic. AUC 0.98: the healthy-vs-diseased screen separates cleanly, and this reproduces under proper cross-validation."
@@ -150,7 +147,7 @@ export default function Page() {
             height={480}
             plate
           />
-          <Figure
+          <FigurePlate
             src="/projects/glenoid-classifier/confusion-matrix.png"
             alt="Six-by-six confusion matrix of the tiered classifier across A2, B2, B3, E2, E3, and Normal — strong diagonal, confusion concentrated between B2/B3 and E2/E3."
             caption="The full 6-way confusion matrix from the report — 120/143 correct (83.9%). Normal is perfect and the errors cluster where they should clinically: B2↔B3 and E2↔E3."
@@ -159,7 +156,7 @@ export default function Page() {
             plate
           />
         </div>
-        <Callout title="Per-tier 84% vs. end-to-end 63% — the honest read">
+        <NoteBlock title="Per-tier 84% vs. end-to-end 63% — the honest read">
           My report headlines <strong>83.9%</strong> overall, and that number is real — it&apos;s the{" "}
           <em>per-tier</em> accuracy, where each stage is scored on the cases that truly belong to it
           (the confusion matrix above). But when the tiers actually <em>chain</em> in a live tool — Tier
@@ -169,16 +166,10 @@ export default function Page() {
           honest end-to-end version, which is why its confidence is candid about the harder subtype
           calls. It&apos;s the same &quot;pick the metric that reflects what was actually learned&quot;
           discipline I bring to my{" "}
-          <Link href="/projects/tha-pain-prediction" className="text-accent underline-offset-4 hover:underline">
-            hip-pain
-          </Link>{" "}
-          and{" "}
-          <Link href="/projects/nba-shot-selection" className="text-accent underline-offset-4 hover:underline">
-            NBA
-          </Link>{" "}
-          models.
-        </Callout>
-        <Figure
+          <Link href="/projects/tha-pain-prediction">hip-pain</Link> and{" "}
+          <Link href="/projects/nba-shot-selection">NBA</Link> models.
+        </NoteBlock>
+        <FigurePlate
           src="/projects/glenoid-classifier/model-comparison.png"
           alt="Bar chart comparing flat classifiers on main-type vs detailed-type accuracy; detailed-type is markedly lower, motivating the tiered approach."
           caption="Why tier at all: a single flat classifier tops out around 78% on main types and ~64% on the full detailed types. Breaking the problem into staged decisions is what makes the healthy-vs-diseased screen so strong."
@@ -189,7 +180,7 @@ export default function Page() {
       </Section>
 
       <Section title="Tech stack">
-        <TechRow
+        <EquipList
           items={[
             "Python",
             "scikit-learn",
@@ -214,6 +205,6 @@ export default function Page() {
           point.
         </p>
       </Section>
-    </CaseStudyShell>
+    </SheetShell>
   );
 }
