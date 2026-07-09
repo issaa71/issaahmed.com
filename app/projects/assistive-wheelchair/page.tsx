@@ -41,10 +41,9 @@ export default function Page() {
         src="/projects/assistive-wheelchair/robot-driving.jpg"
         alt="The robot mid-run inside a white foam-board test arena, with yellow QR waypoint markers on the walls and floor."
         caption="The robot mid-run in my test arena. The yellow markers are the QR checkpoints it scans to confirm which room it has reached."
-        width={720}
-        height={1130}
+        width={1130}
+        height={720}
         priority
-        className="mx-auto max-w-md"
       />
 
       <CalloutStrip cols={4}>
