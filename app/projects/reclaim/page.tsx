@@ -80,8 +80,8 @@ export default function Page() {
         />
         <Callout
           label="Showcase run"
-          value="0 interventions"
-          hint="6 waste classes, full scan→detect→drive→pick→sort cycles — March 26, 2026"
+          value="0"
+          hint="manual interventions — 6 waste classes, full scan → detect → drive → pick → sort cycles, March 26 2026"
         />
         <Callout
           label="Placement"
@@ -105,7 +105,7 @@ export default function Page() {
           label="Product hardware"
           items={[
             { name: "Livox Mid-360", role: "3D LiDAR — SLAM + navigation" },
-            { name: "6-DOF arm", role: "pick-and-place; MoveIt2 motion planning" },
+            { name: "6-DOF arm", role: "MoveIt2 pick-and-place — product spec (prototype: 4-DOF)" },
             { name: "Jetson Orin NX", role: "onboard compute; runs every ROS2 node" },
             { name: "STM32F405", role: "CAN-bus actuator control" },
             { name: "Onboard battery", role: "untethered power for compute + drive" },
@@ -407,25 +407,25 @@ export default function Page() {
         />
         <ul className="list-disc space-y-3 pl-5">
           <li>
-            <strong>Commits, doesn&apos;t thrash.</strong> The executive re-decides only
+            <strong>Commits, doesn&apos;t thrash.</strong>{" "}The executive re-decides only
             on events — item picked, scan finished, path blocked — never per-tick, so
             target switches happen at plan boundaries instead of oscillating between goals.
           </li>
           <li>
-            <strong>SCAN — frontier exploration.</strong> Scan viewpoints sit on the seen
+            <strong>SCAN — frontier exploration.</strong>{" "}Scan viewpoints sit on the seen
             side of the fog boundary, scored by unseen cells revealed per unit of
             travel-plus-scan time, with a directed pivot scan on arrival (0.25 rad/s around
             the left wheel, like the real robot).
           </li>
           <li>
-            <strong>COLLECT — exact routing where it&apos;s affordable.</strong> Batches of
+            <strong>COLLECT — exact routing where it&apos;s affordable.</strong>{" "}Batches of
             ≤7 items are routed exactly (Held-Karp) over true A* path distances; larger
             batches use nearest-neighbor + 2-opt. Dump-station stops are inserted at the
             tour boundary that adds the least detour, computed in closed form from an
             init-time Dijkstra field.
           </li>
           <li>
-            <strong>Motion + recovery.</strong> Pure-pursuit driving with acceleration
+            <strong>Motion + recovery.</strong>{" "}Pure-pursuit driving with acceleration
             limits matching the real drivetrain, plus a watchdog recovery ladder — 3
             consecutive A* failures requeues the item, 6 abandons and logs it — so one
             unreachable item can never hang a mission.

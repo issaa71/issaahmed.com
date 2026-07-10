@@ -51,7 +51,7 @@ export default function Page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <SheetShell
-        sheetNo="05"
+        sheetNo="03"
         sheetCount="06"
         eyebrow="Applied ML · Peer-reviewed Research"
         title="Predicting Long-Term Pain After Total Hip Replacement"
@@ -144,7 +144,7 @@ export default function Page() {
         </Section>
 
         <Section title="From the paper">
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid items-start gap-4 sm:grid-cols-2">
             <FigurePlate
               src="/projects/tha-pain-prediction/paper-fig4-catboost-importances.png"
               alt="Bar charts of CatBoost top-10 feature importances at 3 and 5 years: preoperative pain-perception items, age, BMI, length of stay, and back/neck history dominate."
@@ -183,7 +183,7 @@ export default function Page() {
             <strong>up to 23% of patients still report chronic postoperative pain</strong>,
             which contributes to higher opioid use, readmission rates, and worse overall
             outcomes. Identifying patients at higher risk of persistent pain{" "}
-            <em>preoperatively</em> is a critical clinical challenge: surgeons currently
+            <em>preoperatively</em>{" "}is a critical clinical challenge: surgeons currently
             have no validated tool to estimate this risk, and traditional regression models
             have struggled to capture the non-linear relationships that drive the outcome.
           </p>
@@ -243,7 +243,7 @@ export default function Page() {
             regressor served as the floor-comparison baseline.
           </p>
           <p>
-            <strong>Training protocol.</strong> Stratified 80/20 train/test split, taken
+            <strong>Training protocol.</strong>{" "}Stratified 80/20 train/test split, taken
             within each timepoint&apos;s outcome-complete subset: of the 513 eligible
             patients, the 3-year model used the 355 with a recorded T3 outcome (283 train /
             72 test) and the 5-year model the 459 with a T5 outcome (366 / 93). GridSearchCV
@@ -251,7 +251,7 @@ export default function Page() {
             once final hyperparameters were locked. Deep models used Adam with batch size 128.
           </p>
           <p>
-            <strong>Feature importance.</strong> Four complementary methods (Spearman
+            <strong>Feature importance.</strong>{" "}Four complementary methods (Spearman
             correlation, Kruskal–Wallis, Random Forest importance, recursive feature
             elimination) were combined via cross-validated rank aggregation to identify
             the variables that drove the top-performing models. Age, BMI, history of back
@@ -269,7 +269,7 @@ export default function Page() {
             note="≈ 50s"
           />
           <p>
-            <strong>Non-linear models won decisively at both timepoints.</strong> Across
+            <strong>Non-linear models won decisively at both timepoints.</strong>{" "}Across
             all four metrics, CatBoost, Random Forest, and KNN were the most consistent top
             performers — KNN took the lowest 3-year MSE (2.70), CatBoost the lowest at 5
             years (4.11). Linear models (Linear Regression and Elastic Net) had higher MSE
@@ -286,7 +286,7 @@ export default function Page() {
             second (4.30).
           </p>
           <p>
-            <strong>An honest caveat on the 90.1% classification accuracy.</strong> The
+            <strong>An honest caveat on the 90.1% classification accuracy.</strong>{" "}The
             paper reports 90.1% classification accuracy across the low / moderate / high
             pain categories — but this number was also reached by the mean regressor,
             reflecting the heavy class imbalance in the dataset (most patients report

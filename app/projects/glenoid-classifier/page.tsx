@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <SheetShell
-      sheetNo="04"
+      sheetNo="05"
       sheetCount="06"
       eyebrow="Clinical ML · Shoulder Orthopedics"
       title="Glenoid Morphology Classifier"
@@ -103,7 +103,7 @@ export default function Page() {
 
       <Section title="Problem">
         <p>
-          The <strong>Walch classification</strong> is the standard framework orthopedic surgeons use
+          The <strong>Walch classification</strong>{" "}is the standard framework orthopedic surgeons use
           to describe how a glenoid — the shoulder&apos;s socket — has eroded and deformed in
           arthritis, and it directly drives how a shoulder replacement is planned. Assigning a Walch
           type is normally a manual, expertise-dependent read of a CT scan. This project asks a
@@ -148,7 +148,7 @@ export default function Page() {
           per stage.
         </p>
         <p>
-          <strong>Domain-grounded feature engineering.</strong> From four measured inputs — version,
+          <strong>Domain-grounded feature engineering.</strong>{" "}From four measured inputs — version,
           inclination, and anterior-posterior / superior-inferior subluxation — plus glenoid surface
           area and sphere radius, the pipeline derives a subluxation index and an area-to-radius ratio.
           Encoding subluxation and version as vectors and ratios, rather than raw numbers, hands the
@@ -190,11 +190,11 @@ export default function Page() {
           />
         </div>
         <NoteBlock title="Per-tier 84% vs. end-to-end 63% — the honest read">
-          My report headlines <strong>83.9%</strong> overall, and that number is real — it&apos;s the{" "}
-          <em>per-tier</em> accuracy, where each stage is scored on the cases that truly belong to it
-          (the confusion matrix above). But when the tiers actually <em>chain</em> in a live tool — Tier
+          My report headlines <strong>83.9%</strong>{" "}overall, and that number is real — it&apos;s the{" "}
+          <em>per-tier</em>{" "}accuracy, where each stage is scored on the cases that truly belong to it
+          (the confusion matrix above). But when the tiers actually <em>chain</em>{" "}in a live tool — Tier
           1&apos;s prediction, not the ground truth, decides whether Tier 2 even runs — early misroutes
-          cascade, and a proper end-to-end cross-validation lands at <strong>~63%</strong> on the full
+          cascade, and a proper end-to-end cross-validation lands at <strong>~63%</strong>{" "}on the full
           6-way task. Both are legitimate; they measure different things. The calculator above runs the
           honest end-to-end version, which is why its confidence is candid about the harder subtype
           calls. It&apos;s the same &quot;pick the metric that reflects what was actually learned&quot;

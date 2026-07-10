@@ -38,7 +38,7 @@ export const SHEETS: Sheet[] = [
     category: "Robotics · ROS2 · Computer Vision",
     role: "Team of 4 — I owned perception + control",
     specs: [
-      { label: "Nav missions", value: "15/15 (re-benchmark)" },
+      { label: "Nav missions", value: "15/15 (sim re-benchmark)" },
       { label: "Perception", value: "30 FPS on Jetson" },
       { label: "Placement", value: "3rd overall · 1st in AI division" },
     ],

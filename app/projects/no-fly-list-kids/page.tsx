@@ -69,7 +69,7 @@ export default function Page() {
         note="≈ 75s"
       />
 
-      <CalloutStrip>
+      <CalloutStrip className="[&>*:last-child]:col-span-2 md:[&>*:last-child]:col-span-1">
         <Callout
           label="Legislation"
           value="Bill C-59"
@@ -180,9 +180,9 @@ export default function Page() {
       <Section title="What we asked for">
         <p>
           The campaign had two concrete asks of the federal government: <strong>(1)
-          a redress system</strong> that lets affected travellers obtain a unique
+          a redress system</strong>{" "}that lets affected travellers obtain a unique
           identifier to bypass the false match, and <strong>(2) sufficient funding
-          and legislative authority</strong> to build it. Existing US redress systems
+          and legislative authority</strong>{" "}to build it. Existing US redress systems
           (DHS TRIP) were the reference point — Canada needed an equivalent that
           worked at the airline check-in level rather than requiring travellers to
           re-prove their identity at every flight.
@@ -201,13 +201,13 @@ export default function Page() {
             like to be a No Fly List kid,&rdquo; written at 16. (Artifact link below.)
           </li>
           <li>
-            <strong>Broadcast and print interviews</strong> on CTV News, HuffPost Canada,
+            <strong>Broadcast and print interviews</strong>{" "}on CTV News, HuffPost Canada,
             Middle East Eye, and other outlets, sharing what it is like to be flagged
             as a security risk at a young age and how the false-positive system shapes
             Canadians&apos; everyday travel.
           </li>
           <li>
-            <strong>Parliament Hill testimony and advocacy.</strong> Coalition members
+            <strong>Parliament Hill testimony and advocacy.</strong>{" "}Coalition members
             engaged directly with the Prime Minister&apos;s Office, Public Safety
             Minister Bill Blair, Cabinet Ministers, and cross-party MPs across multiple
             Parliament Hill days.
@@ -217,9 +217,9 @@ export default function Page() {
 
       <Section title="Outcomes">
         <p>
-          <strong>Bill C-59 (National Security Act, 2017)</strong> passed in 2019 with
+          <strong>Bill C-59 (National Security Act, 2017)</strong>{" "}passed in 2019 with
           explicit provisions to support a redress system. The 2018 federal budget
-          allocated <strong>$81.4 million</strong> over five years for redress
+          allocated <strong>$81.4 million</strong>{" "}over five years for redress
           implementation, with $8 million in the first year. The coalition continues to
           monitor implementation and advocate for individuals still affected.
         </p>

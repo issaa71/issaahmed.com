@@ -57,9 +57,9 @@ function SheetIndex() {
     >
       <h2 className="anno-red">Projects</h2>
       <p className="mt-3 max-w-2xl font-prose text-[15.5px] leading-relaxed text-ink-soft">
-        Six projects I built and shipped — two autonomous robots, an offline-RL
-        agent, two clinical ML tools, and a federal advocacy campaign. Open any
-        sheet for the full story.
+        Six projects — five I designed and built, one I fought for: two
+        autonomous robots, an offline-RL agent, two clinical ML tools, and a
+        federal advocacy campaign. Open any sheet for the full story.
       </p>
 
       <ProjectGrid />

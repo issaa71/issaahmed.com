@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <SheetShell
-      sheetNo="03"
+      sheetNo="04"
       sheetCount="06"
       eyebrow="Reinforcement Learning · PyTorch"
       title="NBA Shot Selection — Offline RL on Real Tracking Data"
@@ -144,7 +144,7 @@ export default function Page() {
           tracking data, can outperform the actual decisions NBA players made.
         </p>
         <p>
-          This is an <strong>offline RL</strong> problem with three pathologies that
+          This is an <strong>offline RL</strong>{" "}problem with three pathologies that
           break standard DQN: (1) the agent learns entirely from a fixed dataset and
           cannot explore, (2) the four pass actions are variable-identity — the same
           action index points to a different teammate at every timestep, depending on
@@ -161,29 +161,29 @@ export default function Page() {
         <p>
           The first version of this project produced a headline I was proud of: a
           shot-quality metric (EPSA — expected points per shot attempt above league
-          average) on which the Dueling agent scored <strong>+0.273</strong> versus{" "}
-          <strong>+0.044</strong> for NBA players&apos; actual choices — roughly{" "}
+          average) on which the Dueling agent scored <strong>+0.273</strong>{" "}versus{" "}
+          <strong>+0.044</strong>{" "}for NBA players&apos; actual choices — roughly{" "}
           <strong>6× better</strong>. It was the kind of clean, citable number that ends
           a slide deck. So I tried to break it instead.
         </p>
         <p>Two things broke:</p>
         <p>
-          <strong>The metric was circular.</strong> EPSA scored shots using the same
+          <strong>The metric was circular.</strong>{" "}EPSA scored shots using the same
           contest-adjusted Expected-Points-Value (EPV) proxy that the agent was{" "}
-          <em>rewarded</em> on during training. The agent wasn&apos;t being measured
+          <em>rewarded</em>{" "}on during training. The agent wasn&apos;t being measured
           against reality — it was being graded by the very function it was optimizing,
           so a high score was nearly guaranteed and couldn&apos;t falsify the policy. A
           circular metric can&apos;t be wrong, which is exactly what makes it worthless.
         </p>
         <p>
-          <strong>The data was corrupt.</strong> Auditing the 78-dimensional possession
+          <strong>The data was corrupt.</strong>{" "}Auditing the 78-dimensional possession
           features surfaced two silent bugs: distance-to-basket was measured to the
           wrong basket on a chunk of possessions, and the &quot;terminal&quot; state was
           the last 2 Hz tracking sample of the possession rather than the actual shot
           release. When I re-scored the celebrated agents on{" "}
           <em>real logged shot outcomes</em>, the verdict inverted: they{" "}
           <strong>anti-selected</strong> — endorsing shots that went on to score{" "}
-          <em>worse</em> than the players&apos; own choices (−0.09 PPP). The 6× win was
+          <em>worse</em>{" "}than the players&apos; own choices (−0.09 PPP). The 6× win was
           an artifact, top to bottom.
         </p>
         {/* RevBlock added in the redesign — the two row descriptions are the only new
@@ -233,14 +233,14 @@ export default function Page() {
           <strong>leak-free</strong>. I regenerated all 636 games into a corrected
           substrate (<code>processed_possessions_v2</code>) and gated it on basketball
           sanity: shots beyond 30 ft at 4.5%, three-point rate ~30%, FG% monotonically
-          decreasing with distance, and <strong>100% agreement</strong> between the
+          decreasing with distance, and <strong>100% agreement</strong>{" "}between the
           derived made/missed flag and the play-by-play log.
         </p>
         <p>
           The reward was regrounded on reality. The circular PBRS/EPV proxy was replaced
-          with <strong>real points</strong> at the logged terminal shot, minus a constant
+          with <strong>real points</strong>{" "}at the logged terminal shot, minus a constant
           selectivity bar so the agent is penalized for endorsing below-average looks.
-          Critically, passing earns <em>no</em> shaped teammate-EPV bonus — its value flows
+          Critically, passing earns <em>no</em>{" "}shaped teammate-EPV bonus — its value flows
           only through the Q-bootstrap from whatever terminal shot it leads to — which
           removes the last circular shortcut. Then I retrained six configurations from
           scratch on the clean data.
@@ -266,7 +266,7 @@ export default function Page() {
       <Section title="Approach — Dueling decomposition with type-aware normalization">
         <p>
           The Dueling architecture decomposes Q(s,a) = V(s) + A(s,a) − mean(A). The
-          standard mean-subtraction biases the network <em>against</em> shooting when
+          standard mean-subtraction biases the network <em>against</em>{" "}shooting when
           there are four pass actions and one shoot action — the mean is dominated by
           the pass group. The fix is type-aware advantage normalization: pass advantages
           are mean-centered within the pass group only, while the shoot advantage is
@@ -304,7 +304,7 @@ export default function Page() {
         <p>
           The honest follow-up question: is the agent doing anything cleverer than &quot;the
           three-pointer is worth more, so shoot more threes&quot;? Most of the +0.2 gap{" "}
-          <em>is</em> that three-point-value effect, which a one-line &quot;shoot the best
+          <em>is</em>{" "}that three-point-value effect, which a one-line &quot;shoot the best
           threes&quot; rule also captures. But measured against that exact heuristic,{" "}
           <strong>4 of 5 configs beat it by a statistically significant margin</strong>{" "}
           (bootstrap CI excludes zero): the high-selectivity agent by +0.094, the two
@@ -323,17 +323,17 @@ export default function Page() {
         />
         <p>
           Selectivity, not volume, is the lever. The strongest agent (high selectivity
-          bar) shoots on only <strong>13.4%</strong> of decision points — an &quot;only
+          bar) shoots on only <strong>13.4%</strong>{" "}of decision points — an &quot;only
           fire on elite looks&quot; policy that lifts realized PPP to 1.347 — while the
           model-reward agent shoots 38.5% at +0.206. Different points on the same
           selectivity frontier, all above the player baseline.
         </p>
         <p>
-          <strong>A standalone deliverable came out of the same data.</strong> Separate
+          <strong>A standalone deliverable came out of the same data.</strong>{" "}Separate
           from the RL agent, I trained a supervised <strong>shot-quality model</strong>{" "}
           that predicts make probability from the pre-shot state. It reaches{" "}
-          <strong>AUC 0.672</strong> from tracking features alone and{" "}
-          <strong>0.733</strong> once play-by-play context is added — a clean, verified
+          <strong>AUC 0.672</strong>{" "}from tracking features alone and{" "}
+          <strong>0.733</strong>{" "}once play-by-play context is added — a clean, verified
           model that&apos;s useful on its own as a shot-difficulty estimator.
         </p>
       </Section>
@@ -341,12 +341,12 @@ export default function Page() {
       <NoteBlock title="Honest caveats — what this is not">
         <ul className="space-y-2">
           <li>
-            <strong>One-sided.</strong> The evaluation judges shot{" "}
-            <em>selection</em> only — the counterfactual value of a pass is unobservable
+            <strong>One-sided.</strong>{" "}The evaluation judges shot{" "}
+            <em>selection</em>{" "}only — the counterfactual value of a pass is unobservable
             offline, so this is not a claim about full possession value or teammate choice.
           </li>
           <li>
-            <strong>One config genuinely failed — and I kept it in the table.</strong> A
+            <strong>One config genuinely failed — and I kept it in the table.</strong>{" "}A
             BCQ variant collapsed to <strong>99.9% always-shoot</strong>. Empirically, its
             behavior-cloning head put ~99.9% probability on SHOOT at essentially every
             state, so the BCQ feasibility mask admitted only one action (1.00 of 5 on
@@ -354,7 +354,7 @@ export default function Page() {
             near-degenerate action distribution, not a reward bug.
           </li>
           <li>
-            <strong>Training budget mattered, and checkpoints lied.</strong> The plain
+            <strong>Training budget mattered, and checkpoints lied.</strong>{" "}The plain
             outcome agents only earned their significant edge once trained to the full
             100K episodes; a mid-training &quot;best-eval&quot; checkpoint — selected by the
             old circular metric — looked like a tie. Lesson burned in: evaluate converged
