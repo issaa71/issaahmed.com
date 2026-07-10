@@ -24,8 +24,7 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
 });
 
-// TODO: switch to https://issaahmed.com once the custom domain is wired up
-const SITE_URL = "https://issaahmed-com.vercel.app";
+const SITE_URL = "https://issaahmed.com";
 
 export const viewport: Viewport = {
   themeColor: "#faf7f0",

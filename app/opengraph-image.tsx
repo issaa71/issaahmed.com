@@ -4,8 +4,7 @@ export const alt = "Issa Ahmed · Robotics, ML & Full-Stack Projects";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// TODO: switch to https://issaahmed.com once the custom domain is wired up
-const HOSTNAME = "issaahmed-com.vercel.app";
+const HOSTNAME = "issaahmed.com";
 
 // REDLINE OG card: the share image is typeset as an engineering drawing sheet:
 // warm paper, a double-line border frame, a dimensioned signature, and a real
