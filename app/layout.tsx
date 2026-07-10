@@ -96,7 +96,6 @@ export default function RootLayout({
                 "Full-stack engineering",
               ],
               sameAs: [
-                "https://github.com/issaa71",
                 "https://www.linkedin.com/in/issa-ahmed-032490190/",
               ],
             }),

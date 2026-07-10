@@ -11,8 +11,6 @@ import {
   DataTable,
   NoteBlock,
   RevBlock,
-  RefRow,
-  Ref,
   EquipList,
   FlowDiagram,
   FsmDiagram,
@@ -273,24 +271,6 @@ export default function Page() {
           distance per item collected — so those are the headlines.
         </NoteBlock>
       </Section>
-
-      <RefRow>
-        <Ref
-          href="https://github.com/issaa71/CapstoneRECLAIM"
-          label="GitHub repository"
-          detail="5-package ROS2 monorepo — issaa71/CapstoneRECLAIM"
-        />
-        <Ref
-          href="https://reclaim-nav-sim.vercel.app"
-          label="Interactive 3D navigation simulation"
-          detail="Live React + Three.js (reclaim_v2) — 5 seeded venue presets, comparison dashboard, behavior timeline, deterministic replays"
-        />
-        <Ref
-          href="https://www.youtube.com/watch?v=jR9Q2AjDWao"
-          label="Demo video · Three-class sweep"
-          detail="YouTube · autonomous run across landfill, recyclable, and compost in one demo"
-        />
-      </RefRow>
 
       <Section title="Problem">
         <p>
