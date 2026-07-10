@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Link from "next/link";
 import { TopBar, SiteFooter, DimensionedName } from "./_components/drafting";
 import { CopyEmail } from "./_components/copy-email";
@@ -187,45 +186,52 @@ function Equipment() {
           {"Skills & tools"}
         </h2>
 
-        <div className="mt-8 border-t border-line">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {SKILLS.map((g) => (
             <div
               key={g.group}
-              className="grid gap-1 border-b border-line py-3 sm:grid-cols-[11rem_1fr] sm:gap-6"
+              className="flex flex-col border border-line bg-paper p-6"
             >
-              <div className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-graphite">
-                {g.group}
+              <div className="flex items-center gap-2.5">
+                <span aria-hidden className="h-2.5 w-2.5 shrink-0 bg-red" />
+                <h3 className="font-struct text-[16px] font-bold uppercase tracking-[0.08em] text-ink">
+                  {g.group}
+                </h3>
               </div>
-              <div className="font-anno text-[12.5px] leading-relaxed text-ink">
-                {g.items.map((it, i) => (
-                  <Fragment key={it}>
-                    {i > 0 ? <span className="text-line"> · </span> : null}
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {g.items.map((it) => (
+                  <li
+                    key={it}
+                    className="border border-line px-3 py-1.5 font-struct text-[14px] font-medium leading-none text-ink-soft"
+                  >
                     {it}
-                  </Fragment>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
 
         <div className="mt-12">
-          <h3 className="anno">Certifications</h3>
+          <h3 className="font-struct text-[14px] font-bold uppercase tracking-[0.1em] text-ink">
+            Certifications
+          </h3>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {CERTIFICATIONS.map((c) => {
               const inner = (
                 <>
-                  <div className="font-struct text-[15px] font-bold tabular-nums text-ink">
+                  <div className="font-struct text-[18px] font-bold tabular-nums text-ink">
                     {c.code}
                   </div>
-                  <div className="mt-1 font-prose text-[13px] leading-snug text-ink">
+                  <div className="mt-1.5 font-prose text-[14.5px] leading-snug text-ink">
                     {c.name}
                   </div>
-                  <div className="mt-2 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite">
+                  <div className="mt-2.5 font-anno text-[10.5px] uppercase tracking-[0.14em] text-graphite">
                     {c.issuer}
                     {c.year ? ` · ${c.year}` : ""}
                   </div>
                   {c.verifyUrl ? (
-                    <div className="mt-2 font-anno text-[10px] uppercase tracking-[0.14em] text-red">
+                    <div className="mt-3 font-anno text-[10.5px] uppercase tracking-[0.14em] text-red">
                       Verify ↗
                     </div>
                   ) : null}
@@ -237,14 +243,14 @@ function Equipment() {
                   href={c.verifyUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-4 transition-colors hover:border-red"
+                  className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-5 transition-colors hover:border-red"
                 >
                   {inner}
                 </a>
               ) : (
                 <div
                   key={c.code}
-                  className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-4"
+                  className="flex flex-col rounded-[2px] border-[1.5px] border-ink-soft/45 p-5"
                 >
                   {inner}
                 </div>
