@@ -7,9 +7,7 @@ import {
   Callout,
   Timeline,
   RefRow,
-  Ref,
-  PlaceholderPlate,
-} from "../_components/sheet";
+  Ref,} from "../_components/sheet";
 
 export const metadata: Metadata = {
   title: "No Fly List Kids — Federal Advocacy",
@@ -61,13 +59,6 @@ export default function Page() {
           CTV News · Middle East Eye
         </span>
       </div>
-
-      <PlaceholderPlate
-        kind="VIDEO"
-        title="Grounded — flagged since age five"
-        covers="first-person: what it's like to be wrongly on Canada's no-fly list as a kid, the Toronto Star op-ed I wrote at 16, and how the coalition won Bill C-59 and $81M in redress"
-        note="≈ 75s"
-      />
 
       <CalloutStrip className="[&>*:last-child]:col-span-2 md:[&>*:last-child]:col-span-1">
         <Callout

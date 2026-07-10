@@ -14,7 +14,6 @@ import {
   EquipList,
   FlowDiagram,
   FsmDiagram,
-  PlaceholderPlate,
   SpecGrid,
 } from "../_components/sheet";
 
@@ -323,13 +322,6 @@ export default function Page() {
       </Section>
 
       <Section title="Approach — navigation (rebuilt post-capstone)">
-        {/* TO BE ISSUED — a ≈60s screen-capture walking through the re-baseline. */}
-        <PlaceholderPlate
-          kind="VIDEO"
-          title="The benchmark I stopped trusting"
-          covers="why I rebuilt the simulator after the grade was in, and what re-benchmarking cost me"
-          note="≈ 60s"
-        />
         <p>
           The capstone shipped a robot — and a navigation benchmark I stopped trusting.
           The original simulator assumed an idealized 0.5 m/s robot with continuous

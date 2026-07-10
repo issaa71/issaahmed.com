@@ -7,7 +7,6 @@ import {
   Callout,
   LiveBar,
   FigurePlate,
-  PlaceholderPlate,
   NoteBlock,
   EquipList,
   SpecGrid,
@@ -296,13 +295,6 @@ export default function Page() {
             scan the right QR checkpoint at each stop before moving on.
           </p>
         </div>
-        {/* TO BE ISSUED — a ≈60s screen-capture of a full autonomous run through the taped house. */}
-        <PlaceholderPlate
-          kind="VIDEO"
-          title="The robot driving itself to a room"
-          covers="a full autonomous run through the taped 'house' — planning, obstacle reaction, and a QR arrival check"
-          note="≈ 60s"
-        />
         <NoteBlock title="Honest scope">
           This is a capstone proof-of-concept, and I&apos;d rather name its edges than oversell it.
           I settled real parameters (0.5 m obstacle range, dual HSV red bands, 0.05 m/px maps)

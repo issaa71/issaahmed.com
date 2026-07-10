@@ -261,13 +261,6 @@ export default function Page() {
         </Section>
 
         <Section title="Results">
-          {/* swap for: screen recording explaining the 90.1% mean-baseline artifact */}
-          <PlaceholderPlate
-            kind="VIDEO"
-            title="The 90.1% accuracy trap"
-            covers="why a mean baseline that learned nothing also scores 90.1% on this skewed data — and why we led with MSE (2.70 vs 3.07) instead"
-            note="≈ 50s"
-          />
           <p>
             <strong>Non-linear models won decisively at both timepoints.</strong>{" "}Across
             all four metrics, CatBoost, Random Forest, and KNN were the most consistent top

@@ -12,9 +12,7 @@ import {
   Stamp,
   NoteBlock,
   EquipList,
-  FigurePlate,
-  PlaceholderPlate,
-  DeepSetsDiagram,
+  FigurePlate,  DeepSetsDiagram,
   MetricBars,
   SpecGrid,
 } from "../_components/sheet";
@@ -117,14 +115,6 @@ export default function Page() {
           ]}
         />
       </Section>
-
-      {/* swap for: screen recording of the nba-rl-sim what-if mode (defender drag → Q(shoot) collapses to a pass) */}
-      <PlaceholderPlate
-        kind="VIDEO"
-        title="Drag a defender, watch it change its mind"
-        covers="screen-capture of the what-if mode — slide a defender onto the ball-handler and Q(shoot) collapses to a pass, live in the browser"
-        note="≈ 55s"
-      />
 
       <RefRow>
         <Ref
