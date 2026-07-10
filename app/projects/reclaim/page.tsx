@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
 import type { Metadata } from "next";
 import {
   SheetShell,
@@ -33,42 +31,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Stills from reclaim_v2's clean-screenshot (H-key) mode. These 4 PNGs are
-// captured later and dropped into public/projects/reclaim/. The section below
-// renders automatically once all four files are present and the site rebuilds —
-// until then it shows a blueprint placeholder plate, so the page is never
-// placeholder-free nor shows broken images.
-const STILLS = [
-  {
-    src: "/projects/reclaim/sim-route-cafeteria.png",
-    alt: "Top-down view of the cafeteria flagship run (seed 42) mid-COLLECT, with the planned route drawn over the venue.",
-    caption:
-      "Planned route on the cafeteria flagship run (seed 42) — the Held-Karp-ordered batch with the dump stop inserted at the minimum-detour boundary.",
-  },
-  {
-    src: "/projects/reclaim/sim-frontier-fog.png",
-    alt: "Fog-of-war during the SCAN behavior, showing a frontier cluster and the directed scan arc.",
-    caption:
-      "Frontier exploration: scan viewpoints sit on the seen side of the fog boundary, scored by unseen cells revealed per unit of travel-plus-scan time.",
-  },
-  {
-    src: "/projects/reclaim/sim-timeline.png",
-    alt: "The behavior timeline panel with live detection captions and the preset and seed reproducibility chip.",
-    caption:
-      "Behavior timeline and live detection captions. The preset · seed chip reproduces this run byte-for-byte.",
-  },
-  {
-    src: "/projects/reclaim/sim-dashboard.png",
-    alt: "The comparison dashboard across all five algorithms, with per-metric winner badges and persisted run history.",
-    caption:
-      "Comparison dashboard across all five algorithms — per-metric winner badges and persisted run history.",
-  },
-] as const;
-
-const stillsReady = STILLS.every((s) =>
-  existsSync(path.join(process.cwd(), "public", s.src))
-);
-
 export default function Page() {
   return (
     <SheetShell
@@ -84,13 +46,13 @@ export default function Page() {
       ]}
     >
       <FigurePlate
-        src="/projects/reclaim/team.jpg"
-        alt="The RECLAIM capstone team with the prototype at the Western Engineering MSE 4499 showcase."
-        caption="Team RECLAIM with the prototype at the Western Engineering MSE 4499 showcase (March 26, 2026). 3rd place overall — and 1st in the AI division."
-        width={1024}
-        height={768}
+        src="/projects/reclaim/demo.jpg"
+        alt="The RECLAIM prototype on the showcase floor — autonomous drive base, sensor mast, 4-DOF sorting arm, and the labelled TRASH and COMPOST bins."
+        caption="The RECLAIM prototype — an autonomous drive base, a 4-DOF sorting arm, and the recyclable / compost / landfill bins it sorts into."
+        width={768}
+        height={1024}
         priority
-        className="breakout"
+        className="mx-auto max-w-lg"
       />
 
       <CalloutStrip>
@@ -137,6 +99,88 @@ export default function Page() {
         className="breakout"
       />
 
+      <Section title="System architecture">
+        <div>
+          <p className="anno">Product hardware</p>
+          <div className="mt-3 grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3">
+            {[
+              { name: "Livox Mid-360", role: "3D LiDAR — SLAM + navigation" },
+              { name: "6-DOF arm", role: "pick-and-place; MoveIt2 motion planning" },
+              { name: "Jetson Orin NX", role: "onboard compute; runs every ROS2 node" },
+              { name: "STM32F405", role: "CAN-bus actuator control" },
+              { name: "Onboard battery", role: "untethered power for compute + drive" },
+              { name: "OAK-D Pro", role: "stereo depth camera for YOLO perception" },
+            ].map((c) => (
+              <div key={c.name} className="bg-paper p-4">
+                <div className="font-struct text-[14px] font-bold leading-snug text-ink">{c.name}</div>
+                <div className="mt-1 font-prose text-[13px] leading-snug text-ink-soft">{c.role}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <FlowDiagram
+          label="Autonomy loop"
+          steps={[
+            { label: "SCAN", sub: "LiDAR + frontier exploration" },
+            { label: "DETECT", sub: "YOLO26n · 30 FPS" },
+            { label: "DRIVE", sub: "pure-pursuit nav" },
+            { label: "PICK", sub: "4-DOF arm" },
+            { label: "SORT", sub: "3 waste streams" },
+          ]}
+          caption="The full autonomy loop, run once per item at the real robot's ~13 s stop-look-drive cadence. Every section below details one stage."
+        />
+        <p>
+          The product integrates five subsystems on a differential-drive platform: 24V
+          E-S planetary gearmotors for locomotion, a 6-DOF arm for pick-and-place, an
+          OAK-D stereo camera with YOLO under TensorRT FP16 for detection across
+          waste classes, a Livox Mid-360 3D LiDAR with SLAM Toolbox + a hybrid coverage
+          algorithm for navigation, and an STM32F405 microcontroller for CAN-bus
+          actuator control. The reduced-scope prototype used lower-cost substitutes —
+          OAK-D Lite, a 4-DOF hobby-servo arm with a LewanSoul claw, YOLO26n (6 classes),
+          Teensy 4.1, and a vision-servo state machine, with an RPLIDAR A1M8 on the
+          prototype — but exercised the full scan→detect→drive→pick→sort loop.
+        </p>
+        <p>
+          The repository is a five-package ROS2 monorepo:{" "}
+          <code>reclaim_perception</code>, <code>reclaim_navigation</code>,{" "}
+          <code>reclaim_control</code>, <code>reclaim_bringup</code>, and{" "}
+          <code>reclaim_interfaces</code>.
+        </p>
+        <FigurePlate
+          src="/projects/reclaim/ros2-architecture.png"
+          alt="ROS2 node graph for the RECLAIM product: a Navigation cluster (livox_driver, slam_toolbox, Nav2), a Perception node (OAK-D + YOLO, TensorRT FP16 at 30 FPS), a central waste_tracker state machine (SCAN → APPROACH → PICK → DEPOSIT), a Manipulation cluster (pick_and_place, move_group/MoveIt2, controller_manager over CAN), a Locomotion drive_controller, and a Monitoring bridge — with the ROS2 topics wiring them together."
+          caption="The product ROS2 node graph — every node and the topics wiring perception → planning → navigation → manipulation, all running on a Jetson Orin NX (ROS 2 Humble)."
+          width={1239}
+          height={962}
+          className="breakout"
+        />
+      </Section>
+
+      <Section title="Hardware & electronics">
+        <p>
+          Beyond the software, the product is a full electromechanical design — mechanical
+          CAD, the microcontroller wiring I laid out, and its power distribution. I owned the
+          perception + control electronics and the arm; the chassis CAD is the team&apos;s
+          product concept.
+        </p>
+        <FigurePlate
+          src="/projects/reclaim/cad-product.png"
+          alt="SolidWorks render of the RECLAIM product concept: a differential-drive chassis with three translucent sort bins, an e-stop and status beacon on top, a battery and compute bay, and a 6-DOF arm with a gripper."
+          caption="The product-concept CAD: a differential-drive chassis, three sort bins, an e-stop + status beacon, and the 6-DOF sorting arm I did the URDF + servo work for."
+          width={924}
+          height={689}
+          className="mx-auto max-w-2xl"
+        />
+        <FigurePlate
+          src="/projects/reclaim/prototype-labeled.jpg"
+          alt="Top-down labeled photo of the RECLAIM prototype's electronics on its plywood base: OAK-D Lite camera, Teensy 4.1 microcontroller, MIC-711 computer, battery, robotic arm, fuse block, Wago power splitter, Cytron motor controller, and buck converter."
+          caption="The prototype electronics, labeled — Teensy 4.1, MIC-711 compute, OAK-D Lite, the Cytron motor controller, battery, buck converter, fuse block, and Wago power splitter. I owned the Teensy firmware and the actuator/encoder wiring."
+          width={1400}
+          height={781}
+          className="breakout"
+        />
+      </Section>
+
       <Section title="Demo videos">
         <p>
           Three pick-attempt runs on the physical prototype, captured during capstone
@@ -162,39 +206,6 @@ export default function Page() {
           />
         </VideoGrid>
       </Section>
-
-      {stillsReady ? (
-        <Section title="Inside the rebuilt simulator">
-          <p>
-            Stills from reclaim_v2&apos;s clean-screenshot mode — what the live demo looks
-            like under the hood.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {STILLS.map((s) => (
-              <FigurePlate
-                key={s.src}
-                src={s.src}
-                alt={s.alt}
-                caption={s.caption}
-                width={1600}
-                height={900}
-              />
-            ))}
-          </div>
-        </Section>
-      ) : (
-        <Section title="Inside the rebuilt simulator">
-          {/* Renders the four H-key stills automatically once
-              sim-route-cafeteria.png, sim-frontier-fog.png, sim-timeline.png, and
-              sim-dashboard.png land in public/projects/reclaim/ on the next build. */}
-          <PlaceholderPlate
-            kind="FIGURE"
-            title="Four reclaim_v2 simulator stills"
-            covers="H-key clean screenshots: the cafeteria Held-Karp route, the frontier fog boundary, the behavior timeline, and the five-algorithm comparison dashboard"
-            note="capture the 4 PNGs into /public/projects/reclaim/ — this section renders them automatically on the next build"
-          />
-        </Section>
-      )}
 
       <Section title="Results — the re-benchmarked navigation stack">
         <p>
@@ -311,37 +322,6 @@ export default function Page() {
         </p>
       </Section>
 
-      <Section title="System architecture">
-        <FlowDiagram
-          label="Autonomy loop"
-          steps={[
-            { label: "SCAN", sub: "LiDAR + frontier exploration" },
-            { label: "DETECT", sub: "YOLO26n · 30 FPS" },
-            { label: "DRIVE", sub: "pure-pursuit nav" },
-            { label: "PICK", sub: "4-DOF arm" },
-            { label: "SORT", sub: "3 waste streams" },
-          ]}
-          caption="The full autonomy loop, run once per item at the real robot's ~13 s stop-look-drive cadence. Every section below details one stage."
-        />
-        <p>
-          The product integrates five subsystems on a differential-drive platform: 24V
-          E-S planetary gearmotors for locomotion, a 6-DOF arm for pick-and-place, an
-          OAK-D stereo camera with YOLO under TensorRT FP16 for detection across
-          waste classes, a Livox Mid-360 3D LiDAR with SLAM Toolbox + a hybrid coverage
-          algorithm for navigation, and an STM32F405 microcontroller for CAN-bus
-          actuator control. The reduced-scope prototype used lower-cost substitutes —
-          OAK-D Lite, a 4-DOF hobby-servo arm with a LewanSoul claw, YOLO26n (6 classes),
-          Teensy 4.1, and a vision-servo state machine, with an RPLIDAR A1M8 on the
-          prototype — but exercised the full scan→detect→drive→pick→sort loop.
-        </p>
-        <p>
-          The repository is a five-package ROS2 monorepo:{" "}
-          <code>reclaim_perception</code>, <code>reclaim_navigation</code>,{" "}
-          <code>reclaim_control</code>, <code>reclaim_bringup</code>, and{" "}
-          <code>reclaim_interfaces</code>.
-        </p>
-      </Section>
-
       <Section title="Approach — perception">
         <p>
           YOLO26n trained on a combination of Roboflow + Kaggle waste datasets, refined
@@ -351,6 +331,21 @@ export default function Page() {
           Exported under TensorRT FP16 to hit 30 FPS on the Jetson Orin NX — sufficient
           to drive a vision-servo control loop without dropping frames.
         </p>
+        <FigurePlate
+          src="/projects/reclaim/showcase-perception.jpg"
+          alt="Issa presenting the RECLAIM perception stack at the showcase, monitors showing the detector's throughput, model size, and class-to-bin map."
+          caption="Demoing the perception stack at the showcase — the monitors show the TensorRT-FP16 detector at 30 FPS, its 5.1 MB model, and the class-to-bin mapping."
+          width={1200}
+          height={1600}
+          className="mx-auto max-w-md"
+        />
+        <FigurePlate
+          src="/projects/reclaim/perception-detection.jpg"
+          alt="The RECLAIM perception node's live output: YOLO bounding boxes labeling a cup (0.70), a napkin (0.42), and a plastic bottle (0.41), each annotated with its 3D X/Y/Z position in millimetres from the depth camera."
+          caption="The detector running live: each waste item gets a YOLO class + confidence and a 3D position (X/Y/Z in mm) fused from the OAK-D depth camera — what the arm uses to reach for it."
+          width={1600}
+          height={1277}
+        />
       </Section>
 
       <Section title="Approach — navigation (rebuilt post-capstone)">
@@ -479,11 +474,19 @@ export default function Page() {
           AI division.
         </p>
         <FigurePlate
-          src="/projects/reclaim/demo.jpg"
-          alt="The RECLAIM prototype on the showcase floor with status monitors in the background showing the SCAN phase of the state machine."
-          caption="Prototype on the showcase floor. Status monitors (background) show the state machine in the SCAN phase."
-          width={768}
-          height={1024}
+          src="/projects/reclaim/team.jpg"
+          alt="The RECLAIM capstone team of four with the prototype at the Western Engineering MSE 4499 showcase."
+          caption="Team RECLAIM with the prototype at the MSE 4499 showcase (March 26, 2026) — 3rd place overall, and 1st in the AI division."
+          width={1024}
+          height={768}
+          className="breakout"
+        />
+        <FigurePlate
+          src="/projects/reclaim/showcase-robot.jpg"
+          alt="Issa Ahmed standing with the RECLAIM prototype at the showcase, holding an aluminum can and a plastic water bottle."
+          caption="At the showcase with the prototype and two of the items it sorts — an aluminum can and a plastic bottle, both recyclables."
+          width={1200}
+          height={1600}
           className="mx-auto max-w-md"
         />
       </Section>
