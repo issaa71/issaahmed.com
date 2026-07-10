@@ -146,4 +146,7 @@ export {
   Timeline,
   DeepSetsDiagram,
   MetricBars,
+  SystemGraph,
 } from "../../_components/diagrams";
+
+export { SpecGrid } from "../../_components/spec-grid";

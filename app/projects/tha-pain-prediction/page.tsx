@@ -11,6 +11,7 @@ import {
   DataTable,
   PlaceholderPlate,
   FlowDiagram,
+  SpecGrid,
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
@@ -109,6 +110,38 @@ export default function Page() {
             hint="linear · tree ensembles · neural nets"
           />
         </CalloutStrip>
+
+        <Section title="Stack & methods">
+          <SpecGrid
+            cols={3}
+            items={[
+              {
+                name: "13 models",
+                role: "linear, tree ensembles, KNN, and neural nets",
+              },
+              {
+                name: "CatBoost",
+                role: "strongest at T5; carried into the calculator",
+              },
+              {
+                name: "scikit-learn",
+                role: "imputation, scaling, and GridSearchCV",
+              },
+              {
+                name: "Streamlit",
+                role: "the deployed clinician calculator",
+              },
+              {
+                name: "SAFE-T cohort",
+                role: "513 patients across T3 and T5",
+              },
+              {
+                name: "Peer-reviewed",
+                role: "J. Arthroplasty · 2nd of 7 authors",
+              },
+            ]}
+          />
+        </Section>
 
         <Section title="From the paper">
           <div className="grid gap-4 sm:grid-cols-2">

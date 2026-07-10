@@ -16,6 +16,7 @@ import {
   PlaceholderPlate,
   DeepSetsDiagram,
   MetricBars,
+  SpecGrid,
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
@@ -84,6 +85,38 @@ export default function Page() {
         title="Watch the agent call shoot-or-pass on real NBA possessions — then drag a defender and watch it change its mind"
         sub="held-out possessions · what-if mode · the trained network runs client-side"
       />
+
+      <Section title="Stack & methods">
+        <SpecGrid
+          cols={3}
+          items={[
+            {
+              name: "PyTorch",
+              role: "the policy network, trained from scratch",
+            },
+            {
+              name: "Deep Sets",
+              role: "permutation-equivariant over 5 defenders, 4 teammates",
+            },
+            {
+              name: "Dueling DQN",
+              role: "value/advantage split, offline Q-learning",
+            },
+            {
+              name: "SportVU tracking",
+              role: "real NBA player-tracking possessions",
+            },
+            {
+              name: "78-dim features",
+              role: "per-timestep possession feature vector",
+            },
+            {
+              name: "Parity harness",
+              role: "Python↔TS features & Q-values verified",
+            },
+          ]}
+        />
+      </Section>
 
       {/* swap for: screen recording of the nba-rl-sim what-if mode (defender drag → Q(shoot) collapses to a pass) */}
       <PlaceholderPlate

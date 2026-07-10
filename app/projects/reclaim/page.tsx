@@ -17,6 +17,7 @@ import {
   FlowDiagram,
   FsmDiagram,
   PlaceholderPlate,
+  SpecGrid,
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
@@ -100,24 +101,17 @@ export default function Page() {
       />
 
       <Section title="System architecture">
-        <div>
-          <p className="anno">Product hardware</p>
-          <div className="mt-3 grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3">
-            {[
-              { name: "Livox Mid-360", role: "3D LiDAR — SLAM + navigation" },
-              { name: "6-DOF arm", role: "pick-and-place; MoveIt2 motion planning" },
-              { name: "Jetson Orin NX", role: "onboard compute; runs every ROS2 node" },
-              { name: "STM32F405", role: "CAN-bus actuator control" },
-              { name: "Onboard battery", role: "untethered power for compute + drive" },
-              { name: "OAK-D Pro", role: "stereo depth camera for YOLO perception" },
-            ].map((c) => (
-              <div key={c.name} className="bg-paper p-4">
-                <div className="font-struct text-[14px] font-bold leading-snug text-ink">{c.name}</div>
-                <div className="mt-1 font-prose text-[13px] leading-snug text-ink-soft">{c.role}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SpecGrid
+          label="Product hardware"
+          items={[
+            { name: "Livox Mid-360", role: "3D LiDAR — SLAM + navigation" },
+            { name: "6-DOF arm", role: "pick-and-place; MoveIt2 motion planning" },
+            { name: "Jetson Orin NX", role: "onboard compute; runs every ROS2 node" },
+            { name: "STM32F405", role: "CAN-bus actuator control" },
+            { name: "Onboard battery", role: "untethered power for compute + drive" },
+            { name: "OAK-D Pro", role: "stereo depth camera for YOLO perception" },
+          ]}
+        />
         <FlowDiagram
           label="Autonomy loop"
           steps={[

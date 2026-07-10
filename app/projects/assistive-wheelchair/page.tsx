@@ -5,10 +5,14 @@ import {
   Section,
   CalloutStrip,
   Callout,
+  LiveBar,
   FigurePlate,
   PlaceholderPlate,
   NoteBlock,
   EquipList,
+  SpecGrid,
+  FlowDiagram,
+  SystemGraph,
 } from "../_components/sheet";
 import { WheelchairSim } from "./_sim";
 
@@ -70,6 +74,125 @@ export default function Page() {
           hint="10-digit location IDs scanned at each room to confirm it arrived where it intended"
         />
       </CalloutStrip>
+
+      <LiveBar
+        href="#sim"
+        kicker="Interactive sim · runs in your browser"
+        title="Drive the wheelchair to a room — it waits to scan each QR checkpoint before moving on"
+        sub="a browser rebuild of the navigation-checkpoint simulation I wrote"
+        cta="TRY IT ↓"
+      />
+
+      <Section title="System architecture">
+        <SpecGrid
+          label="Platform hardware"
+          items={[
+            {
+              name: "Raspberry Pi 5",
+              role: "onboard compute — runs the full ROS 2 graph",
+            },
+            {
+              name: "Oradar MS200",
+              role: "360° 2D LiDAR — mapping + /scan for Nav2",
+            },
+            {
+              name: "Orbbec Astra",
+              role: "RGB-D camera — colour + depth for the CV detectors",
+            },
+            {
+              name: "Onboard IMU",
+              role: "fused with wheel odometry via an EKF",
+            },
+            {
+              name: "micro-ROS control board",
+              role: "real-time motor control + wheel-encoder odometry",
+            },
+            {
+              name: "Yahboom MicroROS-Pi5",
+              role: "the rover base platform I built the stack on",
+            },
+          ]}
+        />
+        <FlowDiagram
+          label="Navigation loop"
+          steps={[
+            { label: "LOCALIZE", sub: "AMCL · pre-mapped home" },
+            { label: "PLAN", sub: "Nav2 → the named room" },
+            { label: "DRIVE", sub: "DWB · re-plan on obstacles" },
+            { label: "SENSE", sub: "red-tape + furniture CV" },
+            { label: "ARRIVE", sub: "QR checkpoint · 10-digit ID" },
+          ]}
+          caption="The high-level loop for one trip. Hazard and furniture detection actually run continuously alongside driving rather than as a discrete step — they're drawn inline here for readability."
+        />
+        <p>
+          The robot runs ROS 2 on a Raspberry Pi 5. I built the assistive-navigation
+          layer — three application nodes — on top of the Yahboom platform&apos;s vendor
+          stack (the sensor drivers, EKF localization, SLAM mapping, and the Nav2
+          navigation pipeline), which is what let me spend my effort on the navigation
+          logic instead of re-solving mapping and motion control.{" "}
+          <code>room_navigator</code> turns a named room into a Nav2 goal pose;{" "}
+          <code>red_tape_detector</code> injects floor-hazard no-go regions into the
+          costmap; and a furniture detector keys on room objects by colour, shape, and
+          pattern.
+        </p>
+        <SystemGraph
+          label="ROS2 node graph"
+          tiers={[
+            {
+              lane: "Sensor drivers",
+              nodes: [
+                { name: "oradar_scan", sub: "MS200 2D LiDAR" },
+                { name: "astra_camera", sub: "Orbbec Astra RGB-D" },
+                { name: "base_node", sub: "wheel odometry + IMU" },
+              ],
+              edge: "/scan · /camera/color · /camera/depth · odom_raw · /imu/data_raw",
+            },
+            {
+              lane: "Localization & mapping · vendor stack",
+              nodes: [
+                {
+                  name: "robot_localization",
+                  sub: "EKF · fuses odom + IMU → /odom",
+                },
+                {
+                  name: "amcl",
+                  sub: "localize against the saved 2D map → /amcl_pose",
+                },
+              ],
+              edge: "/odom · /amcl_pose · /map · /tf",
+            },
+            {
+              lane: "Application layer · my nodes",
+              accent: true,
+              nodes: [
+                { name: "room_navigator", sub: "named room → Nav2 goal" },
+                { name: "red_tape_detector", sub: "HSV hazard mask · 10 Hz" },
+                { name: "furniture_detector", sub: "colour + shape + pattern" },
+              ],
+              edge: "navigate_to_pose goal · costmap no-go regions",
+            },
+            {
+              lane: "Nav2 navigation · vendor stack",
+              nodes: [
+                { name: "bt_navigator", sub: "behavior-tree orchestration" },
+                { name: "planner_server", sub: "NavFn global plan" },
+                { name: "controller_server", sub: "DWB local controller" },
+              ],
+              edge: "/cmd_vel",
+            },
+            {
+              lane: "Base",
+              nodes: [
+                {
+                  name: "base_node (micro-ROS)",
+                  sub: "drives the motors from /cmd_vel",
+                },
+              ],
+            },
+          ]}
+          caption="The ROS 2 graph as I built it: the Yahboom platform supplies the vendor sensor, localization, and Nav2 layers (grey); my three application nodes (red) sit on top. /scan also feeds AMCL and the Nav2 costmaps directly, and the base node closes the loop — publishing odometry at the top and driving the motors from /cmd_vel at the bottom. Custom-node topics follow each node's role; the exact names live in the project code."
+        />
+      </Section>
 
       <Section title="Problem">
         <p>

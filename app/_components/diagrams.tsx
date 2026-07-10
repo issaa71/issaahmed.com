@@ -399,3 +399,78 @@ export function MetricBars({
     </figure>
   );
 }
+
+/* SystemGraph -------------------------------------------------------------- */
+
+/** Layered node graph — tiers of nodes wired by named topic/message buses,
+    flowing top→bottom. Accent a tier (or a single node) in red to mark
+    authored code against a vendor/platform substrate. Reads as a real ROS2
+    graph; stacks cleanly on mobile. */
+export function SystemGraph({
+  label = "Node graph",
+  tiers,
+  caption,
+}: {
+  label?: string;
+  tiers: {
+    lane: string;
+    accent?: boolean;
+    nodes: { name: string; sub?: string; accent?: boolean }[];
+    edge?: string;
+  }[];
+  caption?: string;
+}) {
+  return (
+    <figure className={PLATE}>
+      <Kicker label={label} />
+      <div className="flex flex-col">
+        {tiers.map((t, ti) => (
+          <Fragment key={t.lane}>
+            <div
+              className={`border p-3 ${t.accent ? "border-red bg-red-wash/25" : "border-line bg-paper"}`}
+            >
+              <p
+                className={`mb-2.5 font-anno text-[9.5px] uppercase tracking-[0.16em] ${t.accent ? "text-red" : "text-graphite"}`}
+              >
+                {t.lane}
+              </p>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                {t.nodes.map((n) => {
+                  const red = n.accent ?? t.accent;
+                  return (
+                    <div
+                      key={n.name}
+                      className={`flex-1 border bg-paper px-2.5 py-2 text-center ${red ? "border-red/70" : "border-line"}`}
+                    >
+                      <div
+                        className={`font-anno text-[11.5px] font-medium leading-tight ${red ? "text-red" : "text-ink"}`}
+                      >
+                        {n.name}
+                      </div>
+                      {n.sub ? (
+                        <div className="mt-1 font-anno text-[9px] leading-snug text-graphite">
+                          {n.sub}
+                        </div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            {ti < tiers.length - 1 ? (
+              <div className="flex flex-col items-center gap-1 py-2 text-graphite">
+                <Arrow dir="down" />
+                {t.edge ? (
+                  <span className="max-w-full px-2 text-center font-anno text-[9.5px] leading-snug text-graphite">
+                    {t.edge}
+                  </span>
+                ) : null}
+              </div>
+            ) : null}
+          </Fragment>
+        ))}
+      </div>
+      {caption ? <Note>{caption}</Note> : null}
+    </figure>
+  );
+}

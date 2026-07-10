@@ -9,6 +9,7 @@ import {
   FigurePlate,
   FlowDiagram,
   NoteBlock,
+  SpecGrid,
 } from "../_components/sheet";
 import { GlenoidCalculator } from "./_calculator";
 
@@ -53,6 +54,38 @@ export default function Page() {
           hint="end-to-end cross-validated; vs the report's 84% per-tier number — see Results"
         />
       </CalloutStrip>
+
+      <Section title="Stack & methods">
+        <SpecGrid
+          cols={3}
+          items={[
+            {
+              name: "Hierarchical classifier",
+              role: "three tiers: normal → type → subtype",
+            },
+            {
+              name: "Model comparison",
+              role: "rf, svm, xgboost, logistic — best per tier",
+            },
+            {
+              name: "scikit-learn",
+              role: "training and cross-validation",
+            },
+            {
+              name: "6 CT-derived inputs",
+              role: "version, inclination, subluxation, area, radius",
+            },
+            {
+              name: "Feature engineering",
+              role: "subluxation index and area-to-radius ratio",
+            },
+            {
+              name: "TypeScript inference",
+              role: "trained model runs in-browser, no server",
+            },
+          ]}
+        />
+      </Section>
 
       <div id="calculator" className="scroll-mt-24">
         <Section title="Try it — live Walch classifier">
