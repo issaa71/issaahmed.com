@@ -61,7 +61,7 @@ export default function Page() {
         <Callout
           label="Obstacle reaction"
           value="0.5 m"
-          hint="lidar range where it re-plans, generating 8 candidate approach points around the obstacle"
+          hint="obstacle range at which Nav2's costmap flags it and re-plans the path around it rather than stopping dead"
         />
         <Callout
           label="Danger detection"
@@ -234,8 +234,8 @@ export default function Page() {
           The robot first builds a 2D map of the space with its onboard lidar, then localizes
           against it. On a &quot;go to the bedroom&quot; command, a custom ROS2 node I wrote looks up
           the room&apos;s recorded coordinates and hands them to Nav2 to plan the route — and when the
-          lidar sees an obstacle within 0.5 m, it generates eight geometric approach points and
-          re-plans around it rather than stopping dead.
+          lidar sees an obstacle within ~0.5 m of the planned path, Nav2&apos;s costmap flags it and the
+          planner routes around it rather than stopping dead.
         </p>
         <FigurePlate
           src="/projects/assistive-wheelchair/workflow.png"
@@ -305,8 +305,8 @@ export default function Page() {
         />
         <NoteBlock title="Honest scope">
           This is a capstone proof-of-concept, and I&apos;d rather name its edges than oversell it.
-          I settled real parameters (0.5 m obstacle range, dual HSV red bands, 8 approach points,
-          0.05 m/px maps) and got repeatable behaviour — but I didn&apos;t formally measure a
+          I settled real parameters (0.5 m obstacle range, dual HSV red bands, 0.05 m/px maps)
+          and got repeatable behaviour — but I didn&apos;t formally measure a
           navigation success rate or localization error, which is the first thing I&apos;d quantify
           next. The furniture-recognition-to-approach behaviour (driving up to a specific object like
           a bed) was designed but not fully implemented. And the hardest lessons were physical: the
