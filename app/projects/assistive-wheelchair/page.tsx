@@ -8,7 +8,7 @@ import {
   LiveBar,
   FigurePlate,
   NoteBlock,
-  EquipList,
+  TechStack,
   SpecGrid,
   FlowDiagram,
   SystemGraph,
@@ -309,19 +309,26 @@ export default function Page() {
       </Section>
 
       <Section title="Tech stack">
-        <EquipList
-          items={[
-            "ROS2",
-            "Nav2",
-            "SLAM (gmapping / Cartographer)",
-            "route planning",
-            "OpenCV",
-            "pyzbar (QR / barcode)",
-            "robot_localization (EKF)",
-            "Astra depth camera",
-            "2D lidar",
-            "Python",
-            "Raspberry Pi 5",
+        <TechStack
+          groups={[
+            {
+              group: "Software & CV",
+              items: ["Python", "OpenCV", "pyzbar (QR / barcode)"],
+            },
+            {
+              group: "Robotics & Navigation",
+              items: [
+                "ROS2",
+                "Nav2",
+                "SLAM (gmapping / Cartographer)",
+                "route planning",
+                "robot_localization (EKF)",
+              ],
+            },
+            {
+              group: "Hardware & Sensors",
+              items: ["Astra depth camera", "2D lidar", "Raspberry Pi 5"],
+            },
           ]}
         />
       </Section>

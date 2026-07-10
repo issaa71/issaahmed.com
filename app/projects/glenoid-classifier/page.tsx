@@ -5,7 +5,7 @@ import {
   Section,
   Callout,
   CalloutStrip,
-  EquipList,
+  TechStack,
   FigurePlate,
   FlowDiagram,
   NoteBlock,
@@ -213,16 +213,20 @@ export default function Page() {
       </Section>
 
       <Section title="Tech stack">
-        <EquipList
-          items={[
-            "Python",
-            "scikit-learn",
-            "Random Forest",
-            "XGBoost",
-            "SVM",
-            "pandas · NumPy",
-            "Streamlit",
-            "TypeScript (in-browser inference)",
+        <TechStack
+          groups={[
+            {
+              group: "Languages",
+              items: ["Python", "TypeScript (in-browser inference)"],
+            },
+            {
+              group: "ML & Modeling",
+              items: ["scikit-learn", "Random Forest", "XGBoost", "SVM"],
+            },
+            {
+              group: "Data & Delivery",
+              items: ["pandas · NumPy", "Streamlit"],
+            },
           ]}
         />
       </Section>

@@ -318,7 +318,7 @@ export function RefRow({
 }) {
   return (
     <div className={className}>
-      <p className="anno mb-1">{heading}</p>
+      {heading ? <p className="anno mb-1">{heading}</p> : null}
       <ul className="border-t border-line">{children}</ul>
     </div>
   );
@@ -353,11 +353,11 @@ export function Ref({
             className="h-4 w-auto"
           />
         ) : null}
-        <span className="font-anno text-[12px] text-ink transition-colors group-hover:text-red">
+        <span className="font-struct text-[15px] font-semibold text-ink transition-colors group-hover:text-red">
           {label}
         </span>
         {detail ? (
-          <span className="font-prose text-[13px] text-ink-soft">{detail}</span>
+          <span className="font-prose text-[14px] text-ink-soft">{detail}</span>
         ) : null}
         <span aria-hidden className="ml-auto font-anno text-[12px] text-red">
           ↗

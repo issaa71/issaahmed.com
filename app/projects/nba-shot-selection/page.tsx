@@ -11,7 +11,7 @@ import {
   RevBlock,
   Stamp,
   NoteBlock,
-  EquipList,
+  TechStack,
   FigurePlate,  DeepSetsDiagram,
   MetricBars,
   SpecGrid,
@@ -354,15 +354,16 @@ export default function Page() {
       </NoteBlock>
 
       <Section title="Tech stack">
-        <EquipList
-          items={[
-            "Python",
-            "PyTorch",
-            "NumPy",
-            "Gymnasium",
-            "SportVU 2015-16",
-            "pandas",
-            "Matplotlib",
+        <TechStack
+          groups={[
+            {
+              group: "Languages & ML",
+              items: ["Python", "PyTorch", "Gymnasium", "NumPy"],
+            },
+            {
+              group: "Data & viz",
+              items: ["pandas", "Matplotlib", "SportVU 2015-16"],
+            },
           ]}
         />
       </Section>

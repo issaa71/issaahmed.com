@@ -204,11 +204,11 @@ export function Timeline({
                 aria-hidden
                 className={`absolute -left-[3.5px] top-1.5 h-1.5 w-1.5 ${it.accent ? "bg-red" : "bg-graphite"}`}
               />
-              <p className="font-struct text-[15px] font-semibold leading-snug text-ink">
+              <p className="font-struct text-[16.5px] font-semibold leading-snug text-ink">
                 {it.title}
               </p>
               {it.detail ? (
-                <p className="mt-1 font-prose text-[14px] leading-snug text-ink-soft">
+                <p className="mt-1.5 font-prose text-[15px] leading-relaxed text-ink-soft">
                   {it.detail}
                 </p>
               ) : null}

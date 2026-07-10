@@ -87,12 +87,17 @@ export function SheetShell({
   );
 }
 
-/** Case-study section: auto-numbered §, hairline top rule, serif prose body. */
+/** Case-study section: auto-numbered §, hairline top rule, serif prose body.
+    Pass `prose={false}` for a section whose body is block content (e.g. a
+    RefRow of links or a card grid) that should NOT inherit the `.rl-prose`
+    inline-link styling (underline/red) meant for running prose. */
 export function Section({
   title,
+  prose = true,
   children,
 }: {
   title: string;
+  prose?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -106,9 +111,13 @@ export function Section({
           {title}
         </h2>
       </div>
-      <div className="rl-prose mt-4 space-y-4 font-prose text-[16.5px] leading-[1.75] text-ink">
-        {children}
-      </div>
+      {prose ? (
+        <div className="rl-prose mt-4 space-y-4 font-prose text-[16.5px] leading-[1.75] text-ink">
+          {children}
+        </div>
+      ) : (
+        <div className="mt-4 space-y-4">{children}</div>
+      )}
     </section>
   );
 }
@@ -150,3 +159,4 @@ export {
 } from "../../_components/diagrams";
 
 export { SpecGrid } from "../../_components/spec-grid";
+export { TechStack } from "../../_components/tech-stack";

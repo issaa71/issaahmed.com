@@ -5,7 +5,7 @@ import {
   Section,
   CalloutStrip,
   Callout,
-  EquipList,
+  TechStack,
   FigurePlate,
   DataTable,
   FlowDiagram,
@@ -315,18 +315,21 @@ export default function Page() {
         </Section>
 
         <Section title="Tech stack">
-          <EquipList
-            items={[
-              "Python",
-              "scikit-learn",
-              "PyTorch",
-              "XGBoost",
-              "CatBoost",
-              "LightGBM",
-              "pandas",
-              "NumPy",
-              "Streamlit",
-              "GridSearchCV",
+          <TechStack
+            groups={[
+              {
+                group: "Languages & data",
+                items: ["Python", "pandas", "NumPy"],
+              },
+              { group: "ML frameworks", items: ["scikit-learn", "PyTorch"] },
+              {
+                group: "Gradient boosting",
+                items: ["XGBoost", "CatBoost", "LightGBM"],
+              },
+              {
+                group: "Tuning & deployment",
+                items: ["GridSearchCV", "Streamlit"],
+              },
             ]}
           />
         </Section>

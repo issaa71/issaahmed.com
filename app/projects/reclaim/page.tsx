@@ -11,7 +11,7 @@ import {
   DataTable,
   NoteBlock,
   RevBlock,
-  EquipList,
+  TechStack,
   FlowDiagram,
   FsmDiagram,
   SpecGrid,
@@ -377,7 +377,7 @@ export default function Page() {
           ]}
           caption="Event-driven executive: it re-decides only on events (item picked, scan finished, path blocked), never per tick, so targets switch at plan boundaries instead of oscillating between goals. Transitions are priority-arbitrated; the primary path is shown."
         />
-        <ul className="list-disc space-y-3 pl-5">
+        <ul className="space-y-3 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-[0.7em] [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:bg-red [&>li]:before:content-['']">
           <li>
             <strong>Commits, doesn&apos;t thrash.</strong>{" "}The executive re-decides only
             on events (item picked, scan finished, path blocked) never per-tick, so
@@ -458,27 +458,41 @@ export default function Page() {
       </Section>
 
       <Section title="Tech stack">
-        <EquipList
-          items={[
-            "ROS2 Humble",
-            "Python",
-            "C / micro-ROS",
-            "PyTorch",
-            "OpenCV",
-            "YOLO26n",
-            "TensorRT FP16",
-            "Roboflow",
-            "Nav2",
-            "SLAM Toolbox",
-            "MoveIt2",
-            "Foxglove Studio",
-            "Three.js (R3F)",
-            "Jetson Orin NX",
-            "OAK-D Lite",
-            "RPLIDAR A1M8",
-            "Teensy 4.1",
-            "SolidWorks",
-            "MATLAB",
+        <TechStack
+          groups={[
+            { group: "Languages", items: ["Python", "C / micro-ROS"] },
+            {
+              group: "ML & Vision",
+              items: [
+                "PyTorch",
+                "OpenCV",
+                "YOLO26n",
+                "TensorRT FP16",
+                "Roboflow",
+              ],
+            },
+            {
+              group: "Robotics & Sim",
+              items: [
+                "ROS2 Humble",
+                "Nav2",
+                "SLAM Toolbox",
+                "MoveIt2",
+                "Foxglove Studio",
+                "Three.js (R3F)",
+              ],
+            },
+            {
+              group: "Hardware & CAD",
+              items: [
+                "Jetson Orin NX",
+                "OAK-D Lite",
+                "RPLIDAR A1M8",
+                "Teensy 4.1",
+                "SolidWorks",
+                "MATLAB",
+              ],
+            },
           ]}
         />
       </Section>

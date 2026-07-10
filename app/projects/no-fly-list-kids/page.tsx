@@ -37,26 +37,33 @@ export default function Page() {
         frame from the Bill C-59 coverage) is supplied, slot a <FigurePlate>
         here, just below this press strip, in place of the placeholder video.
       */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4">
-        <span className="anno">As featured in</span>
-        <Image
-          src="/press/toronto-star.svg"
-          alt="Toronto Star"
-          width={955}
-          height={110}
-          unoptimized
-          className="h-4 w-auto opacity-70"
-        />
-        <Image
-          src="/press/huffpost.svg"
-          alt="HuffPost"
-          width={720}
-          height={84}
-          unoptimized
-          className="h-4 w-auto opacity-70"
-        />
-        <span className="font-anno text-[11px] uppercase tracking-[0.14em] text-graphite">
-          CTV News · Middle East Eye
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-3 border-y border-line py-4">
+        <span className="anno mr-1">As featured in</span>
+        <span className="inline-flex items-center border border-line px-3 py-2">
+          <Image
+            src="/press/toronto-star.svg"
+            alt="Toronto Star"
+            width={955}
+            height={110}
+            unoptimized
+            className="h-4 w-auto opacity-90"
+          />
+        </span>
+        <span className="inline-flex items-center border border-line px-3 py-2">
+          <Image
+            src="/press/huffpost.svg"
+            alt="HuffPost"
+            width={720}
+            height={84}
+            unoptimized
+            className="h-4 w-auto opacity-90"
+          />
+        </span>
+        <span className="border border-line px-3 py-2 font-struct text-[14px] font-medium leading-none text-ink-soft">
+          CTV News
+        </span>
+        <span className="border border-line px-3 py-2 font-struct text-[14px] font-medium leading-none text-ink-soft">
+          Middle East Eye
         </span>
       </div>
 
@@ -119,8 +126,8 @@ export default function Page() {
         />
       </Section>
 
-      <div>
-        <RefRow heading="Reference documents">
+      <Section title="Reference documents" prose={false}>
+        <RefRow heading="">
           <Ref
             href="https://www.thestar.com/opinion/contributors/grounded-what-it-s-like-to-be-a-no-fly-list-kid/article_2a8a4669-d074-5f05-908a-edaae0f6ffe6.html"
             logo={{
@@ -144,11 +151,11 @@ export default function Page() {
             detail="Quoted + photographed at the Library of Parliament · June 2019"
           />
         </RefRow>
-        <p className="mt-4 font-prose text-[13px] leading-relaxed text-ink-soft">
+        <p className="font-prose text-[14px] leading-relaxed text-ink-soft">
           The campaign (including my family) has also been covered by CTV News and
           Middle East Eye.
         </p>
-      </div>
+      </Section>
 
       <Section title="Context">
         <p>
@@ -186,7 +193,7 @@ export default function Page() {
           role was personal storytelling, media work, and direct engagement with
           decision-makers.
         </p>
-        <ul className="list-disc pl-5 space-y-2">
+        <ul className="space-y-2 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-[0.7em] [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:bg-red [&>li]:before:content-['']">
           <li>
             <strong>Op-ed in the Toronto Star</strong>, &ldquo;Grounded: What it&apos;s
             like to be a No Fly List kid,&rdquo; written at 16. (Artifact link below.)
