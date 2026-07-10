@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   TopBar,
-  TitleBlockFooter,
+  SiteFooter,
   Stamp,
   type StampTone,
 } from "../../_components/drafting";
@@ -74,15 +74,15 @@ export function SheetShell({
 
         <div className="pb-10">
           <Link
-            href="/#index"
+            href="/projects"
             className="font-anno text-[11px] uppercase tracking-[0.14em] text-graphite transition-colors hover:text-red"
           >
-            ← INDEX
+            ← Projects
           </Link>
         </div>
       </main>
 
-      <TitleBlockFooter sheet={`SHT ${sheetNo}`} />
+      <SiteFooter />
     </div>
   );
 }
@@ -126,7 +126,7 @@ export {
   NoteBlock,
   RevBlock,
   DimensionedName,
-  TitleBlockFooter,
+  SiteFooter,
   TopBar,
   PulseDot,
 } from "../../_components/drafting";

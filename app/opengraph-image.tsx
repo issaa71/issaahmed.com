@@ -344,7 +344,7 @@ export default function Image() {
                       color: "#bc3f21",
                     }}
                   >
-                    3 LIVE DEMOS
+                    4 LIVE DEMOS
                   </div>
                 </div>
               </div>

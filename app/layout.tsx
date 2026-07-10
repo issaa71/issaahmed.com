@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { SheetFrame } from "./_components/drafting";
 
 // Archivo — structure/display face. The `wdth` axis powers the extended
 // (.wide) treatment on the hero name and sheet titles.
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
     template: "%s · Issa Ahmed",
   },
   description:
-    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with three running live in your browser.",
+    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with four running live in your browser.",
   keywords: [
     "Issa Ahmed",
     "Robotics",
@@ -57,14 +56,14 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and three of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and four of them live in your browser.",
     siteName: "Issa Ahmed",
   },
   twitter: {
     card: "summary_large_image",
     title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and three of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and four of them live in your browser.",
   },
   robots: { index: true, follow: true },
 };
@@ -103,7 +102,6 @@ export default function RootLayout({
             }),
           }}
         />
-        <SheetFrame />
         {children}
       </body>
     </html>

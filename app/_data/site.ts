@@ -1,9 +1,9 @@
 export const PROFILE = {
   name: "Issa Ahmed",
   tagline:
-    "I build autonomous robots, applied ML systems, and full-stack tools.",
+    "I build autonomous robots, applied ML and AI systems, and full-stack tools.",
   currentLine:
-    "Everything here is something I designed, built, and shipped — and three of the projects run live, right in your browser.",
+    "Everything here is something I designed, built, and shipped — and four of the projects run live, right in your browser.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -78,13 +78,12 @@ export const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "AI / ML",
     items: [
+      "classical & deep-learning models",
       "PyTorch",
       "scikit-learn",
-      "XGBoost",
       "OpenCV",
-      "YOLOv8",
+      "YOLO",
       "TensorRT",
-      "Gymnasium",
     ],
   },
   {

@@ -24,41 +24,6 @@ export function PulseDot({ className }: { className?: string }) {
   );
 }
 
-/* 1 · SheetFrame ----------------------------------------------------------- */
-
-/** Fixed, pointer-events-none drawing-sheet frame drawn over the viewport on
-    lg+; a simple 3px top rule below lg. Rendered once in layout.tsx. */
-export function SheetFrame() {
-  return (
-    <>
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-x-0 top-0 z-50 h-[3px] bg-frame lg:hidden"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-50 hidden lg:block"
-      >
-        <div className="absolute inset-[10px] border border-frame">
-          {/* inner offset hairline completes the double-border look */}
-          <div className="absolute inset-[4px] border border-frame/40" />
-          {/* left zone letters A–D */}
-          <div className="absolute inset-y-0 left-[4px] flex flex-col">
-            {["A", "B", "C", "D"].map((l) => (
-              <span
-                key={l}
-                className="flex flex-1 items-center font-anno text-[9px] leading-none text-graphite"
-              >
-                {l}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
 /* 2 · TopBar --------------------------------------------------------------- */
 
 const NAV_LINK =
@@ -80,9 +45,6 @@ export function TopBar({
           <span className="font-struct text-[13px] font-bold uppercase tracking-[0.08em] text-ink transition-colors group-hover:text-red">
             Issa Ahmed
           </span>
-          <span className="hidden font-anno text-[10.5px] uppercase tracking-[0.16em] text-graphite sm:inline">
-            · Drawing package
-          </span>
         </Link>
 
         <nav className="flex items-center gap-4 sm:gap-5">
@@ -93,8 +55,8 @@ export function TopBar({
                   {sheet}
                 </span>
               ) : null}
-              <Link href="/#index" className={NAV_LINK}>
-                Index
+              <Link href="/projects" className={NAV_LINK}>
+                Projects
               </Link>
               <Link href="/#contact" className={NAV_LINK}>
                 Contact
@@ -102,14 +64,14 @@ export function TopBar({
             </>
           ) : (
             <>
-              <a href="#index" className={NAV_LINK}>
-                Index
-              </a>
+              <Link href="/projects" className={NAV_LINK}>
+                Projects
+              </Link>
               <a href="#notes" className={`${NAV_LINK} max-sm:hidden`}>
-                Notes
+                Philosophy
               </a>
               <a href="#equipment" className={`${NAV_LINK} max-sm:hidden`}>
-                Equipment
+                Skills
               </a>
               <a href="#contact" className={NAV_LINK}>
                 Contact
@@ -122,70 +84,15 @@ export function TopBar({
   );
 }
 
-/* 3 · TitleBlockFooter ----------------------------------------------------- */
+/* 3 · SiteFooter ----------------------------------------------------------- */
 
-function TBCell({
-  label,
-  children,
-  className,
-}: {
-  label: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`bg-paper px-4 py-3 ${className ?? ""}`}>
-      <div className="font-anno text-[9.5px] uppercase tracking-[0.14em] text-graphite">
-        {label}
-      </div>
-      <div className="mt-1 font-anno text-[13px] leading-snug text-ink">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/** The site footer on every page — a bordered title-block table. */
-export function TitleBlockFooter({ sheet }: { sheet: string }) {
+/** Minimal page footer — a single quiet copyright line. */
+export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="mt-16 px-6 pb-10 lg:px-10">
       <div className="mx-auto max-w-[72rem]">
-        <div className="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-[1fr_1fr_1.6fr_1.6fr_0.9fr_0.8fr_1.3fr]">
-          <TBCell label="Drawn by">Issa Ahmed</TBCell>
-          <TBCell label="Location">Toronto, ON</TBCell>
-          <TBCell label="Contact">
-            <a
-              href="mailto:issaahmed1@icloud.com"
-              className="transition-colors hover:text-red"
-            >
-              issaahmed1@icloud.com
-            </a>
-          </TBCell>
-          <TBCell label="Links">
-            <a
-              href="https://github.com/issaa71"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-red"
-            >
-              GitHub ↗
-            </a>
-            <span className="text-line"> · </span>
-            <a
-              href="https://www.linkedin.com/in/issa-ahmed-032490190/"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:text-red"
-            >
-              LinkedIn ↗
-            </a>
-          </TBCell>
-          <TBCell label="Sheet">{sheet}</TBCell>
-          <TBCell label="Scale">N.T.S.</TBCell>
-          <TBCell label="Checked by">You — run the live demos</TBCell>
-        </div>
-        <p className="mt-3 font-anno text-[10px] text-graphite">
+        <p className="font-anno text-[10px] text-graphite">
           © {year} · Toronto, ON · Next.js + Vercel
         </p>
       </div>
@@ -231,95 +138,11 @@ export function Stamp({
     label animate (motion-safe). The inline-block wrapper hugs the text width so
     the dimension line spans it exactly at every viewport. */
 export function DimensionedName({ className }: { className?: string }) {
-  const label = "ROBOTICS · APPLIED ML · FULL-STACK";
   return (
     <div className={`relative inline-block ${className ?? ""}`}>
-      {/* top dimension chrome, 8px above the name */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-4 translate-y-[calc(-100%-8px)]"
-      >
-        <svg
-          className="absolute inset-0 h-full w-full"
-          viewBox="0 0 100 16"
-          preserveAspectRatio="none"
-          fill="none"
-        >
-          {/* horizontal dimension line — NO vectorEffect: it must scale so the
-              pathLength=100 / dasharray:100 draw-in stays one full-width dash
-              (screen-space dashes would repeat as fragments). strokeWidth maps
-              through the y-scale (viewBox h16 → h-4 16px = ×1), so it stays 1px. */}
-          <line
-            x1="0"
-            y1="8"
-            x2="100"
-            y2="8"
-            stroke="var(--ink)"
-            strokeOpacity={0.6}
-            strokeWidth={1}
-            pathLength={100}
-            className="dim-stroke"
-          />
-          <line
-            x1="0.5"
-            y1="8"
-            x2="0.5"
-            y2="16"
-            stroke="var(--ink)"
-            strokeOpacity={0.6}
-            strokeWidth={1}
-            vectorEffect="non-scaling-stroke"
-          />
-          <line
-            x1="99.5"
-            y1="8"
-            x2="99.5"
-            y2="16"
-            stroke="var(--ink)"
-            strokeOpacity={0.6}
-            strokeWidth={1}
-            vectorEffect="non-scaling-stroke"
-          />
-        </svg>
-        {/* fixed-size, corner-anchored arrowheads pointing outward */}
-        <svg
-          width="8"
-          height="8"
-          viewBox="0 0 8 8"
-          className="absolute left-0 top-1/2 -translate-y-1/2"
-          fill="var(--ink)"
-          fillOpacity={0.6}
-        >
-          <path d="M0 4 L8 0.5 L8 7.5 Z" />
-        </svg>
-        <svg
-          width="8"
-          height="8"
-          viewBox="0 0 8 8"
-          className="absolute right-0 top-1/2 -translate-y-1/2"
-          fill="var(--ink)"
-          fillOpacity={0.6}
-        >
-          <path d="M8 4 L0 0.5 L0 7.5 Z" />
-        </svg>
-        {/* label breaks the line in the middle */}
-        <span className="dim-label anno-red absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-paper px-2 text-[10px]">
-          {label}
-        </span>
-      </div>
-
       <h1 className="font-struct text-[clamp(2.05rem,10.5vw,7rem)] font-extrabold uppercase leading-[0.95] tracking-[-0.02em] text-ink">
         Issa Ahmed
       </h1>
-
-      {/* witness ticks below the baseline at each end */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-2 translate-y-[6px]"
-      >
-        <span className="absolute bottom-0 left-0 h-2 w-px bg-ink/60" />
-        <span className="absolute bottom-0 right-0 h-2 w-px bg-ink/60" />
-      </div>
     </div>
   );
 }
