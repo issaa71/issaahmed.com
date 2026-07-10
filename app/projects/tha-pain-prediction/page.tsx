@@ -9,8 +9,8 @@ import {
   EquipList,
   FigurePlate,
   DataTable,
-  PlaceholderPlate,
   FlowDiagram,
+  LiveBar,
   SpecGrid,
 } from "../_components/sheet";
 
@@ -299,11 +299,19 @@ export default function Page() {
             Streamlit, deployed to Streamlit Community Cloud, and is the version cited in the
             published paper.
           </p>
-          {/* swap-note: drop a screenshot of the live calculator into /public/projects/tha-pain-prediction/ and swap this for a FigurePlate */}
-          <PlaceholderPlate
-            kind="FIGURE"
-            title="The Streamlit clinician calculator"
-            covers="the deployed tool's UI — preoperative inputs (age, BMI, WOMAC / ICOAP items) and the predicted 3- and 5-year pain output"
+          <LiveBar
+            href="https://hippain-8ipnqvicztvdyk3cip7hfa.streamlit.app/"
+            kicker="Live tool · the version cited in the paper"
+            title="Try the pain-prediction calculator — enter preoperative inputs, get a 3- and 5-year estimate"
+            sub="Streamlit · CatBoost model · deployed to Streamlit Community Cloud"
+          />
+          <FigurePlate
+            src="/projects/tha-pain-prediction/streamlit-calculator.png"
+            alt="The deployed Streamlit calculator: a Pain Score Prediction sidebar with a T3 (3 years) / T5 (5 years) timepoint selector, and Patient Information inputs — length of stay, BMI, current weight, WOMAC and ICOAP pain items, and pre-op age — that produce a predicted post-operative pain score."
+            caption="The deployed clinician calculator — the CatBoost model from the paper wrapped in a Streamlit UI: pick the 3- or 5-year horizon, enter the preoperative inputs, and it returns the predicted pain score. This is the version cited in the publication."
+            width={2000}
+            height={934}
+            className="breakout"
           />
         </Section>
 
