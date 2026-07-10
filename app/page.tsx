@@ -55,8 +55,10 @@ function SheetIndex() {
       id="index"
       className="scroll-mt-20 border-t border-line py-14 sm:py-16"
     >
-      <h2 className="anno-red">Projects</h2>
-      <p className="mt-3 max-w-2xl font-prose text-[15.5px] leading-relaxed text-ink-soft">
+      <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
+        Projects
+      </h2>
+      <p className="mt-4 max-w-3xl font-prose text-[17px] leading-relaxed text-ink-soft">
         Six projects — five I designed and built, one I fought for: two
         autonomous robots, an offline-RL agent, two clinical ML tools, and a
         federal advocacy campaign. Open any sheet for the full story.
@@ -111,7 +113,9 @@ function GeneralNotes() {
       id="notes"
       className="scroll-mt-20 border-t border-line py-14 sm:py-16"
     >
-      <h2 className="anno-red">Design philosophy</h2>
+      <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
+        Design philosophy
+      </h2>
       <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
         One instinct runs through everything here: build the real thing, then be
         honest about exactly what it does — and make it checkable.
@@ -160,7 +164,9 @@ function Equipment() {
       id="equipment"
       className="scroll-mt-20 border-t border-line py-14 sm:py-16"
     >
-      <h2 className="anno-red">{"Skills & tools"}</h2>
+      <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
+        {"Skills & tools"}
+      </h2>
 
       <div className="mt-8 border-t border-line">
         {SKILLS.map((g) => (
@@ -234,7 +240,9 @@ function Equipment() {
 function Contact() {
   return (
     <section id="contact" className="scroll-mt-20 border-t border-line py-16">
-      <h2 className="anno-red">Contact</h2>
+      <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
+        Contact
+      </h2>
       <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
         Open to roles and collaborations in robotics, AI / ML, and full-stack
         engineering.
