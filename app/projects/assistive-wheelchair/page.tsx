@@ -10,6 +10,7 @@ import {
   NoteBlock,
   EquipList,
 } from "../_components/sheet";
+import { WheelchairSim } from "./_sim";
 
 export const metadata: Metadata = {
   title: "Assistive Navigation Robot — ROS2 Smart-Wheelchair Prototype",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Assistive Navigation Robot — ROS2 Smart-Wheelchair Prototype",
     description:
-      "A ROS2 assistive-navigation robot: A* room-to-room planning, OpenCV danger-zone detection, and QR-checkpoint arrival, on a Yahboom Raspberry Pi 5 platform.",
+      "A ROS2 assistive-navigation robot: room-to-room route planning via a custom Nav2 client, OpenCV danger-zone detection, and QR-checkpoint arrival, on a Yahboom Raspberry Pi 5 platform.",
     type: "article",
   },
 };
@@ -49,8 +50,8 @@ export default function Page() {
       <CalloutStrip cols={4}>
         <Callout
           label="Room-to-room planning"
-          value="A*"
-          hint="a custom ROS2 node plans over a pre-mapped home, on top of the Nav2 stack"
+          value="Nav2"
+          hint="a custom ROS2 node I wrote sends the destination to Nav2, which plans and drives the route over a pre-mapped home"
           accent
         />
         <Callout
@@ -84,7 +85,7 @@ export default function Page() {
       <Section title="My role">
         <p>
           I designed and built this end to end. I wrote the navigation system and the whole
-          application layer on top of the robot&apos;s ROS2 stack: the room-to-room A* path planning,
+          application layer on top of the robot&apos;s ROS2 stack: the room-to-room route planning,
           the computer-vision detectors for floor hazards and furniture, the QR-checkpoint arrival
           logic, and a parallel software simulation of the entire navigation loop. The workflow
           diagram below is mine.
@@ -98,10 +99,18 @@ export default function Page() {
       </Section>
 
       <Section title="Approach">
+        <FigurePlate
+          src="/projects/assistive-wheelchair/floor-plan.png"
+          alt="Schematic floor plan of the L-shaped test course, with labelled rooms (bedroom, kitchen, bathroom, dining, living) and dimensions in centimetres."
+          caption="The five-room test &quot;house&quot; I taped out and mapped — the layout the robot planned and navigated against."
+          width={980}
+          height={954}
+          plate
+        />
         <p>
           The robot first builds a 2D map of the space with its onboard lidar, then localizes
-          against it. On a &quot;go to the bedroom&quot; command, a custom ROS2 node I hooked into
-          Nav2 looks up the room&apos;s recorded coordinates and plans a route with A* — and when the
+          against it. On a &quot;go to the bedroom&quot; command, a custom ROS2 node I wrote looks up
+          the room&apos;s recorded coordinates and hands them to Nav2 to plan the route — and when the
           lidar sees an obstacle within 0.5 m, it generates eight geometric approach points and
           re-plans around it rather than stopping dead.
         </p>
@@ -123,11 +132,18 @@ export default function Page() {
           headed for.
         </p>
         <FigurePlate
-          src="/projects/assistive-wheelchair/red-tape-detection.jpg"
-          alt="OpenCV window titled 'Red Tape Detection' showing the robot's camera view with the HSV bounds printed, a green bounding box locked onto red tape on the floor, and an 'OK !!!' status."
-          caption="My red-tape detector running live on the robot: dual HSV bands segment the red floor tape, a green box locks on, and the node reports the hit ('OK !!!') so the planner routes around it."
-          width={1300}
-          height={1704}
+          src="/projects/assistive-wheelchair/red-tape-segmentation.jpg"
+          alt="Side-by-side view: the robot's raw camera frame with a green bounding box on the red floor tape (left), and the binary segmentation mask isolating that tape as white on black (right)."
+          caption="My red-tape detector segmenting the floor tape: the raw camera frame (left) and the binary mask it builds from two HSV colour bands (right), which the planner treats as a no-go region."
+          width={1800}
+          height={840}
+        />
+        <FigurePlate
+          src="/projects/assistive-wheelchair/furniture-detection.jpg"
+          alt="The furniture detector's view: a green bounding box and centre dot on the bedroom's bed prop, a 'Found furniture / Position' overlay, a small binary colour-mask panel, and HSV calibration sliders."
+          caption="My furniture detector keying on the bedroom's bed: colour, aspect ratio, and the bed's flower pattern combine into a labelled hit, alongside the colour mask and the HSV controls I tuned it with."
+          width={1800}
+          height={1082}
         />
         <p>
           I also built the whole navigation loop as a parallel <strong>software simulation</strong> —
@@ -145,6 +161,18 @@ export default function Page() {
           &quot;house&quot; I built, the robot localized, planned to named rooms, reacted to
           obstacles inside 0.5 m, flagged red-tape danger zones, and confirmed arrival by QR code.
         </p>
+        <div id="sim" className="scroll-mt-24">
+          <p className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
+            TRY IT — RUNS IN YOUR BROWSER
+          </p>
+          <div className="mt-3">
+            <WheelchairSim />
+          </div>
+          <p className="mt-3 font-prose text-[13.5px] italic leading-snug text-ink-soft">
+            Pick a room — the wheelchair drives the fixed route I defined for it, waiting to
+            scan the right QR checkpoint at each stop before moving on.
+          </p>
+        </div>
         {/* TO BE ISSUED — a ≈60s screen-capture of a full autonomous run through the taped house. */}
         <PlaceholderPlate
           kind="VIDEO"
@@ -171,7 +199,7 @@ export default function Page() {
             "ROS2",
             "Nav2",
             "SLAM (gmapping / Cartographer)",
-            "A* planning",
+            "route planning",
             "OpenCV",
             "pyzbar (QR / barcode)",
             "robot_localization (EKF)",
