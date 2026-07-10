@@ -156,6 +156,7 @@ export {
   DeepSetsDiagram,
   MetricBars,
   SystemGraph,
+  DataProvenance,
 } from "../../_components/diagrams";
 
 export { SpecGrid } from "../../_components/spec-grid";

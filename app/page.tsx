@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { TopBar, SiteFooter, DimensionedName } from "./_components/drafting";
+import {
+  TopBar,
+  SiteFooter,
+  DimensionedName,
+  PulseDot,
+} from "./_components/drafting";
 import { CopyEmail } from "./_components/copy-email";
 import { ProjectGrid } from "./_components/project-cards";
 import { PROFILE, SKILLS, CERTIFICATIONS } from "./_data/site";
@@ -31,22 +36,57 @@ export default function Home() {
   );
 }
 
-/* Hero: the name + thesis, centered. pt-14 clears the sticky TopBar. */
+/* Hero: the name + thesis, then a spec bar (the drawing's title block) that
+   gives the proof and availability a designed, substantial treatment. The old
+   tiny mono identity line read as an afterthought; this makes the standout
+   fact (four live demos) the focal point and the identity a real block. */
 function Hero() {
   return (
-    <section className="pb-12 pt-14 text-center">
+    <section className="pb-14 pt-14 text-center">
       <div className={SHELL}>
         <DimensionedName />
 
-        <p className="mx-auto mt-8 max-w-2xl font-prose text-[22px] leading-snug text-ink sm:text-[24px]">
+        <p className="mx-auto mt-8 max-w-2xl font-prose text-[23px] leading-snug text-ink sm:text-[26px]">
           {PROFILE.tagline}
         </p>
-        <p className="mx-auto mt-4 max-w-2xl font-prose text-[15.5px] leading-relaxed text-ink-soft">
-          {PROFILE.currentLine}
+        <p className="mx-auto mt-4 max-w-xl font-prose text-[16px] leading-relaxed text-ink-soft">
+          Everything here is something I designed, built, and shipped.
         </p>
-        <p className="mt-5 font-anno text-[11px] uppercase tracking-[0.12em] text-graphite">
-          {PROFILE.identity}
-        </p>
+
+        <dl className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-px border border-line bg-line text-left sm:grid-cols-3">
+          <div className="bg-paper px-5 py-4">
+            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
+              Live demos
+            </dt>
+            <dd className="mt-2 flex items-baseline gap-2">
+              <span className="font-struct text-[30px] font-bold leading-none tabular-nums text-red">
+                4
+              </span>
+              <span className="font-prose text-[13.5px] leading-[1.25] text-ink-soft">
+                run right in
+                <br />
+                your browser
+              </span>
+            </dd>
+          </div>
+          <div className="bg-paper px-5 py-4">
+            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
+              Focus
+            </dt>
+            <dd className="mt-2 font-struct text-[15.5px] font-semibold leading-snug text-ink">
+              {"Robotics · Applied ML & AI · Full-stack"}
+            </dd>
+          </div>
+          <div className="bg-paper px-5 py-4">
+            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
+              Status
+            </dt>
+            <dd className="mt-2 flex items-center gap-2 font-struct text-[15.5px] font-semibold leading-snug text-ink">
+              <PulseDot />
+              Toronto · open to new-grad roles
+            </dd>
+          </div>
+        </dl>
       </div>
     </section>
   );

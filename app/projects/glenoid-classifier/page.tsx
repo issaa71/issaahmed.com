@@ -10,6 +10,7 @@ import {
   FlowDiagram,
   NoteBlock,
   SpecGrid,
+  DataProvenance,
 } from "../_components/sheet";
 import { GlenoidCalculator } from "./_calculator";
 
@@ -125,6 +126,54 @@ export default function Page() {
           went a step further and re-exported the trained model to run natively in the browser above,
           so the classifier isn&apos;t just described: it&apos;s runnable.
         </p>
+      </Section>
+
+      <Section title="Where the data comes from">
+        <p>
+          A teaching assistant in my biomechanics course handed me a dataset of real
+          patients and asked whether I could build something useful from it. That is the
+          whole origin of this project: one spreadsheet, and a question.
+        </p>
+        <p>
+          The dataset is 143 patients&apos; shoulders. For each one, ten geometric
+          measurements of the glenoid, the shallow socket the arm bone sits in, were taken
+          from a CT scan of the shoulder: how the socket is tilted (version and
+          inclination), how far the ball of the joint has drifted off-center (subluxation),
+          and its surface area, curvature, and depth. Every patient also arrives already labelled with its type, using the
+          Walch system that surgeons use to describe how a socket has worn. So the model
+          learns from measurements plus the correct answer for 143 people, and it never sees
+          anything else: no images, no names, nothing but those numbers. Because the
+          measurements came pre-recorded and pre-labelled, the real engineering was choosing
+          which of the ten actually matter and teaching a staged model to reason from them
+          the way a clinician would.
+        </p>
+        <DataProvenance
+          label="Data provenance"
+          merge="one row per patient"
+          sources={[
+            {
+              name: "143 patient glenoids",
+              what: "Real shoulder-socket data for 143 patients: the measurements, plus the correct answer for each.",
+              origin: "Given to me by a TA in my biomechanics course",
+            },
+            {
+              name: "Ten geometric measurements",
+              what: "Per patient: tilt (version, inclination), joint off-centering (subluxation), plus area, curvature, and depth.",
+              origin: "Measured from each patient's CT scan",
+            },
+            {
+              name: "Expert Walch labels",
+              what: "The correct answer for each patient: healthy, or which wear pattern (A / B / E) and subtype.",
+              origin: "Labelled in the provided dataset",
+            },
+          ]}
+          stages={[
+            { stage: "Pick the signal" },
+            { stage: "Engineer 2 ratios" },
+            { stage: "6 model inputs", accent: true },
+          ]}
+          caption="Ten raw measurements, narrowed by statistics (ANOVA, Tukey) to the six that carry the most signal, two of them engineered ratios. Those six feed the classifier below."
+        />
       </Section>
 
       <Section title="Approach">

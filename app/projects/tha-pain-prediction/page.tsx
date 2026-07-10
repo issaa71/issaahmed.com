@@ -11,6 +11,7 @@ import {
   FlowDiagram,
   LiveBar,
   SpecGrid,
+  DataProvenance,
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
@@ -204,6 +205,54 @@ export default function Page() {
             feature importance pipeline, and the Streamlit calculator that surfaces the
             model in a clinically usable form.
           </p>
+        </Section>
+
+        <Section title="Where the data comes from">
+          <p>
+            I didn&apos;t collect any of this data. I was the only engineer on a team of
+            orthopaedic surgeons and researchers, and my job was to turn an existing
+            clinical dataset into something predictive. Understanding that dataset, and
+            cleaning it, was most of the work.
+          </p>
+          <p>
+            Everything runs on one cohort called SAFE-T: 513 people who had a hip
+            replacement at two academic hospitals and were then checked in with for years
+            afterward. Before their surgery, the usual things were recorded, their age and
+            BMI, the details of the operation, other health conditions, and standard
+            pain-and-function questionnaires (WOMAC and ICOAP). Then at the three-year and
+            five-year marks, one number mattered most: how much hip pain they still had,
+            rated 0 to 10. The model learns from the before-surgery answers to predict that
+            later pain score, so a surgeon could estimate a new patient&apos;s risk during a
+            consultation.
+          </p>
+          <DataProvenance
+            label="Data provenance"
+            merge="one row per patient"
+            sources={[
+              {
+                name: "SAFE-T cohort",
+                what: "513 people who had a primary hip replacement at two academic hospitals, followed from before surgery out to five years.",
+                origin: "An existing study, given to me, not collected by me",
+              },
+              {
+                name: "Before-surgery inputs",
+                what: "Age, BMI, the surgery details, other health conditions, and standard WOMAC / ICOAP pain-and-function questionnaires.",
+                origin: "Recorded at the pre-operative visit",
+              },
+              {
+                name: "The pain to predict",
+                what: "Each patient's average hip pain, 0 to 10, at the three-year and five-year follow-ups.",
+                origin: "Follow-up visits (T3 and T5)",
+              },
+            ]}
+            stages={[
+              { stage: "Keep usable slice" },
+              { stage: "Clean & impute" },
+              { stage: "Select features" },
+              { stage: "Modeling dataset", accent: true },
+            ]}
+            caption="513 patients, 71 candidate variables (60 numeric, 11 categorical). On clinical data this messy, most of the accuracy is won here, in the cleaning and feature selection, before any model runs."
+          />
         </Section>
 
         <Section title="Approach">

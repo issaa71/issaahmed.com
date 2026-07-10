@@ -108,6 +108,94 @@ export function FlowDiagram({
   );
 }
 
+/* DataProvenance ----------------------------------------------------------
+   "Where the data comes from": a row of source cards (the here / here / here)
+   that merge into a compact pipeline ending at what the visitor sees. Makes
+   the data side of the ML case studies legible to a non-technical reader. */
+
+export function DataProvenance({
+  label = "Where the data comes from",
+  sources,
+  merge,
+  stages,
+  caption,
+}: {
+  label?: string;
+  sources: { name: string; what: string; origin?: string }[];
+  merge?: string;
+  stages: { stage: string; accent?: boolean }[];
+  caption?: string;
+}) {
+  const srcCols =
+    sources.length >= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
+  return (
+    <figure className={PLATE}>
+      <Kicker label={label} />
+
+      <p className="mb-3 font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
+        {sources.length} sources
+      </p>
+      <div className={`grid grid-cols-1 gap-px border border-line bg-line ${srcCols}`}>
+        {sources.map((s, i) => (
+          <div key={s.name} className="flex flex-col bg-paper p-4">
+            <span className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
+              {`SRC ${String(i + 1).padStart(2, "0")}`}
+            </span>
+            <span className="mt-2 font-struct text-[14px] font-bold leading-snug text-ink">
+              {s.name}
+            </span>
+            <span className="mt-1.5 font-prose text-[13px] leading-snug text-ink-soft">
+              {s.what}
+            </span>
+            {s.origin ? (
+              <span className="mt-auto pt-2.5 font-anno text-[10px] leading-snug text-graphite">
+                {s.origin}
+              </span>
+            ) : null}
+          </div>
+        ))}
+      </div>
+
+      {/* the sources converge */}
+      <div className="flex flex-col items-center py-2.5 text-graphite">
+        <Arrow dir="down" />
+        {merge ? (
+          <span className="mt-1 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite">
+            {merge}
+          </span>
+        ) : null}
+      </div>
+
+      <p className="mb-3 font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
+        Pipeline
+      </p>
+      <ol className="flex flex-col items-stretch sm:flex-row">
+        {stages.map((s, i) => (
+          <Fragment key={s.stage}>
+            <li
+              className={`flex flex-1 items-center justify-center border bg-paper px-2.5 py-2.5 text-center ${s.accent ? "border-red" : "border-line"}`}
+            >
+              <span
+                className={`font-anno text-[11px] font-medium leading-snug ${s.accent ? "text-red" : "text-ink"}`}
+              >
+                {s.stage}
+              </span>
+            </li>
+            {i < stages.length - 1 ? (
+              <span className="flex shrink-0 items-center justify-center py-1 text-graphite sm:px-0.5 sm:py-0">
+                <Arrow dir="right" className="hidden sm:block" />
+                <Arrow dir="down" className="sm:hidden" />
+              </span>
+            ) : null}
+          </Fragment>
+        ))}
+      </ol>
+
+      {caption ? <Note>{caption}</Note> : null}
+    </figure>
+  );
+}
+
 /* FsmDiagram --------------------------------------------------------------- */
 
 export function FsmDiagram({

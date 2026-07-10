@@ -15,6 +15,7 @@ import {
   FigurePlate,  DeepSetsDiagram,
   MetricBars,
   SpecGrid,
+  DataProvenance,
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
@@ -145,6 +146,59 @@ export default function Page() {
           adversary turned out to be a fourth pathology: a reward and an evaluation that
           quietly graded the agent against its own assumptions.
         </p>
+      </Section>
+
+      <Section title="Where the data comes from">
+        <p>
+          I built this because I love basketball. I wanted to see whether a machine
+          could learn shot selection the way the analytics era rewrote it: stop settling
+          for long two-pointers, live at the rim and the three-point line. It is a passion
+          project I pushed well past what it needed to be, and the part I find most
+          interesting starts before any model runs, with the data. None of it comes ready
+          to use. I stitch it together from three separate public sources.
+        </p>
+        <p>
+          During the 2015-16 season the NBA had SportVU cameras in every arena tracking
+          where all ten players and the ball were about 25 times a second, and the raw logs
+          are mirrored on a public GitHub repository, so I can see exactly where everyone
+          stood at the moment of every shoot-or-pass decision. On their own those positions
+          don&apos;t tell me what happened next, so I merge in a second public source, the
+          play-by-play log: a plain record of who shot and whether it went in. A third
+          source, the NBA&apos;s official stats site, gives each player&apos;s shooting
+          accuracy broken down by distance. Merging the cameras with the play-by-play is
+          the move that matters: it lets the agent see the whole scene at a decision and be
+          graded on whether the real shot went in, so it learns from reality instead of
+          from a guess.
+        </p>
+        <DataProvenance
+          label="Data provenance"
+          merge="merged on player + event"
+          sources={[
+            {
+              name: "SportVU camera tracking",
+              what: "Where all ten players and the ball were, about 25 times a second, every game of 2015-16.",
+              origin: "Public GitHub · linouk23/NBA-Player-Movements",
+            },
+            {
+              name: "Play-by-play log",
+              what: "What actually happened each play: who shot, and whether it went in.",
+              origin: "Public GitHub · sumitrodatta/nba-alt-awards",
+            },
+            {
+              name: "Shooting % by distance",
+              what: "Each player's field-goal accuracy across seven distance zones.",
+              origin: "NBA official stats · nba_api ShotChartDetail",
+            },
+          ]}
+          stages={[
+            { stage: "Segment & merge" },
+            { stage: "78-feature states" },
+            { stage: "Repair & verify" },
+            { stage: "Offline DQN" },
+            { stage: "Live explorer", accent: true },
+          ]}
+          caption="Three public feeds stitched into 116,928 real decision points, then graded on real logged shot outcomes. Every step is reproducible from the raw logs."
+        />
       </Section>
 
       <Section title="The twist: a forensic audit that broke my own result">
