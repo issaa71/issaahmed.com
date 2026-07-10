@@ -4,6 +4,8 @@ export const PROFILE = {
     "I build autonomous robots, applied ML and AI systems, and full-stack tools.",
   currentLine:
     "Everything here is something I designed, built, and shipped, and four of the projects run live, right in your browser.",
+  identity:
+    "New-grad engineer · Toronto · open to robotics, applied-ML & full-stack roles",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",

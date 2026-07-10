@@ -99,7 +99,7 @@ export default function Page() {
 
       <Section title="System architecture">
         <SpecGrid
-          label="Product hardware"
+          label="Product design (specified, not built)"
           items={[
             { name: "Livox Mid-360", role: "3D LiDAR: SLAM + navigation" },
             { name: "6-DOF arm", role: "MoveIt2 pick-and-place, product spec (prototype: 4-DOF)" },

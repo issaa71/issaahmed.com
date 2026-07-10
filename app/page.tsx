@@ -43,6 +43,9 @@ function Hero() {
       <p className="mt-4 max-w-2xl mx-auto font-prose text-[15.5px] leading-relaxed text-ink-soft">
         {PROFILE.currentLine}
       </p>
+      <p className="mt-5 font-anno text-[11px] uppercase tracking-[0.12em] text-graphite">
+        {PROFILE.identity}
+      </p>
     </section>
   );
 }

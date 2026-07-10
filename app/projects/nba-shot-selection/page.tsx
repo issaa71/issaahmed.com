@@ -36,7 +36,7 @@ export default function Page() {
       sheetCount="06"
       eyebrow="Reinforcement Learning · PyTorch"
       title="NBA Shot Selection: Offline RL on Real Tracking Data"
-      tagline="A Dueling Deep Q-Network with a per-entity Deep Sets architecture, trained on 116,928 real NBA possessions to call shoot-or-pass. It first looked ~6× better than NBA players. Then I audited it until it broke: the headline metric was circular and the data was corrupt. Repaired and regrounded on real shot outcomes, the agent now out-selects NBA shot decisions by +0.19–0.32 points-per-shot on held-out games: a genuine, honestly-scoped result."
+      tagline="An offline-RL agent (a Dueling Deep Q-Network with a per-entity Deep Sets architecture) trained on 116,928 real NBA possessions to call shoot-or-pass. It out-selects NBA shot decisions by +0.19–0.32 points-per-shot on held-out games: the honest number that survived after I audited my own headline result until it broke (the metric was circular, the data corrupt) and rebuilt it on real shot outcomes."
       meta="AISE 4030 Reinforcement Learning · Western Engineering · April 2026"
       status={[
         { label: "Course project · April 2026", tone: "ink" },
