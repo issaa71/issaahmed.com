@@ -88,20 +88,26 @@ function SheetIndex() {
    each anchored to a sheet (bodies verbatim from the current PRINCIPLES, spec §8.3). */
 const NOTES = [
   {
-    title: "Calibrate to reality",
-    body: "After the capstone I stopped trusting my own navigation benchmark, rebuilt the simulator to the real robot's measured specs, and published that the algorithm I demoed completes only 6 of 15 missions on it. The rewrite does 15/15.",
-    evidence: "RECLAIM · the re-baseline",
+    title: "Integrate across subsystems",
+    body: "My best work is where separate parts become one system: perception, control, firmware, and the arm on RECLAIM; a vendor ROS2 stack and my own nodes on the wheelchair. Mechatronics taught me to work across the seams, not stay in one lane.",
+    evidence: "RECLAIM · the full stack",
     href: "/projects/reclaim",
   },
   {
-    title: "Pick the honest metric",
-    body: "A model can hit 90.1% “accuracy” by predicting the average on skewed data. I lead with the measures that reflect what was actually learned (MSE, shot-quality, buffer accuracy) and flag the trap out loud.",
-    evidence: "THA · the accuracy trap",
+    title: "Translate between technical and non-technical",
+    body: "I was the only engineer among the MDs and PhDs on a published clinical paper, and at 16 I wrote a Toronto Star op-ed and did national interviews about a security-list failure. I can make a system legible to the people who have to act on it.",
+    evidence: "THA · the only engineer in the room",
     href: "/projects/tha-pain-prediction",
   },
   {
-    title: "Ship it so you can check",
-    body: "Four of these projects run live in your browser, and the NBA explorer's in-browser network reproduces the Python pipeline to within 1e-6 on every feature, checked by a 250-vector parity suite. Claims you can poke at beat claims you take on faith.",
+    title: "Do whatever the thing needs",
+    body: "A startup taught me the job is whatever moves it forward: a pitch deck, a live demo, a cold-outreach email, or unglamorous grunt work. I don't wait for a perfectly-scoped ticket to start being useful.",
+    evidence: "No Fly List Kids · eight years of it",
+    href: "/projects/no-fly-list-kids",
+  },
+  {
+    title: "Make the claim checkable",
+    body: "I'd rather ship a result you can poke at than a number you have to trust. So I audit my own work until it holds, and where I can, I put the thing live in the browser so you can check it yourself.",
     evidence: "NBA · the live explorer",
     href: "/projects/nba-shot-selection",
   },
@@ -117,8 +123,9 @@ function GeneralNotes() {
         Design philosophy
       </h2>
       <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
-        One instinct runs through everything here: build the real thing, then be
-        honest about exactly what it does, and make it checkable.
+        I&apos;m a mechatronics generalist: happiest at the seams where hardware,
+        software, and ML meet, and comfortable moving between them and the people
+        who aren&apos;t engineers. A few habits I keep coming back to:
       </p>
 
       <ol className="mt-8 border-t border-line">

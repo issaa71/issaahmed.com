@@ -64,7 +64,7 @@ export default function Page() {
         <Callout
           label="Legislation"
           value="Bill C-59"
-          hint="Passed: National Security Act, 2017"
+          hint="National Security Act, 2017; passed 2019"
         />
         <Callout
           label="Federal funding"
