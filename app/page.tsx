@@ -126,7 +126,7 @@ function GeneralNotes() {
   return (
     <section
       id="notes"
-      className="scroll-mt-20 border-t border-line bg-plate py-16 sm:py-20"
+      className="scroll-mt-20 border-y border-line bg-paper-deep py-16 sm:py-20"
     >
       <div className={SHELL}>
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
@@ -262,7 +262,7 @@ function Contact() {
   return (
     <section
       id="contact"
-      className="scroll-mt-20 border-t border-line bg-plate py-16 sm:py-20"
+      className="scroll-mt-20 border-t border-line bg-paper-deep py-16 sm:py-20"
     >
       <div className={SHELL}>
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
