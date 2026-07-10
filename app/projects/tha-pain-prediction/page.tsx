@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import {
   SheetShell,
   Section,
@@ -334,19 +333,19 @@ export default function Page() {
 
         <Section title="Reflection">
           <p>
-            The most interesting engineering call was recognizing that the headline
-            90.1% number is partly noise — the mean baseline also hits it — and choosing
-            to lead the discussion with MSE and buffer accuracy instead. Class-imbalanced
-            datasets in clinical ML reward this kind of skepticism: it&apos;s easy to
-            present a high accuracy number that doesn&apos;t reflect what the model
-            actually learned. It&apos;s the same call I made in my{" "}
-            <Link href="/projects/nba-shot-selection">
-              NBA shot-selection
-            </Link>{" "}
-            model — judging the agent on shot-quality EPSA and agreement, not one headline
-            number. The future-work section of the paper flags this directly —
-            stratified or ordinal modeling approaches and AUC reporting would tighten the
-            claim, but only if the dichotomization doesn&apos;t worsen the imbalance.
+            The biggest lesson had nothing to do with which model won — it was how much
+            of the result was decided before any model ran. The SAFE-T cohort was real,
+            messy clinical data: 71 candidate features spanning demographics, surgery,
+            comorbidities, and patient-reported WOMAC / ICOAP pain scales, full of missing
+            values and outliers. Getting meaningful predictions out of it was mostly a data
+            problem — iterative imputation to fill numeric gaps without flattening the
+            relationships between features, most-frequent imputation for categoricals,
+            robust-scaling so outliers couldn&apos;t dominate, and then distilling 71 raw
+            variables down to the few that actually carried signal using four complementary
+            feature-importance methods pooled by cross-validated rank aggregation. The
+            modeling was almost the easy part. On data this messy, the accuracy is won in
+            the cleaning and the feature engineering — and it&apos;s the step I&apos;d tell
+            anyone starting a clinical-ML project to budget the most time for.
           </p>
         </Section>
       </SheetShell>
