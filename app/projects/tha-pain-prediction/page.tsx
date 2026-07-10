@@ -176,37 +176,6 @@ export default function Page() {
           />
         </Section>
 
-        <Section title="Problem">
-          <p>
-            Total hip arthroplasty (THA) is one of the most successful procedures in modern
-            medicine (over half a million performed annually in North America), but{" "}
-            <strong>up to 23% of patients still report chronic postoperative pain</strong>,
-            which contributes to higher opioid use, readmission rates, and worse overall
-            outcomes. Identifying patients at higher risk of persistent pain{" "}
-            <em>preoperatively</em>{" "}is a critical clinical challenge: surgeons currently
-            have no validated tool to estimate this risk, and traditional regression models
-            have struggled to capture the non-linear relationships that drive the outcome.
-          </p>
-          <p>
-            The collaboration with the Holland Bone & Joint Program at Sunnybrook and the
-            University of Toronto Department of Orthopaedic Surgery aimed to (1) build and
-            validate ML models that predict long-term pain from preoperative patient
-            factors, and (2) translate the best-performing model into a web tool that a
-            clinician could use during a patient consultation.
-          </p>
-        </Section>
-
-        <Section title="My role">
-          <p>
-            Among the seven co-authors I was the only engineer; the senior team were MDs
-            and PhDs at Sunnybrook + UofT. I led the technical implementation: feature
-            preprocessing and imputation, model selection and training across 13
-            algorithms, hyperparameter search with cross-validation, the four-method
-            feature importance pipeline, and the Streamlit calculator that surfaces the
-            model in a clinically usable form.
-          </p>
-        </Section>
-
         <Section title="Where the data comes from">
           <p>
             I didn&apos;t collect any of this data. I was the only engineer on a team of
@@ -305,6 +274,37 @@ export default function Page() {
             the variables that drove the top-performing models. Age, BMI, history of back
             and neck problems, and specific WOMAC / ICOAP items consistently surfaced as
             the strongest preoperative predictors.
+          </p>
+        </Section>
+
+        <Section title="Problem">
+          <p>
+            Total hip arthroplasty (THA) is one of the most successful procedures in modern
+            medicine (over half a million performed annually in North America), but{" "}
+            <strong>up to 23% of patients still report chronic postoperative pain</strong>,
+            which contributes to higher opioid use, readmission rates, and worse overall
+            outcomes. Identifying patients at higher risk of persistent pain{" "}
+            <em>preoperatively</em>{" "}is a critical clinical challenge: surgeons currently
+            have no validated tool to estimate this risk, and traditional regression models
+            have struggled to capture the non-linear relationships that drive the outcome.
+          </p>
+          <p>
+            The collaboration with the Holland Bone & Joint Program at Sunnybrook and the
+            University of Toronto Department of Orthopaedic Surgery aimed to (1) build and
+            validate ML models that predict long-term pain from preoperative patient
+            factors, and (2) translate the best-performing model into a web tool that a
+            clinician could use during a patient consultation.
+          </p>
+        </Section>
+
+        <Section title="My role">
+          <p>
+            Among the seven co-authors I was the only engineer; the senior team were MDs
+            and PhDs at Sunnybrook + UofT. I led the technical implementation: feature
+            preprocessing and imputation, model selection and training across 13
+            algorithms, hyperparameter search with cross-validation, the four-method
+            feature importance pipeline, and the Streamlit calculator that surfaces the
+            model in a clinically usable form.
           </p>
         </Section>
 

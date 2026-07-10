@@ -125,29 +125,6 @@ export default function Page() {
         />
       </RefRow>
 
-      <Section title="Problem">
-        <p>
-          Shot selection is one of the most consequential decisions in professional
-          basketball: at each step of a possession the ball-handler must decide whether
-          to attempt a shot or pass, conditioned on defender positioning, teammate
-          availability, shot-clock pressure, and their own shooting ability. The
-          question this project asks is whether a learned policy, trained on real NBA
-          tracking data, can outperform the actual decisions NBA players made.
-        </p>
-        <p>
-          This is an <strong>offline RL</strong>{" "}problem with three pathologies that
-          break standard DQN: (1) the agent learns entirely from a fixed dataset and
-          cannot explore, (2) the four pass actions are variable-identity: the same
-          action index points to a different teammate at every timestep, depending on
-          who is closest to the ball-handler, which corrupts standard Bellman backups,
-          and (3) shoot is a terminal action that occurs once per episode while passes
-          can occur 2–10 times, creating asymmetry that interacts destructively with
-          conservative offline-RL penalties like CQL. As I&apos;d find out, the real
-          adversary turned out to be a fourth pathology: a reward and an evaluation that
-          quietly graded the agent against its own assumptions.
-        </p>
-      </Section>
-
       <Section title="Where the data comes from">
         <p>
           I built this because I love basketball. I wanted to see whether a machine
@@ -199,6 +176,29 @@ export default function Page() {
           ]}
           caption="Three public feeds stitched into 116,928 real decision points, then graded on real logged shot outcomes. Every step is reproducible from the raw logs."
         />
+      </Section>
+
+      <Section title="Problem">
+        <p>
+          Shot selection is one of the most consequential decisions in professional
+          basketball: at each step of a possession the ball-handler must decide whether
+          to attempt a shot or pass, conditioned on defender positioning, teammate
+          availability, shot-clock pressure, and their own shooting ability. The
+          question this project asks is whether a learned policy, trained on real NBA
+          tracking data, can outperform the actual decisions NBA players made.
+        </p>
+        <p>
+          This is an <strong>offline RL</strong>{" "}problem with three pathologies that
+          break standard DQN: (1) the agent learns entirely from a fixed dataset and
+          cannot explore, (2) the four pass actions are variable-identity: the same
+          action index points to a different teammate at every timestep, depending on
+          who is closest to the ball-handler, which corrupts standard Bellman backups,
+          and (3) shoot is a terminal action that occurs once per episode while passes
+          can occur 2–10 times, creating asymmetry that interacts destructively with
+          conservative offline-RL penalties like CQL. As I&apos;d find out, the real
+          adversary turned out to be a fourth pathology: a reward and an evaluation that
+          quietly graded the agent against its own assumptions.
+        </p>
       </Section>
 
       <Section title="The twist: a forensic audit that broke my own result">

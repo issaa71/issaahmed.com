@@ -102,32 +102,6 @@ export default function Page() {
         </Section>
       </div>
 
-      <Section title="Problem">
-        <p>
-          The <strong>Walch classification</strong>{" "}is the standard framework orthopedic surgeons use
-          to describe how a glenoid (the shoulder&apos;s socket) has eroded and deformed in
-          arthritis, and it directly drives how a shoulder replacement is planned. Assigning a Walch
-          type is normally a manual, expertise-dependent read of a CT scan. This project asks a
-          narrower, tractable question: can a small set of quantitative, CT-derived measurements be
-          mapped automatically onto the Walch types?
-        </p>
-        <p>
-          It pairs naturally with my{" "}
-          <Link href="/projects/tha-pain-prediction">peer-reviewed hip-arthroplasty work</Link> as a
-          second musculoskeletal-ML piece: same instinct of turning clinical measurements into a
-          decision-support tool.
-        </p>
-      </Section>
-
-      <Section title="My role">
-        <p>
-          Solo work. I built the data preparation and feature engineering, the three-tier model stack,
-          and two delivery front-ends: a Streamlit web app and a terminal tool. For this portfolio I
-          went a step further and re-exported the trained model to run natively in the browser above,
-          so the classifier isn&apos;t just described: it&apos;s runnable.
-        </p>
-      </Section>
-
       <Section title="Where the data comes from">
         <p>
           A teaching assistant in my biomechanics course handed me a dataset of real
@@ -212,6 +186,32 @@ export default function Page() {
           height={600}
           plate
         />
+      </Section>
+
+      <Section title="Problem">
+        <p>
+          The <strong>Walch classification</strong>{" "}is the standard framework orthopedic surgeons use
+          to describe how a glenoid (the shoulder&apos;s socket) has eroded and deformed in
+          arthritis, and it directly drives how a shoulder replacement is planned. Assigning a Walch
+          type is normally a manual, expertise-dependent read of a CT scan. This project asks a
+          narrower, tractable question: can a small set of quantitative, CT-derived measurements be
+          mapped automatically onto the Walch types?
+        </p>
+        <p>
+          It pairs naturally with my{" "}
+          <Link href="/projects/tha-pain-prediction">peer-reviewed hip-arthroplasty work</Link> as a
+          second musculoskeletal-ML piece: same instinct of turning clinical measurements into a
+          decision-support tool.
+        </p>
+      </Section>
+
+      <Section title="My role">
+        <p>
+          Solo work. I built the data preparation and feature engineering, the three-tier model stack,
+          and two delivery front-ends: a Streamlit web app and a terminal tool. For this portfolio I
+          went a step further and re-exported the trained model to run natively in the browser above,
+          so the classifier isn&apos;t just described: it&apos;s runnable.
+        </p>
       </Section>
 
       <Section title="Results, and an honest look at the numbers">

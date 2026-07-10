@@ -117,7 +117,7 @@ export function Stamp({
   className?: string;
 }) {
   const tones: Record<StampTone, string> = {
-    red: "border-red text-red bg-red-wash/40 -rotate-1",
+    red: "border-red text-red bg-red-wash/40",
     ink: "border-ink-soft text-ink-soft",
     blue: "border-blueprint text-blueprint",
   };
