@@ -7,7 +7,7 @@ import {
 } from "../../_components/drafting";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE case-study shell — each project is a numbered sheet. Prose lives in
+   REDLINE case-study shell: each project is a numbered sheet. Prose lives in
    a 46rem column; wide elements use the `.breakout` utility. The <article>
    drives the § (section) and FIG. (figure) CSS counters.
 
@@ -87,7 +87,7 @@ export function SheetShell({
   );
 }
 
-/** Case-study section — auto-numbered §, hairline top rule, serif prose body. */
+/** Case-study section: auto-numbered §, hairline top rule, serif prose body. */
 export function Section({
   title,
   children,

@@ -3,15 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE chrome — the drafting language lives here: hairlines, small mono
+   REDLINE chrome. The drafting language lives here: hairlines, small mono
    labels, stamps, dimension marks. Prose stays large/serif/ink elsewhere.
    All components are server-safe (no client hooks). Max border-radius 3px.
-   Bespoke inline SVG marks only — no icon library, no emoji.
+   Bespoke inline SVG marks only: no icon library, no emoji.
    ────────────────────────────────────────────────────────────────────────── */
 
 /* Shared primitives -------------------------------------------------------- */
 
-/** 6px vermilion dot with a motion-safe ping — the "LIVE" affordance. */
+/** 6px vermilion dot with a motion-safe ping: the "LIVE" affordance. */
 export function PulseDot({ className }: { className?: string }) {
   return (
     <span className={`relative flex h-1.5 w-1.5 shrink-0 ${className ?? ""}`}>
@@ -86,7 +86,7 @@ export function TopBar({
 
 /* 3 · SiteFooter ----------------------------------------------------------- */
 
-/** Minimal page footer — a single quiet copyright line. */
+/** Minimal page footer: a single quiet copyright line. */
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
@@ -149,7 +149,7 @@ export function DimensionedName({ className }: { className?: string }) {
 
 /* 6 · Callout strip -------------------------------------------------------- */
 
-/** Column count on md+ — static class names so Tailwind's compiler can see them
+/** Column count on md+: static class names so Tailwind's compiler can see them
     (it can't resolve dynamically-built strings). */
 const CALLOUT_COLS: Record<2 | 3 | 4, string> = {
   2: "md:grid-cols-2",
@@ -215,7 +215,7 @@ export type RevRow = {
   tone?: "ink" | "red";
 };
 
-/** The honesty-arc revision table — replaces BeforeAfter. */
+/** The honesty-arc revision table. Replaces BeforeAfter. */
 export function RevBlock({
   rows,
   context,
@@ -275,7 +275,7 @@ export function RevBlock({
 
 /* 8 · NoteBlock ------------------------------------------------------------ */
 
-/** Left-ruled note — replaces Callout boxes. No background fill. */
+/** Left-ruled note. Replaces Callout boxes. No background fill. */
 export function NoteBlock({
   title,
   children,
@@ -295,7 +295,7 @@ export function NoteBlock({
       <p
         className={`font-anno text-[10.5px] uppercase tracking-[0.16em] ${red ? "text-red" : "text-graphite"}`}
       >
-        NOTE — {title}
+        NOTE: {title}
       </p>
       <div className="mt-1.5 font-prose text-[15px] leading-relaxed text-ink">
         {children}
@@ -306,7 +306,7 @@ export function NoteBlock({
 
 /* 10 · RefRow / Ref -------------------------------------------------------- */
 
-/** Hairline-separated list of reference documents — replaces Artifact cards. */
+/** Hairline-separated list of reference documents. Replaces Artifact cards. */
 export function RefRow({
   heading = "Reference documents",
   children,
@@ -369,7 +369,7 @@ export function Ref({
 
 /* 11 · EquipList ----------------------------------------------------------- */
 
-/** Inline mono list joined by hairline dots — replaces TechRow pills. */
+/** Inline mono list joined by hairline dots. Replaces TechRow pills. */
 export function EquipList({
   items,
   className,
@@ -396,7 +396,7 @@ export function EquipList({
 /** The demo CTA banner. Whole bar is the anchor; internal hrefs use next/link. */
 export function LiveBar({
   href,
-  kicker = "WITNESS TEST — RUNS IN YOUR BROWSER",
+  kicker = "WITNESS TEST · RUNS IN YOUR BROWSER",
   title,
   sub,
   cta = "RUN ↗",

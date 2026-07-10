@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE — as-built engineering-drawing-package design language.
+   REDLINE: as-built engineering-drawing-package design language.
    Warm paper + ink, one vermilion accent. Light theme only.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -15,10 +15,10 @@
   --graphite: #7a7160;     /* small mono labels ONLY (never body text) */
   --line: #ddd5c2;         /* hairline rules */
   --frame: #a49a83;        /* the sheet border frame */
-  --red: #bc3f21;          /* redline vermilion — the one accent */
+  --red: #bc3f21;          /* redline vermilion: the one accent */
   --red-deep: #96311a;     /* hover/active */
   --red-wash: #f7e8df;     /* selection, subtle stamp fill */
-  --blueprint: #5c86ab;    /* non-photo blue — PLACEHOLDERS ONLY */
+  --blueprint: #5c86ab;    /* non-photo blue: PLACEHOLDERS ONLY */
   --blueprint-line: #b3c9db;
 }
 
@@ -73,7 +73,7 @@ body {
 
 /* Utilities ----------------------------------------------------------------- */
 
-/* Mono annotation label — the sitewide 10.5px kicker. */
+/* Mono annotation label: the sitewide 10.5px kicker. */
 @utility anno {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 10.5px;
@@ -110,7 +110,7 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Case-study prose — inline element skins inside a <Section>. */
+/* Case-study prose: inline element skins inside a <Section>. */
 .rl-prose a {
   color: var(--red);
   text-decoration: underline;
@@ -146,7 +146,7 @@ body {
   content: "FIG. " counter(fig, decimal-leading-zero);
 }
 
-/* Motion — decorative only. Everything is fully visible at rest and under
+/* Motion: decorative only. Everything is fully visible at rest and under
    prefers-reduced-motion (the animated properties are set solely inside the
    no-preference block, so reduced motion falls back to the static state). */
 @keyframes dim-draw {
@@ -174,13 +174,13 @@ body {
     opacity: 0;
     animation: dim-fade 0.6s ease-out 0.75s forwards;
   }
-  /* Generic hero entrance (non-h1 lines) — ends at opacity 1. */
+  /* Generic hero entrance (non-h1 lines): ends at opacity 1. */
   .animate-rise {
     animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 }
 
-/* Calculator slider (§7) — 2px hairline track with tick graduations beneath,
+/* Calculator slider (§7): 2px hairline track with tick graduations beneath,
    14px square-ish paper thumb with a 1.5px red border. Apply class `rl-range`
    to the <input type="range">. WebKit + Firefox pseudo-elements are written as
    separate rules on purpose (a shared selector list would be dropped by both). */

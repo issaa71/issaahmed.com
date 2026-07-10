@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-// Archivo — structure/display face. The `wdth` axis powers the extended
+// Archivo: structure/display face. The `wdth` axis powers the extended
 // (.wide) treatment on the hero name and sheet titles.
 const archivo = Archivo({
   subsets: ["latin"],
@@ -10,14 +10,14 @@ const archivo = Archivo({
   axes: ["wdth"],
 });
 
-// Source Serif 4 — body prose. `opsz` optical-size axis for large display prose.
+// Source Serif 4: body prose. `opsz` optical-size axis for large display prose.
 const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
   variable: "--font-source-serif",
   axes: ["opsz"],
 });
 
-// IBM Plex Mono — annotations, labels, data tables (non-variable → weights).
+// IBM Plex Mono: annotations, labels, data tables (non-variable → weights).
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -35,11 +35,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
+    default: "Issa Ahmed · Robotics, ML & Full-Stack Projects",
     template: "%s · Issa Ahmed",
   },
   description:
-    "Robotics, applied ML, and full-stack projects — designed, built, and shipped, with four running live in your browser.",
+    "Robotics, applied ML, and full-stack projects: designed, built, and shipped, with four running live in your browser.",
   keywords: [
     "Issa Ahmed",
     "Robotics",
@@ -54,16 +54,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
+    title: "Issa Ahmed · Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and four of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems: built, shipped, and four of them live in your browser.",
     siteName: "Issa Ahmed",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Issa Ahmed — Robotics, ML & Full-Stack Projects",
+    title: "Issa Ahmed · Robotics, ML & Full-Stack Projects",
     description:
-      "Autonomous robots, applied ML, and full-stack systems — built, shipped, and four of them live in your browser.",
+      "Autonomous robots, applied ML, and full-stack systems: built, shipped, and four of them live in your browser.",
   },
   robots: { index: true, follow: true },
 };

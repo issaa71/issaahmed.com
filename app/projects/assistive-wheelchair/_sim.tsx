@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { PulseDot } from "../../_components/drafting";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Assistive-wheelchair navigation SIMULATION — a faithful web rebuild of the
+   Assistive-wheelchair navigation SIMULATION: a faithful web rebuild of the
    Python turtle sim (AISE 4020B). It is NOT pathfinding: every room has ONE
    fixed waypoint route I authored, and the chair pauses at each checkpoint to
    "scan" the matching QR code before moving on. Geometry is carried verbatim
@@ -26,7 +26,7 @@ type Room = {
 const ROOM_W = 180;
 const ROOM_H = 100;
 
-/* Rooms + their fixed routes — exactly as defined in the original simulation. */
+/* Rooms + their fixed routes, exactly as defined in the original simulation. */
 const ROOMS: Room[] = [
   { name: "Kitchen", x: 100, y: 100, door: { x: 190, y: 200 }, route: ["Mid1", "Mid2", "Mid3", "Mid4", "Kitchen"] },
   { name: "Living Room", x: 300, y: 100, door: { x: 390, y: 200 }, route: ["Mid1", "Mid2", "Mid3", "Living Room"] },
@@ -41,7 +41,7 @@ const ROOMS: Room[] = [
   { name: "Office", x: 520, y: 400, door: { x: 610, y: 400 }, route: ["Mid1", "Mid2", "Mid3", "Mid7", "Office"] },
 ];
 
-/* Corridor checkpoints — the QR waypoints between room rows. */
+/* Corridor checkpoints: the QR waypoints between room rows. */
 const MIDS: Record<string, Pt> = {
   Mid1: { x: 790, y: 225 },
   Mid2: { x: 590, y: 225 },
@@ -72,7 +72,7 @@ const LINE_COLOR: Record<LogKind, string> = {
   arrive: "font-semibold text-ink",
 };
 
-/* ── animation control token — lets a run cancel its own RAF + timers ── */
+/* ── animation control token: lets a run cancel its own RAF + timers ── */
 type Token = { cancelled: boolean; raf: number; timeout: number };
 
 const pointsAttr = (pts: Pt[]) => pts.map((p) => `${p.x},${p.y}`).join(" ");
@@ -168,7 +168,7 @@ export function WheelchairSim() {
     const moveTo = (i: number) => {
       if (token.cancelled) return;
       if (i >= route.length) {
-        append({ kind: "arrive", main: `Arrived: ${name} — navigation complete.` });
+        append({ kind: "arrive", main: `Arrived: ${name}. Navigation complete.` });
         setRunning(false);
         if (tokenRef.current === token) tokenRef.current = null;
         return;
@@ -220,9 +220,9 @@ export function WheelchairSim() {
   const dashedPts = activeRoom ? [marker, ...pathPts.slice(reached + 1)] : [];
 
   const statusText = running
-    ? "Driving the fixed route — pausing to scan each QR checkpoint."
+    ? "Driving the fixed route, pausing to scan each QR checkpoint."
     : destination
-      ? "Route complete — arrived and QR-verified."
+      ? "Route complete: arrived and QR-verified."
       : "Idle. Eleven rooms, each with the fixed route I defined for it.";
 
   return (
@@ -232,7 +232,7 @@ export function WheelchairSim() {
         <span className="flex items-center gap-2">
           <PulseDot />
           <span className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
-            Live simulation — runs in your browser
+            Live simulation: runs in your browser
           </span>
         </span>
         <span className="hidden shrink-0 font-anno text-[10px] uppercase tracking-[0.14em] text-graphite sm:block">
@@ -246,7 +246,7 @@ export function WheelchairSim() {
           viewBox="0 0 1000 700"
           className="h-auto w-full select-none"
           role="group"
-          aria-label="Floor plan — activate a room to send the wheelchair its fixed route"
+          aria-label="Floor plan: activate a room to send the wheelchair its fixed route"
         >
           {/* title + live HUD (decorative) */}
           <g aria-hidden>
@@ -270,7 +270,7 @@ export function WheelchairSim() {
             <line x1={28} y1={556} x2={972} y2={556} className="stroke-line" strokeWidth={1} />
           </g>
 
-          {/* rooms — each is an accessible button */}
+          {/* rooms: each is an accessible button */}
           {ROOMS.map((r) => {
             const selected = destination === r.name;
             const cx = r.x + ROOM_W / 2;
@@ -324,7 +324,7 @@ export function WheelchairSim() {
             );
           })}
 
-          {/* doorways — a paper-coloured gap cut into each room's wall */}
+          {/* doorways: a paper-coloured gap cut into each room's wall */}
           <g aria-hidden className="pointer-events-none">
             {ROOMS.map((r) => (
               <line
@@ -487,7 +487,7 @@ export function WheelchairSim() {
           </div>
 
           <p className="mt-5 border-t border-line pt-4 font-prose text-[13px] leading-relaxed text-ink-soft/90">
-            Fixed waypoint routes with QR-gated checkpoints — not live pathfinding. The
+            Fixed waypoint routes with QR-gated checkpoints, not live pathfinding. The
             chair drives to each corridor checkpoint, waits to scan the matching QR code,
             then continues to the next.
           </p>
@@ -502,7 +502,7 @@ export function WheelchairSim() {
                 nav · readout
               </span>
               <span className="font-anno text-[10px] text-graphite">
-                {log.length ? `${log.length} events` : "—"}
+                {log.length ? `${log.length} events` : "–"}
               </span>
             </div>
             <ol
@@ -512,7 +512,7 @@ export function WheelchairSim() {
               className="max-h-[15rem] min-h-[9rem] space-y-1 overflow-y-auto px-3 py-3 font-anno text-[11.5px] leading-relaxed"
             >
               {log.length === 0 ? (
-                <li className="text-graphite">Awaiting destination — select a room to begin.</li>
+                <li className="text-graphite">Awaiting destination: select a room to begin.</li>
               ) : (
                 log.map((e, i) => (
                   <li key={i} className="animate-rise">

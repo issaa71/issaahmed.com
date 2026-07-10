@@ -5,7 +5,7 @@ import { ProjectSheetList, PendingStrip } from "../_components/project-cards";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Six projects — five I designed and built, one I fought for: two autonomous robots, an offline-RL agent, two clinical ML tools, and a federal advocacy campaign.",
+    "Six projects, five I designed and built, one I fought for: two autonomous robots, an offline-RL agent, two clinical ML tools, and a federal advocacy campaign.",
 };
 
 export default function ProjectsPage() {
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
             Projects
           </h1>
           <p className="mt-5 max-w-2xl font-prose text-[18px] leading-[1.65] text-ink">
-            Six projects — five I designed and built, one I fought for: two
+            Six projects, five I designed and built, one I fought for: two
             autonomous robots, an offline-RL agent, two clinical ML tools, and a
             federal advocacy campaign.
           </p>

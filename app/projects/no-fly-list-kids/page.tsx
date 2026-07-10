@@ -10,13 +10,13 @@ import {
   Ref,} from "../_components/sheet";
 
 export const metadata: Metadata = {
-  title: "No Fly List Kids — Federal Advocacy",
+  title: "No Fly List Kids · Federal Advocacy",
   description:
-    "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement — contributed to Bill C-59 and the $81M redress system.",
+    "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement: contributed to Bill C-59 and the $81M redress system.",
   openGraph: {
-    title: "No Fly List Kids — Federal Advocacy",
+    title: "No Fly List Kids · Federal Advocacy",
     description:
-      "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement — contributed to Bill C-59 and the $81M redress system.",
+      "Federal advocacy with the No Fly List Kids coalition: Toronto Star op-ed, national media, PMO engagement: contributed to Bill C-59 and the $81M redress system.",
     type: "article",
   },
 };
@@ -27,13 +27,13 @@ export default function Page() {
       sheetNo="06"
       sheetCount="06"
       eyebrow="Policy · Communication · Coalition advocacy"
-      title="No Fly List Kids — Federal Advocacy"
-      tagline="A long-running federal advocacy campaign for Canadians wrongly flagged on the no-fly list — including me, since I was about five years old. The coalition I joined in 2017 contributed to the passage of Bill C-59 and an $81M federal budget allocation to build a redress system."
+      title="No Fly List Kids · Federal Advocacy"
+      tagline="A long-running federal advocacy campaign for Canadians wrongly flagged on the no-fly list, including me, since I was about five years old. The coalition I joined in 2017 contributed to the passage of Bill C-59 and an $81M federal budget allocation to build a redress system."
       meta="No Fly List Kids coalition · 2017 – present"
-      status={[{ label: "Bill C-59 — passed 2019", tone: "red" }]}
+      status={[{ label: "Bill C-59 · passed 2019", tone: "red" }]}
     >
       {/*
-        ASSET SWAP — when a broadcast still of Issa (a CTV / HuffPost interview
+        ASSET SWAP: when a broadcast still of Issa (a CTV / HuffPost interview
         frame from the Bill C-59 coverage) is supplied, slot a <FigurePlate>
         here, just below this press strip, in place of the placeholder video.
       */}
@@ -64,12 +64,12 @@ export default function Page() {
         <Callout
           label="Legislation"
           value="Bill C-59"
-          hint="Passed — National Security Act, 2017"
+          hint="Passed: National Security Act, 2017"
         />
         <Callout
           label="Federal funding"
           value="$81M"
-          hint="2018 budget — redress system build"
+          hint="2018 budget: redress system build"
         />
         <Callout
           label="Years of advocacy"
@@ -86,7 +86,7 @@ export default function Page() {
               year: "2016",
               title: "No Fly List Kids coalition founded",
               detail:
-                "Sulemaan Ahmed and Khadija Cajee, after their son Adam was flagged — collective work that carried the campaign for years.",
+                "Sulemaan Ahmed and Khadija Cajee, after their son Adam was flagged: collective work that carried the campaign for years.",
             },
             {
               year: "2017",
@@ -96,7 +96,7 @@ export default function Page() {
             },
             {
               year: "Age 16",
-              title: "Toronto Star op-ed — “Grounded”",
+              title: "Toronto Star op-ed: “Grounded”",
               detail:
                 "Sole author, on what it’s like to be a No Fly List kid. Broadcast and print interviews on CTV, HuffPost, and Middle East Eye followed.",
             },
@@ -104,18 +104,18 @@ export default function Page() {
               year: "2018",
               title: "$81.4M federal redress budget",
               detail:
-                "Allocated over five years to build a redress system — $8M in the first year.",
+                "Allocated over five years to build a redress system ($8M in the first year).",
               accent: true,
             },
             {
               year: "2019",
               title: "Bill C-59 passes",
               detail:
-                "National Security Act, 2017 — with explicit provisions to support the redress system. Coalition photographed at the Library of Parliament.",
+                "National Security Act, 2017, with explicit provisions to support the redress system. Coalition photographed at the Library of Parliament.",
               accent: true,
             },
           ]}
-          caption="Collective work — my contribution was alongside many families and members, not in place of them."
+          caption="Collective work: my contribution was alongside many families and members, not in place of them."
         />
       </Section>
 
@@ -129,7 +129,7 @@ export default function Page() {
               width: 955,
               height: 110,
             }}
-            label="Toronto Star op-ed — written by me, age 16"
+            label="Toronto Star op-ed, written by me, age 16"
             detail="“Grounded: What it’s like to be a No Fly List kid” · sole author"
           />
           <Ref
@@ -140,12 +140,12 @@ export default function Page() {
               width: 720,
               height: 84,
             }}
-            label="HuffPost Canada — Bill C-59 passage"
+            label="HuffPost Canada, Bill C-59 passage"
             detail="Quoted + photographed at the Library of Parliament · June 2019"
           />
         </RefRow>
         <p className="mt-4 font-prose text-[13px] leading-relaxed text-ink-soft">
-          The campaign — including my family — has also been covered by CTV News and
+          The campaign (including my family) has also been covered by CTV News and
           Middle East Eye.
         </p>
       </div>
@@ -155,10 +155,10 @@ export default function Page() {
           Canada operates a &ldquo;Passenger Protect&rdquo; list, sometimes called the
           no-fly list, which flags travellers as security risks. The underlying matching
           system has historically used name-only comparisons, which produces high
-          rates of false positives — including children. I was flagged on this list
+          rates of false positives, including children. I was flagged on this list
           starting at around age five. My two brothers were also flagged. Hundreds of
-          other Canadian children — most with common names like Adam Ahmed, Yusuf
-          Ahmed, Sebastian Khan — have had similar experiences, often without their
+          other Canadian children (most with common names like Adam Ahmed, Yusuf
+          Ahmed, Sebastian Khan) have had similar experiences, often without their
           families understanding why.
         </p>
         <p>
@@ -174,7 +174,7 @@ export default function Page() {
           a redress system</strong>{" "}that lets affected travellers obtain a unique
           identifier to bypass the false match, and <strong>(2) sufficient funding
           and legislative authority</strong>{" "}to build it. Existing US redress systems
-          (DHS TRIP) were the reference point — Canada needed an equivalent that
+          (DHS TRIP) were the reference point; Canada needed an equivalent that
           worked at the airline check-in level rather than requiring travellers to
           re-prove their identity at every flight.
         </p>
@@ -188,7 +188,7 @@ export default function Page() {
         </p>
         <ul className="list-disc pl-5 space-y-2">
           <li>
-            <strong>Op-ed in the Toronto Star</strong> — &ldquo;Grounded: What it&apos;s
+            <strong>Op-ed in the Toronto Star</strong>, &ldquo;Grounded: What it&apos;s
             like to be a No Fly List kid,&rdquo; written at 16. (Artifact link below.)
           </li>
           <li>

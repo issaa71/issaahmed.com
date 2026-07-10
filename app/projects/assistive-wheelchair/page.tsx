@@ -16,11 +16,11 @@ import {
 import { WheelchairSim } from "./_sim";
 
 export const metadata: Metadata = {
-  title: "Assistive Navigation Robot — ROS2 Smart-Wheelchair Prototype",
+  title: "Assistive Navigation Robot: ROS2 Smart-Wheelchair Prototype",
   description:
-    "A ROS2 robot that maps a home, localizes, and drives itself to a named room — detecting obstacles, flagging floor-level danger zones with OpenCV, and confirming arrival by QR code. A proof-of-concept for an assistive smart wheelchair.",
+    "A ROS2 robot that maps a home, localizes, and drives itself to a named room: detecting obstacles, flagging floor-level danger zones with OpenCV, and confirming arrival by QR code. A proof-of-concept for an assistive smart wheelchair.",
   openGraph: {
-    title: "Assistive Navigation Robot — ROS2 Smart-Wheelchair Prototype",
+    title: "Assistive Navigation Robot: ROS2 Smart-Wheelchair Prototype",
     description:
       "A ROS2 assistive-navigation robot: room-to-room route planning via a custom Nav2 client, OpenCV danger-zone detection, and QR-checkpoint arrival, on a Yahboom Raspberry Pi 5 platform.",
     type: "article",
@@ -34,7 +34,7 @@ export default function Page() {
       sheetCount="06"
       eyebrow="Robotics · ROS2 · Computer Vision"
       title="Assistive Navigation Robot"
-      tagline="A ROS2 robot that maps a home, localizes within it, and drives itself to a named room on command — planning around obstacles, flagging floor-level danger zones with computer vision, and confirming arrival by QR code. A proof-of-concept for an assistive smart wheelchair."
+      tagline="A ROS2 robot that maps a home, localizes within it, and drives itself to a named room on command: planning around obstacles, flagging floor-level danger zones with computer vision, and confirming arrival by QR code. A proof-of-concept for an assistive smart wheelchair."
       meta="AISE 4020B capstone · ROS2 · Nav2 · OpenCV · Yahboom Raspberry Pi 5"
       status={[
         { label: "As built", tone: "ink" },
@@ -77,7 +77,7 @@ export default function Page() {
       <LiveBar
         href="#sim"
         kicker="Interactive sim · runs in your browser"
-        title="Drive the wheelchair to a room — it waits to scan each QR checkpoint before moving on"
+        title="Drive the wheelchair to a room; it waits to scan each QR checkpoint before moving on"
         sub="a browser rebuild of the navigation-checkpoint simulation I wrote"
         cta="TRY IT ↓"
       />
@@ -88,15 +88,15 @@ export default function Page() {
           items={[
             {
               name: "Raspberry Pi 5",
-              role: "onboard compute — runs the full ROS 2 graph",
+              role: "onboard compute: runs the full ROS 2 graph",
             },
             {
               name: "Oradar MS200",
-              role: "360° 2D LiDAR — mapping + /scan for Nav2",
+              role: "360° 2D LiDAR: mapping + /scan for Nav2",
             },
             {
               name: "Orbbec Astra",
-              role: "RGB-D camera — colour + depth for the CV detectors",
+              role: "RGB-D camera: colour + depth for the CV detectors",
             },
             {
               name: "Onboard IMU",
@@ -121,11 +121,11 @@ export default function Page() {
             { label: "SENSE", sub: "red-tape + furniture CV" },
             { label: "ARRIVE", sub: "QR checkpoint · 10-digit ID" },
           ]}
-          caption="The high-level loop for one trip. Hazard and furniture detection actually run continuously alongside driving rather than as a discrete step — they're drawn inline here for readability."
+          caption="The high-level loop for one trip. Hazard and furniture detection actually run continuously alongside driving rather than as a discrete step; they're drawn inline here for readability."
         />
         <p>
           The robot runs ROS 2 on a Raspberry Pi 5. I built the assistive-navigation
-          layer — three application nodes — on top of the Yahboom platform&apos;s vendor
+          layer (three application nodes) on top of the Yahboom platform&apos;s vendor
           stack (the sensor drivers, EKF localization, SLAM mapping, and the Nav2
           navigation pipeline), which is what let me spend my effort on the navigation
           logic instead of re-solving mapping and motion control.{" "}
@@ -189,17 +189,17 @@ export default function Page() {
               ],
             },
           ]}
-          caption="The ROS 2 graph as I built it: the Yahboom platform supplies the vendor sensor, localization, and Nav2 layers (grey); my three application nodes (red) sit on top. /scan also feeds AMCL and the Nav2 costmaps directly, and the base node closes the loop — publishing odometry at the top and driving the motors from /cmd_vel at the bottom. Custom-node topics follow each node's role; the exact names live in the project code."
+          caption="The ROS 2 graph as I built it: the Yahboom platform supplies the vendor sensor, localization, and Nav2 layers (grey); my three application nodes (red) sit on top. /scan also feeds AMCL and the Nav2 costmaps directly, and the base node closes the loop: publishing odometry at the top and driving the motors from /cmd_vel at the bottom. Custom-node topics follow each node's role; the exact names live in the project code."
         />
       </Section>
 
       <Section title="Problem">
         <p>
           Navigating tight domestic spaces is hard for wheelchair users, and the repetitive
-          trips — kitchen, bathroom, bedroom — add up to real daily strain. I set out to
+          trips (kitchen, bathroom, bedroom) add up to real daily strain. I set out to
           prototype the software for an assistive &quot;smart wheelchair&quot;: a system that could
           map a home, localize within it, detect and route around obstacles, flag floor-level danger
-          zones, and drive a user from wherever they are to a room they name — safely, and with a
+          zones, and drive a user from wherever they are to a room they name, safely, and with a
           check that it actually arrived.
         </p>
       </Section>
@@ -213,9 +213,9 @@ export default function Page() {
           diagram below is mine.
         </p>
         <p>
-          I built on a standard robotics foundation — the Yahboom Raspberry Pi 5 platform ships a
+          I built on a standard robotics foundation. The Yahboom Raspberry Pi 5 platform ships a
           ready-made ROS2 stack (Nav2 navigation, SLAM mapping, the Astra depth-camera and lidar
-          drivers, EKF sensor fusion) — which is exactly what let me put my effort into the
+          drivers, EKF sensor fusion), which is exactly what let me put my effort into the
           assistive-navigation logic instead of reinventing mapping and motion control.
         </p>
       </Section>
@@ -224,7 +224,7 @@ export default function Page() {
         <FigurePlate
           src="/projects/assistive-wheelchair/floor-plan.png"
           alt="Schematic floor plan of the L-shaped test course, with labelled rooms (bedroom, kitchen, bathroom, dining, living) and dimensions in centimetres."
-          caption="The five-room test &quot;house&quot; I taped out and mapped — the layout the robot planned and navigated against."
+          caption="The five-room test &quot;house&quot; I taped out and mapped: the layout the robot planned and navigated against."
           width={980}
           height={954}
           plate
@@ -232,7 +232,7 @@ export default function Page() {
         <p>
           The robot first builds a 2D map of the space with its onboard lidar, then localizes
           against it. On a &quot;go to the bedroom&quot; command, a custom ROS2 node I wrote looks up
-          the room&apos;s recorded coordinates and hands them to Nav2 to plan the route — and when the
+          the room&apos;s recorded coordinates and hands them to Nav2 to plan the route, and when the
           lidar sees an obstacle within ~0.5 m of the planned path, Nav2&apos;s costmap flags it and the
           planner routes around it rather than stopping dead.
         </p>
@@ -246,7 +246,7 @@ export default function Page() {
         />
         <p>
           Two computer-vision pieces run alongside the planner. A <strong>red-tape detector</strong>
-          {" "}segments red floor tape — a stand-in for stair edges and other hazards — using two HSV
+          {" "}segments red floor tape (a stand-in for stair edges and other hazards) using two HSV
           colour bands (so it survives changing light) with morphological cleanup, at 10 Hz, so the
           planner can treat those regions as no-go. A furniture detector combines colour, shape, and
           pattern cues to identify objects in a room. And at each destination, the robot scans a wall
@@ -268,7 +268,7 @@ export default function Page() {
           height={1082}
         />
         <p>
-          I also built the whole navigation loop as a parallel <strong>software simulation</strong> —
+          I also built the whole navigation loop as a parallel <strong>software simulation</strong>:
           a turtle-graphics agent with an OpenCV / pyzbar barcode reader, running the scanner and the
           moving agent as concurrent processes so the agent pauses at each checkpoint until the right
           code is read. It gave me a clean, controllable testbed for the path-planning and
@@ -278,27 +278,27 @@ export default function Page() {
 
       <Section title="Results">
         <p>
-          I delivered a working system on both fronts — a physical robot and the simulation — and
+          I delivered a working system on both fronts (a physical robot and the simulation) and
           recorded a demo of it driving the arena autonomously. In the taped-out five-room
           &quot;house&quot; I built, the robot localized, planned to named rooms, reacted to
           obstacles inside 0.5 m, flagged red-tape danger zones, and confirmed arrival by QR code.
         </p>
         <div id="sim" className="scroll-mt-24">
           <p className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
-            TRY IT — RUNS IN YOUR BROWSER
+            TRY IT · RUNS IN YOUR BROWSER
           </p>
           <div className="mt-3">
             <WheelchairSim />
           </div>
           <p className="mt-3 font-prose text-[13.5px] italic leading-snug text-ink-soft">
-            Pick a room — the wheelchair drives the fixed route I defined for it, waiting to
+            Pick a room: the wheelchair drives the fixed route I defined for it, waiting to
             scan the right QR checkpoint at each stop before moving on.
           </p>
         </div>
         <NoteBlock title="Honest scope">
           This is a capstone proof-of-concept, and I&apos;d rather name its edges than oversell it.
           I settled real parameters (0.5 m obstacle range, dual HSV red bands, 0.05 m/px maps)
-          and got repeatable behaviour — but I didn&apos;t formally measure a
+          and got repeatable behaviour, but I didn&apos;t formally measure a
           navigation success rate or localization error, which is the first thing I&apos;d quantify
           next. The furniture-recognition-to-approach behaviour (driving up to a specific object like
           a bed) was designed but not fully implemented. And the hardest lessons were physical: the
@@ -329,8 +329,8 @@ export default function Page() {
       <Section title="Reflection">
         <p>
           The instinct I&apos;m proudest of here is leverage: building on a capable vendor platform
-          let me put the effort where the actual problem was — the assistive-navigation logic, the
-          hazard detection, the arrival guarantee — instead of re-solving mapping and motion control.
+          let me put the effort where the actual problem was (the assistive-navigation logic, the
+          hazard detection, the arrival guarantee) instead of re-solving mapping and motion control.
           It pairs with my{" "}
           <Link href="/projects/reclaim">RECLAIM capstone</Link>{" "}
           as a second robotics build around the same closed perception → planning → actuation loop,

@@ -6,7 +6,7 @@ import { PulseDot, Stamp } from "../../_components/drafting";
 /* ── Model types (matches public/projects/glenoid-classifier/model.json) ──
    Each forest is a set of decision trees. Leaves hold a normalized class-
    probability vector; internal nodes hold 0. Inference averages the leaf
-   vectors across trees (soft voting) and argmaxes — provably identical to the
+   vectors across trees (soft voting) and argmaxes: provably identical to the
    scikit-learn RandomForest it was exported from (verified 143/143). */
 type Tree = { f: number[]; t: number[]; l: number[]; r: number[]; v: (number[] | 0)[] };
 type Forest = { classes: string[]; trees: Tree[] };
@@ -93,7 +93,7 @@ const WALCH: Record<string, { name: string; desc: string }> = {
 };
 
 /* UI-only: is the live input vector exactly one of the reference cases? Pure
-   value-equality against PRESETS — derives the active chip without any state
+   value-equality against PRESETS: derives the active chip without any state
    that could touch inference. */
 function sameInputs(a: Inputs, b: Inputs): boolean {
   return FIELDS.every((f) => a[f.key] === b[f.key]);
@@ -125,7 +125,7 @@ export function GlenoidCalculator() {
         <span className="flex items-center gap-2">
           <PulseDot />
           <span className="font-anno text-[10px] uppercase tracking-[0.16em] text-red">
-            Live model — runs entirely in your browser
+            Live model: runs entirely in your browser
           </span>
         </span>
         {model ? (
@@ -265,7 +265,7 @@ export function GlenoidCalculator() {
               <div className="mt-auto pt-6">
                 <p className="anno mb-2">Limits</p>
                 <p className="font-prose text-[12.5px] leading-relaxed text-ink-soft">
-                  Research prototype —{" "}
+                  Research prototype:{" "}
                   <Stamp tone="ink" className="align-middle">
                     not for clinical use
                   </Stamp>

@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   CopyEmail — the Contact email box, made interactive. Renders the same
+   CopyEmail: the Contact email box, made interactive. Renders the same
    bordered display as the static box (envelope mark + address) but as a real
    <button> that writes the address to the clipboard on click; the copy mark
    swaps to a check + "COPIED" for ~2s, then reverts. The separate "Send an
    Email" button owns the mailto. Client-only (clipboard + local copied state).
-   Bespoke inline SVG marks only — no icon library, no emoji. Max radius 2px.
+   Bespoke inline SVG marks only: no icon library, no emoji. Max radius 2px.
    ────────────────────────────────────────────────────────────────────────── */
 
 const REVERT_MS = 2000;
@@ -32,7 +32,7 @@ export function CopyEmail({ email }: { email: string }) {
       if (timeoutRef.current !== undefined) clearTimeout(timeoutRef.current);
       timeoutRef.current = window.setTimeout(() => setCopied(false), REVERT_MS);
     } catch {
-      // Clipboard unavailable (insecure context / denied) — leave the box at rest.
+      // Clipboard unavailable (insecure context / denied). Leave the box at rest.
     }
   }
 
@@ -43,7 +43,7 @@ export function CopyEmail({ email }: { email: string }) {
       aria-label={`Copy email address ${email}`}
       className="group mt-8 flex min-h-[52px] w-full max-w-md cursor-pointer items-center gap-3 rounded-[2px] border border-line bg-paper px-5 py-4 text-left transition-colors hover:border-red/50"
     >
-      {/* Envelope — keeps the email identity. */}
+      {/* Envelope: keeps the email identity. */}
       <svg
         width="18"
         height="18"

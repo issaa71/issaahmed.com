@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE plates — figures, video reels, data tables, and non-photo-blue
+   REDLINE plates: figures, video reels, data tables, and non-photo-blue
    construction placeholders. Server-safe; hairline chrome, max radius 3px.
    ────────────────────────────────────────────────────────────────────────── */
 
@@ -26,7 +26,7 @@ function CropTicks() {
   );
 }
 
-/** Circled-triangle play glyph — line art in blueprint, not a filled disc. */
+/** Circled-triangle play glyph: line art in blueprint, not a filled disc. */
 function PlayGlyph() {
   return (
     <svg
@@ -49,7 +49,7 @@ function PlayGlyph() {
   );
 }
 
-/** Reserved space for a not-yet-issued asset — deliberate, not broken. */
+/** Reserved space for a not-yet-issued asset: deliberate, not broken. */
 export function PlaceholderPlate({
   kind,
   title,
@@ -71,7 +71,7 @@ export function PlaceholderPlate({
       <div className="mx-auto flex max-w-md flex-col items-center gap-3 text-center">
         {kind === "VIDEO" ? <PlayGlyph /> : null}
         <span className="font-anno text-[10px] uppercase tracking-[0.16em] text-blueprint">
-          TO BE ISSUED — {kind}
+          TO BE ISSUED · {kind}
         </span>
         <span className="font-prose text-[14px] leading-snug text-ink-soft">
           {title}
@@ -200,7 +200,7 @@ export function VideoGrid({
 
 /* 14 · DataTable ----------------------------------------------------------- */
 
-/** Hairline comparison table — first column left, the rest right-aligned. */
+/** Hairline comparison table: first column left, the rest right-aligned. */
 export function DataTable({
   columns,
   rows,

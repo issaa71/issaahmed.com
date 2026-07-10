@@ -6,7 +6,7 @@ import { ProjectGrid } from "./_components/project-cards";
 import { PROFILE, SKILLS, CERTIFICATIONS } from "./_data/site";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE home — the general-arrangement sheet: TopBar → Hero → Projects index
+   REDLINE home, the general-arrangement sheet: TopBar → Hero → Projects index
    (a compact grid of the six sheets, linking to /projects for the full stacked
    cards) → General notes → Equipment & certifications → Contact → title block.
    The sheet data + card chrome live in ./_components/project-cards.
@@ -30,7 +30,7 @@ export default function Home() {
   );
 }
 
-/* Hero — the name + thesis, centered in the column; the body sections below
+/* Hero: the name + thesis, centered in the column; the body sections below
    stay left-aligned. pt-14 clears the sticky TopBar. */
 function Hero() {
   return (
@@ -47,7 +47,7 @@ function Hero() {
   );
 }
 
-/* Sheet index — a compact grid of the six sheets (they ARE the index); the full
+/* Sheet index: a compact grid of the six sheets (they ARE the index); the full
    stacked sheet cards + the pending SHT 07 strip live on /projects. */
 function SheetIndex() {
   return (
@@ -59,7 +59,7 @@ function SheetIndex() {
         Projects
       </h2>
       <p className="mt-4 max-w-3xl font-prose text-[17px] leading-relaxed text-ink-soft">
-        Six projects — five I designed and built, one I fought for: two
+        Six projects, five I designed and built, one I fought for: two
         autonomous robots, an offline-RL agent, two clinical ML tools, and a
         federal advocacy campaign. Open any sheet for the full story.
       </p>
@@ -84,7 +84,7 @@ function SheetIndex() {
   );
 }
 
-/* General notes — the through-line, stated as revision-note style principles,
+/* General notes: the through-line, stated as revision-note style principles,
    each anchored to a sheet (bodies verbatim from the current PRINCIPLES, spec §8.3). */
 const NOTES = [
   {
@@ -95,7 +95,7 @@ const NOTES = [
   },
   {
     title: "Pick the honest metric",
-    body: "A model can hit 90.1% “accuracy” by predicting the average on skewed data. I lead with the measures that reflect what was actually learned — MSE, shot-quality, buffer accuracy — and flag the trap out loud.",
+    body: "A model can hit 90.1% “accuracy” by predicting the average on skewed data. I lead with the measures that reflect what was actually learned (MSE, shot-quality, buffer accuracy) and flag the trap out loud.",
     evidence: "THA · the accuracy trap",
     href: "/projects/tha-pain-prediction",
   },
@@ -118,7 +118,7 @@ function GeneralNotes() {
       </h2>
       <p className="mt-3 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
         One instinct runs through everything here: build the real thing, then be
-        honest about exactly what it does — and make it checkable.
+        honest about exactly what it does, and make it checkable.
       </p>
 
       <ol className="mt-8 border-t border-line">
@@ -157,7 +157,7 @@ function GeneralNotes() {
   );
 }
 
-/* Equipment & methods — the skills as a spec table, then certification stamps. */
+/* Equipment & methods: the skills as a spec table, then certification stamps. */
 function Equipment() {
   return (
     <section
@@ -248,7 +248,7 @@ function Contact() {
         engineering.
       </p>
 
-      {/* Email — copies the address to the clipboard (the "Send an Email"
+      {/* Email: copies the address to the clipboard (the "Send an Email"
           button below owns the mailto). */}
       <CopyEmail email={PROFILE.email} />
 
@@ -294,7 +294,7 @@ function Contact() {
         </a>
       </div>
 
-      {/* Profiles — quieter outlined pair. */}
+      {/* Profiles: quieter outlined pair. */}
       <div className="mt-3 flex flex-wrap gap-3">
         <a
           href={PROFILE.linkedin}

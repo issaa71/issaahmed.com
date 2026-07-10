@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE diagrams — hairline boxes, mono labels, drafting arrows (1px stroke
+   REDLINE diagrams: hairline boxes, mono labels, drafting arrows (1px stroke
    + small solid triangular head). Red marks only the emphasized element.
    Pure CSS/SVG, server-safe, stacks cleanly on mobile.
    ────────────────────────────────────────────────────────────────────────── */
@@ -44,7 +44,7 @@ function Arrow({
   );
 }
 
-/** Red mono kicker row + hairline — every diagram wears one. */
+/** Red mono kicker row + hairline. Every diagram wears one. */
 function Kicker({ label }: { label: string }) {
   return (
     <p className="mb-5 border-b border-line pb-2 font-anno text-[10px] uppercase tracking-[0.16em] text-red">
@@ -291,7 +291,7 @@ export function DeepSetsDiagram({
         <DsNode>
           <span className="text-ink">Ball-handler state</span>
           <span className="mt-0.5 block font-anno text-[9px] text-graphite">
-            context — feeds both heads
+            context, feeds both heads
           </span>
         </DsNode>
       </div>
@@ -306,7 +306,7 @@ export function DeepSetsDiagram({
             {
               t: (
                 <>
-                  φ<sub>def</sub> — shared
+                  φ<sub>def</sub>, shared
                 </>
               ),
               s: "applied per defender",
@@ -322,7 +322,7 @@ export function DeepSetsDiagram({
             {
               t: (
                 <>
-                  φ<sub>tm</sub> — shared
+                  φ<sub>tm</sub>, shared
                 </>
               ),
               s: "applied per teammate",
@@ -338,7 +338,7 @@ export function DeepSetsDiagram({
       </div>
       <Note>
         {caption ??
-          "One shared pass head scores every teammate, so the policy is invariant to which physical player occupies slot i — the fix for variable-identity pass actions."}
+          "One shared pass head scores every teammate, so the policy is invariant to which physical player occupies slot i: the fix for variable-identity pass actions."}
       </Note>
     </figure>
   );
@@ -402,7 +402,7 @@ export function MetricBars({
 
 /* SystemGraph -------------------------------------------------------------- */
 
-/** Layered node graph — tiers of nodes wired by named topic/message buses,
+/** Layered node graph: tiers of nodes wired by named topic/message buses,
     flowing top→bottom. Accent a tier (or a single node) in red to mark
     authored code against a vendor/platform substrate. Reads as a real ROS2
     graph; stacks cleanly on mobile. */

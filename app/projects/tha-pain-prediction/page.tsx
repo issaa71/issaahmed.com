@@ -14,11 +14,11 @@ import {
 } from "../_components/sheet";
 
 export const metadata: Metadata = {
-  title: "THA Pain Prediction — Peer-Reviewed ML",
+  title: "THA Pain Prediction: Peer-Reviewed ML",
   description:
     "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
   openGraph: {
-    title: "THA Pain Prediction — Peer-Reviewed ML",
+    title: "THA Pain Prediction: Peer-Reviewed ML",
     description:
       "Peer-reviewed ML (J. Arthroplasty 2026) predicting long-term pain after hip replacement: 13 models, 513 patients, deployed as a clinician-facing calculator.",
     type: "article",
@@ -54,11 +54,11 @@ export default function Page() {
         sheetCount="06"
         eyebrow="Applied ML · Peer-reviewed Research"
         title="Predicting Long-Term Pain After Total Hip Replacement"
-        tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty — published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
+        tagline="A machine-learning pipeline that estimates a patient's expected pain score 3 and 5 years after primary total hip arthroplasty, published in The Journal of Arthroplasty and deployed as a clinician-facing calculator."
         meta="The Journal of Arthroplasty · 2026 · DOI 10.1016/j.arth.2026.04.023 · 2nd of 7 authors"
-        status={[{ label: "Published — J. Arthroplasty 2026", tone: "red" }]}
+        status={[{ label: "Published: J. Arthroplasty 2026", tone: "red" }]}
       >
-        {/* Journal reference — rebuilt as a linked drafting plate with the cover image. */}
+        {/* Journal reference, rebuilt as a linked drafting plate with the cover image. */}
         <a
           href="https://doi.org/10.1016/j.arth.2026.04.023"
           target="_blank"
@@ -90,13 +90,13 @@ export default function Page() {
           <Callout
             label="Best T3 MSE"
             value="2.70"
-            hint="KNN — beats the 3.07 mean baseline; nonlinear models won at both timepoints"
+            hint="KNN: beats the 3.07 mean baseline; nonlinear models won at both timepoints"
             accent
           />
           <Callout
             label="Authorship"
             value="2nd of 7"
-            hint="the only engineer among the MDs + PhDs — led the ML implementation end to end"
+            hint="the only engineer among the MDs + PhDs, led the ML implementation end to end"
           />
           <Callout
             label="Patients"
@@ -147,7 +147,7 @@ export default function Page() {
             <FigurePlate
               src="/projects/tha-pain-prediction/paper-fig4-catboost-importances.png"
               alt="Bar charts of CatBoost top-10 feature importances at 3 and 5 years: preoperative pain-perception items, age, BMI, length of stay, and back/neck history dominate."
-              caption="Figure 4 of the paper — what drives long-term pain in CatBoost (strongest at 5 years, and the model carried into the calculator): patient-reported pain-perception items, age, BMI, and length of stay."
+              caption="Figure 4 of the paper: what drives long-term pain in CatBoost (strongest at 5 years, and the model carried into the calculator): patient-reported pain-perception items, age, BMI, and length of stay."
               width={1405}
               height={2468}
               plate
@@ -155,7 +155,7 @@ export default function Page() {
             <FigurePlate
               src="/projects/tha-pain-prediction/paper-fig1-pain-distribution.png"
               alt="Bar charts of the pain-score distribution at 3 and 5 years showing most patients report zero or near-zero pain."
-              caption="Figure 1 of the paper — the heavy skew toward zero pain. This class imbalance is why headline 'accuracy' flatters the baseline, and why the study leads with MSE and buffer accuracy."
+              caption="Figure 1 of the paper: the heavy skew toward zero pain. This class imbalance is why headline 'accuracy' flatters the baseline, and why the study leads with MSE and buffer accuracy."
               width={1405}
               height={1605}
               plate
@@ -171,14 +171,14 @@ export default function Page() {
               { cells: ["Linear Regression", "4.20", "42.3%", "70.4%"] },
               { cells: ["Mean baseline", "3.07", "21.1%", "90.1%"] },
             ]}
-            caption="Selected rows from Table 2 of the paper — 3-year (T3) predictions on the held-out test set (n = 72, the 20% held out of the 355 patients with a complete 3-year outcome). Lower MSE is better; buffer ±1 / ±2 is the share of predictions within 1 / 2 points of the true 0–10 pain score. Nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 (90.1%) is the class-imbalance artifact discussed in Results — predicting ‘near zero’ lands within 2 points for the many low-pain patients. Full 13-model tables (T3 + T5) in the publication."
+            caption="Selected rows from Table 2 of the paper: 3-year (T3) predictions on the held-out test set (n = 72, the 20% held out of the 355 patients with a complete 3-year outcome). Lower MSE is better; buffer ±1 / ±2 is the share of predictions within 1 / 2 points of the true 0–10 pain score. Nonlinear models beat both the mean baseline and every linear model. The baseline's high ±2 (90.1%) is the class-imbalance artifact discussed in Results: predicting ‘near zero’ lands within 2 points for the many low-pain patients. Full 13-model tables (T3 + T5) in the publication."
           />
         </Section>
 
         <Section title="Problem">
           <p>
             Total hip arthroplasty (THA) is one of the most successful procedures in modern
-            medicine — over half a million performed annually in North America — but{" "}
+            medicine (over half a million performed annually in North America), but{" "}
             <strong>up to 23% of patients still report chronic postoperative pain</strong>,
             which contributes to higher opioid use, readmission rates, and worse overall
             outcomes. Identifying patients at higher risk of persistent pain{" "}
@@ -219,7 +219,7 @@ export default function Page() {
             caption="GridSearchCV ran inside the training set; the held-out test set was touched once, only after the hyperparameters were locked."
           />
           <p>
-            The dataset was Cohort 1 of the prospective SAFE-T study — 513 patients
+            The dataset was Cohort 1 of the prospective SAFE-T study: 513 patients
             undergoing primary unilateral THA at two large academic hospitals, with data
             collected from preoperative baseline through five years postoperatively. Pain
             was measured on a 0–10 visual analog scale at 3-year (T3) and 5-year (T5)
@@ -235,7 +235,7 @@ export default function Page() {
             outliers; bounded scales were normalized to [0, 1].
           </p>
           <p>
-            <strong>Model family.</strong> 13 models spanning four families — linear
+            <strong>Model family.</strong> 13 models spanning four families: linear
             (linear regression, elastic net, linear SVM, SGD), tree ensembles (decision
             tree, random forest, AdaBoost, XGBoost, CatBoost, LightGBM), an instance-based
             method (KNN), and neural networks (scikit-learn MLP, PyTorch MLP). A mean
@@ -263,7 +263,7 @@ export default function Page() {
           <p>
             <strong>Non-linear models won decisively at both timepoints.</strong>{" "}Across
             all four metrics, CatBoost, Random Forest, and KNN were the most consistent top
-            performers — KNN took the lowest 3-year MSE (2.70), CatBoost the lowest at 5
+            performers: KNN took the lowest 3-year MSE (2.70), CatBoost the lowest at 5
             years (4.11). Linear models (Linear Regression and Elastic Net) had higher MSE
             and weaker buffer accuracy at both T3 and T5, consistent with prior orthopedic
             literature showing linear methods struggle to capture the non-linear
@@ -271,7 +271,7 @@ export default function Page() {
           </p>
           <p>
             At T3, KNN achieved the lowest MSE (2.70) followed closely by XGBoost (2.77),
-            Random Forest (2.79), and CatBoost (2.83) — all beating the 3.07 mean baseline.
+            Random Forest (2.79), and CatBoost (2.83), all beating the 3.07 mean baseline.
             CatBoost had the highest ±2 buffer accuracy of any trained model at 85.9% (the
             mean baseline&apos;s higher 90.1% is the class-imbalance artifact discussed below,
             not skill). At T5, CatBoost achieved the lowest MSE (4.11), with Random Forest
@@ -280,7 +280,7 @@ export default function Page() {
           <p>
             <strong>An honest caveat on the 90.1% classification accuracy.</strong>{" "}The
             paper reports 90.1% classification accuracy across the low / moderate / high
-            pain categories — but this number was also reached by the mean regressor,
+            pain categories, but this number was also reached by the mean regressor,
             reflecting the heavy class imbalance in the dataset (most patients report
             minimal or no pain at T3/T5). The more clinically meaningful signal is the MSE
             gap (2.70 vs 3.07) and the buffer accuracy spread.
@@ -292,7 +292,7 @@ export default function Page() {
             Feature-importance analyses guided the input set for a web-based calculator
             that estimates expected pain severity from a small number of preoperative
             inputs. KNN edged the field on 3-year MSE, but CatBoost is what drives the
-            calculator — strongest at the 5-year horizon, native handling of the categorical
+            calculator: strongest at the 5-year horizon, native handling of the categorical
             inputs, and the most interpretable of the top models, so its feature importances
             (Figure 4) are what made the input set clinically legible. The tool was built with
             Streamlit, deployed to Streamlit Community Cloud, and is the version cited in the
@@ -301,13 +301,13 @@ export default function Page() {
           <LiveBar
             href="https://hippain-8ipnqvicztvdyk3cip7hfa.streamlit.app/"
             kicker="Live tool · the version cited in the paper"
-            title="Try the pain-prediction calculator — enter preoperative inputs, get a 3- and 5-year estimate"
+            title="Try the pain-prediction calculator: enter preoperative inputs, get a 3- and 5-year estimate"
             sub="Streamlit · CatBoost model · deployed to Streamlit Community Cloud"
           />
           <FigurePlate
             src="/projects/tha-pain-prediction/streamlit-calculator.png"
-            alt="The deployed Streamlit calculator: a Pain Score Prediction sidebar with a T3 (3 years) / T5 (5 years) timepoint selector, and Patient Information inputs — length of stay, BMI, current weight, WOMAC and ICOAP pain items, and pre-op age — that produce a predicted post-operative pain score."
-            caption="The deployed clinician calculator — the CatBoost model from the paper wrapped in a Streamlit UI: pick the 3- or 5-year horizon, enter the preoperative inputs, and it returns the predicted pain score. This is the version cited in the publication."
+            alt="The deployed Streamlit calculator: a Pain Score Prediction sidebar with a T3 (3 years) / T5 (5 years) timepoint selector, and Patient Information inputs (length of stay, BMI, current weight, WOMAC and ICOAP pain items, and pre-op age) that produce a predicted post-operative pain score."
+            caption="The deployed clinician calculator, the CatBoost model from the paper wrapped in a Streamlit UI: pick the 3- or 5-year horizon, enter the preoperative inputs, and it returns the predicted pain score. This is the version cited in the publication."
             width={2000}
             height={934}
             className="breakout"
@@ -333,18 +333,18 @@ export default function Page() {
 
         <Section title="Reflection">
           <p>
-            The biggest lesson had nothing to do with which model won — it was how much
+            The biggest lesson had nothing to do with which model won: it was how much
             of the result was decided before any model ran. The SAFE-T cohort was real,
             messy clinical data: 71 candidate features spanning demographics, surgery,
             comorbidities, and patient-reported WOMAC / ICOAP pain scales, full of missing
             values and outliers. Getting meaningful predictions out of it was mostly a data
-            problem — iterative imputation to fill numeric gaps without flattening the
+            problem: iterative imputation to fill numeric gaps without flattening the
             relationships between features, most-frequent imputation for categoricals,
             robust-scaling so outliers couldn&apos;t dominate, and then distilling 71 raw
             variables down to the few that actually carried signal using four complementary
             feature-importance methods pooled by cross-validated rank aggregation. The
             modeling was almost the easy part. On data this messy, the accuracy is won in
-            the cleaning and the feature engineering — and it&apos;s the step I&apos;d tell
+            the cleaning and the feature engineering, and it&apos;s the step I&apos;d tell
             anyone starting a clinical-ML project to budget the most time for.
           </p>
         </Section>

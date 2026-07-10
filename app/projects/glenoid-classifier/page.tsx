@@ -14,11 +14,11 @@ import {
 import { GlenoidCalculator } from "./_calculator";
 
 export const metadata: Metadata = {
-  title: "Glenoid Morphology Classifier — Clinical ML",
+  title: "Glenoid Morphology Classifier: Clinical ML",
   description:
-    "A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification — with the real trained model running live in your browser.",
+    "A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification, with the real trained model running live in your browser.",
   openGraph: {
-    title: "Glenoid Morphology Classifier — Clinical ML",
+    title: "Glenoid Morphology Classifier: Clinical ML",
     description:
       "A hierarchical ML classifier (XGBoost + Random Forest + SVM) for Walch glenoid types, running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
     type: "article",
@@ -32,18 +32,18 @@ export default function Page() {
       sheetCount="06"
       eyebrow="Clinical ML · Shoulder Orthopedics"
       title="Glenoid Morphology Classifier"
-      tagline="A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification — the framework surgeons use to plan shoulder-replacement surgery. The trained model runs live, right here in your browser."
+      tagline="A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification, the framework surgeons use to plan shoulder-replacement surgery. The trained model runs live, right here in your browser."
       meta="Solo project · 143 cases · Walch A/B/E types · Random Forest · runs client-side"
       status={[
         { label: "Live in-browser tool", tone: "red", pulse: true },
-        { label: "Research prototype — not for clinical use", tone: "ink" },
+        { label: "Research prototype: not for clinical use", tone: "ink" },
       ]}
     >
       <CalloutStrip cols={4}>
         <Callout
           label="Healthy vs. diseased"
           value="~91%"
-          hint="Normal-vs-Pathologic screen, AUC 0.98 — the robust, reproducible result"
+          hint="Normal-vs-Pathologic screen, AUC 0.98: the robust, reproducible result"
           accent
         />
         <Callout label="Labelled cases" value="143" hint="all six Walch classes represented" />
@@ -51,7 +51,7 @@ export default function Page() {
         <Callout
           label="Full 6-way (honest)"
           value="~63%"
-          hint="end-to-end cross-validated; vs the report's 84% per-tier number — see Results"
+          hint="end-to-end cross-validated; vs the report's 84% per-tier number (see Results)"
         />
       </CalloutStrip>
 
@@ -65,7 +65,7 @@ export default function Page() {
             },
             {
               name: "Model comparison",
-              role: "rf, svm, xgboost, logistic — best per tier",
+              role: "rf, svm, xgboost, logistic (best per tier)",
             },
             {
               name: "scikit-learn",
@@ -88,9 +88,9 @@ export default function Page() {
       </Section>
 
       <div id="calculator" className="scroll-mt-24">
-        <Section title="Try it — live Walch classifier">
+        <Section title="Try it: live Walch classifier">
           <p>
-            This is the actual trained model, exported to run entirely in your browser — no server, no
+            This is the actual trained model, exported to run entirely in your browser: no server, no
             upload, nothing leaves your device. Drag the six CT-derived measurements (or load a
             reference case) and watch it walk the hierarchy: healthy-vs-diseased first, then the main
             erosion type, then the subtype.
@@ -104,7 +104,7 @@ export default function Page() {
       <Section title="Problem">
         <p>
           The <strong>Walch classification</strong>{" "}is the standard framework orthopedic surgeons use
-          to describe how a glenoid — the shoulder&apos;s socket — has eroded and deformed in
+          to describe how a glenoid (the shoulder&apos;s socket) has eroded and deformed in
           arthritis, and it directly drives how a shoulder replacement is planned. Assigning a Walch
           type is normally a manual, expertise-dependent read of a CT scan. This project asks a
           narrower, tractable question: can a small set of quantitative, CT-derived measurements be
@@ -113,7 +113,7 @@ export default function Page() {
         <p>
           It pairs naturally with my{" "}
           <Link href="/projects/tha-pain-prediction">peer-reviewed hip-arthroplasty work</Link> as a
-          second musculoskeletal-ML piece — same instinct of turning clinical measurements into a
+          second musculoskeletal-ML piece: same instinct of turning clinical measurements into a
           decision-support tool.
         </p>
       </Section>
@@ -121,9 +121,9 @@ export default function Page() {
       <Section title="My role">
         <p>
           Solo work. I built the data preparation and feature engineering, the three-tier model stack,
-          and two delivery front-ends — a Streamlit web app and a terminal tool. For this portfolio I
+          and two delivery front-ends: a Streamlit web app and a terminal tool. For this portfolio I
           went a step further and re-exported the trained model to run natively in the browser above,
-          so the classifier isn&apos;t just described — it&apos;s runnable.
+          so the classifier isn&apos;t just described: it&apos;s runnable.
         </p>
       </Section>
 
@@ -138,18 +138,18 @@ export default function Page() {
             { label: "Tier 3", sub: "subtype" },
             { label: "Walch type", sub: "+ confidence", accent: true },
           ]}
-          caption="Each tier has its own model, and the running confidence is the product of the tier probabilities — so the tool reports how sure it is, not just a label. It mirrors how a clinician reasons down the Walch tree."
+          caption="Each tier has its own model, and the running confidence is the product of the tier probabilities, so the tool reports how sure it is, not just a label. It mirrors how a clinician reasons down the Walch tree."
         />
         <p>
           The classifier is <strong>hierarchical</strong>. Tier 1 separates Normal from Pathologic
-          glenoids. Tier 2 assigns the main type among A, B, and E. Tier 3 resolves the subtype — B2
+          glenoids. Tier 2 assigns the main type among A, B, and E. Tier 3 resolves the subtype: B2
           vs B3, E2 vs E3, with A mapping directly to A2 (the only A subtype in the data). I compared
           Random Forests, SVMs, XGBoost, and logistic regression at each tier and kept the strongest
           per stage.
         </p>
         <p>
-          <strong>Domain-grounded feature engineering.</strong>{" "}From four measured inputs — version,
-          inclination, and anterior-posterior / superior-inferior subluxation — plus glenoid surface
+          <strong>Domain-grounded feature engineering.</strong>{" "}From four measured inputs (version,
+          inclination, and anterior-posterior / superior-inferior subluxation) plus glenoid surface
           area and sphere radius, the pipeline derives a subluxation index and an area-to-radius ratio.
           Encoding subluxation and version as vectors and ratios, rather than raw numbers, hands the
           models the geometry a surgeon actually reads off the scan. An ANOVA confirmed subluxation and
@@ -158,14 +158,14 @@ export default function Page() {
         <FigurePlate
           src="/projects/glenoid-classifier/feature-importance-tier1.png"
           alt="Horizontal bar chart of Tier-1 feature importances: version highest, then the engineered area-to-radius ratio, then AP and SI subluxation."
-          caption="What drives the healthy-vs-diseased screen: version leads, followed by the engineered area-to-radius ratio and the subluxation measures — confirming the geometry the feature engineering was built around."
+          caption="What drives the healthy-vs-diseased screen: version leads, followed by the engineered area-to-radius ratio and the subluxation measures, confirming the geometry the feature engineering was built around."
           width={1000}
           height={600}
           plate
         />
       </Section>
 
-      <Section title="Results — and an honest look at the numbers">
+      <Section title="Results, and an honest look at the numbers">
         <p>
           The strongest, most reproducible result is the <strong>healthy-vs-diseased screen</strong>:
           Normal vs Pathologic reaches <strong>~91% accuracy with an AUC of 0.98</strong>. That&apos;s
@@ -175,25 +175,25 @@ export default function Page() {
           <FigurePlate
             src="/projects/glenoid-classifier/roc-tier1.png"
             alt="ROC curve for the Tier-1 Normal-vs-Pathologic classifier, area under the curve 0.98."
-            caption="Tier 1 — Normal vs Pathologic. AUC 0.98: the healthy-vs-diseased screen separates cleanly, and this reproduces under proper cross-validation."
+            caption="Tier 1: Normal vs Pathologic. AUC 0.98: the healthy-vs-diseased screen separates cleanly, and this reproduces under proper cross-validation."
             width={640}
             height={480}
             plate
           />
           <FigurePlate
             src="/projects/glenoid-classifier/confusion-matrix.png"
-            alt="Six-by-six confusion matrix of the tiered classifier across A2, B2, B3, E2, E3, and Normal — strong diagonal, confusion concentrated between B2/B3 and E2/E3."
-            caption="The full 6-way confusion matrix from the report — 120/143 correct (83.9%). Normal is perfect and the errors cluster where they should clinically: B2↔B3 and E2↔E3."
+            alt="Six-by-six confusion matrix of the tiered classifier across A2, B2, B3, E2, E3, and Normal: strong diagonal, confusion concentrated between B2/B3 and E2/E3."
+            caption="The full 6-way confusion matrix from the report: 120/143 correct (83.9%). Normal is perfect and the errors cluster where they should clinically: B2↔B3 and E2↔E3."
             width={1200}
             height={800}
             plate
           />
         </div>
-        <NoteBlock title="Per-tier 84% vs. end-to-end 63% — the honest read">
-          My report headlines <strong>83.9%</strong>{" "}overall, and that number is real — it&apos;s the{" "}
+        <NoteBlock title="Per-tier 84% vs. end-to-end 63%: the honest read">
+          My report headlines <strong>83.9%</strong>{" "}overall, and that number is real: it&apos;s the{" "}
           <em>per-tier</em>{" "}accuracy, where each stage is scored on the cases that truly belong to it
-          (the confusion matrix above). But when the tiers actually <em>chain</em>{" "}in a live tool — Tier
-          1&apos;s prediction, not the ground truth, decides whether Tier 2 even runs — early misroutes
+          (the confusion matrix above). But when the tiers actually <em>chain</em>{" "}in a live tool (Tier
+          1&apos;s prediction, not the ground truth, decides whether Tier 2 even runs), early misroutes
           cascade, and a proper end-to-end cross-validation lands at <strong>~63%</strong>{" "}on the full
           6-way task. Both are legitimate; they measure different things. The calculator above runs the
           honest end-to-end version, which is why its confidence is candid about the harder subtype
@@ -234,7 +234,7 @@ export default function Page() {
           stage matched to a model that suits it. And the honesty: catching that the headline 84% is a
           per-tier number, reporting the ~63% a deployed tool actually achieves, and then shipping that
           deployed tool so anyone can poke at it. A small dataset (143 cases, some subtypes under 20
-          examples) is a real limit — but naming the limits, and making the model checkable, is the
+          examples) is a real limit, but naming the limits, and making the model checkable, is the
           point.
         </p>
       </Section>

@@ -3,7 +3,7 @@ export const PROFILE = {
   tagline:
     "I build autonomous robots, applied ML and AI systems, and full-stack tools.",
   currentLine:
-    "Everything here is something I designed, built, and shipped — and four of the projects run live, right in your browser.",
+    "Everything here is something I designed, built, and shipped, and four of the projects run live, right in your browser.",
   email: "issaahmed1@icloud.com",
   github: "https://github.com/issaa71",
   linkedin: "https://www.linkedin.com/in/issa-ahmed-032490190/",
@@ -20,7 +20,7 @@ export const PROJECTS: {
 }[] = [
   {
     slug: "reclaim",
-    title: "RECLAIM — Autonomous Waste-Sorting Robot",
+    title: "RECLAIM: Autonomous Waste-Sorting Robot",
     codename: "Robotics · ROS2 · Computer Vision",
     blurb:
       "Indoor autonomous robot that scans, detects, drives, picks, and sorts waste across recyclable, compost, and landfill streams. Capstone project (3rd place).",
@@ -30,14 +30,14 @@ export const PROJECTS: {
     title: "Assistive Navigation Robot",
     codename: "Robotics · ROS2 · Nav2",
     blurb:
-      "A ROS2 robot that maps a home, localizes, and drives itself to a named room — planning around obstacles, flagging floor hazards with computer vision, and confirming arrival by QR code. A smart-wheelchair prototype.",
+      "A ROS2 robot that maps a home, localizes, and drives itself to a named room, planning around obstacles, flagging floor hazards with computer vision, and confirming arrival by QR code. A smart-wheelchair prototype.",
   },
   {
     slug: "nba-shot-selection",
-    title: "NBA Shot Selection — Offline RL",
+    title: "NBA Shot Selection: Offline RL",
     codename: "Reinforcement Learning · PyTorch",
     blurb:
-      "A Dueling DQN with a per-entity Deep Sets architecture, trained on real SportVU tracking to call shoot-or-pass — then audited until its own headline metric broke, and regrounded on real shot outcomes.",
+      "A Dueling DQN with a per-entity Deep Sets architecture, trained on real SportVU tracking to call shoot-or-pass, then audited until its own headline metric broke, and regrounded on real shot outcomes.",
   },
   {
     slug: "tha-pain-prediction",
@@ -51,11 +51,11 @@ export const PROJECTS: {
     title: "Glenoid Morphology Classifier",
     codename: "Clinical ML · scikit-learn",
     blurb:
-      "A three-tier ML pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification — with the real trained model running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
+      "A three-tier ML pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification, with the real trained model running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
   },
   {
     slug: "no-fly-list-kids",
-    title: "No Fly List Kids — Federal Advocacy",
+    title: "No Fly List Kids: Federal Advocacy",
     codename: "Policy · Communication · Coalition work",
     blurb:
       "Long-running federal advocacy via the No Fly List Kids coalition. Toronto Star op-ed, multiple media features, direct engagement with the PMO and federal Cabinet.",

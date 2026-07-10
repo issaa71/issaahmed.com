@@ -4,7 +4,7 @@ import { Stamp } from "./drafting";
 import { PROJECTS } from "../_data/site";
 
 /* ──────────────────────────────────────────────────────────────────────────
-   REDLINE project cards — the shared sheet data + card chrome used by BOTH the
+   REDLINE project cards: the shared sheet data + card chrome used by BOTH the
    home page (compact ProjectGrid) and the /projects sheet index (full-width
    ProjectSheetList). Server components only (no client hooks).
 
@@ -23,7 +23,7 @@ type Sheet = {
   role: string;
   specs: Spec[];
   stamps: CardStamp[];
-  live?: string; // RUN LIVE target — external when it starts with http
+  live?: string; // RUN LIVE target, external when it starts with http
   flip: boolean; // on lg, photo moves to the right on flipped rows
 };
 
@@ -36,7 +36,7 @@ export const SHEETS: Sheet[] = [
     no: "01",
     slug: "reclaim",
     category: "Robotics · ROS2 · Computer Vision",
-    role: "Team of 4 — I owned perception + control",
+    role: "Team of 4: I owned perception + control",
     specs: [
       { label: "Nav missions", value: "15/15 (sim re-benchmark)" },
       { label: "Perception", value: "30 FPS on Jetson" },
@@ -70,7 +70,7 @@ export const SHEETS: Sheet[] = [
     no: "03",
     slug: "tha-pain-prediction",
     category: "Clinical ML · Published",
-    role: "2nd of 7 authors — the only engineer",
+    role: "2nd of 7 authors, the only engineer",
     specs: [
       { label: "Journal", value: "J. Arthroplasty 2026" },
       { label: "Best T3 MSE", value: "2.70 vs 3.07 baseline" },
@@ -128,14 +128,14 @@ export const SHEETS: Sheet[] = [
   },
 ];
 
-/* Reused photography — alt text carried verbatim from the current page.tsx. */
+/* Reused photography: alt text carried verbatim from the current page.tsx. */
 export const PHOTO: Record<
   string,
   { src: string; alt: string; width: number; height: number }
 > = {
   reclaim: {
     src: "/projects/reclaim/demo.jpg",
-    alt: "The RECLAIM robot on the capstone showcase floor — drive base, sensor mast, and 4-DOF sorting arm",
+    alt: "The RECLAIM robot on the capstone showcase floor: drive base, sensor mast, and 4-DOF sorting arm",
     width: 768,
     height: 1024,
   },
@@ -147,7 +147,7 @@ export const PHOTO: Record<
   },
   "nba-shot-selection": {
     src: "/projects/nba-shot-selection/decision-maps-tile.png",
-    alt: "Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents — high near the basket, suppressed in mid-range",
+    alt: "Court-zone heatmaps of learned shoot probability for the DQN and Dueling DQN agents: high near the basket, suppressed in mid-range",
     width: 2330,
     height: 1850,
   },
@@ -155,7 +155,7 @@ export const PHOTO: Record<
 
 /* ── Public renderers ─────────────────────────────────────────────────────── */
 
-/** The six full-width stacked sheet cards — the detailed /projects index. */
+/** The six full-width stacked sheet cards: the detailed /projects index. */
 export function ProjectSheetList() {
   return (
     <div className="mt-8 space-y-10">
@@ -166,7 +166,7 @@ export function ProjectSheetList() {
   );
 }
 
-/** Compact three-up grid of all six sheets — the home-page index at a glance. */
+/** Compact three-up grid of all six sheets: the home-page index at a glance. */
 export function ProjectGrid() {
   return (
     <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -210,7 +210,7 @@ function GridCard({ sheet }: { sheet: Sheet }) {
             href={`/projects/${slug}`}
             className="transition-colors after:absolute after:inset-0 after:content-[''] group-hover:text-red"
           >
-            <span className="sr-only">Open sheet — </span>
+            <span className="sr-only">Open sheet: </span>
             {proj.title}
           </Link>
         </h3>
@@ -313,7 +313,7 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
               href={`/projects/${slug}`}
               className="font-anno text-[10.5px] uppercase tracking-[0.14em] text-ink transition-colors after:absolute after:inset-0 after:content-[''] hover:text-red"
             >
-              <span className="sr-only">{proj.title} — </span>
+              <span className="sr-only">{proj.title}: </span>
               Open sheet
               <span
                 aria-hidden
@@ -368,7 +368,7 @@ function CardMedia({ slug }: { slug: string }) {
       <div className="absolute inset-0 flex items-center justify-center bg-paper-deep p-6">
         <Image
           src="/projects/tha-pain-prediction/journal-cover.png"
-          alt="Cover of The Journal of Arthroplasty — the 2026 issue featuring the peer-reviewed pain-prediction paper"
+          alt="Cover of The Journal of Arthroplasty: the 2026 issue featuring the peer-reviewed pain-prediction paper"
           width={237}
           height={298}
           className="h-[85%] max-h-[26rem] w-auto border border-line shadow-[0_10px_30px_-10px_rgba(28,26,23,0.45)] transition-transform duration-500 group-hover:scale-[1.03]"
@@ -387,7 +387,7 @@ function CardMedia({ slug }: { slug: string }) {
 
 /* Bespoke line-art "instrument face" for the live Walch classifier: a three-tier
    decision tree (Screen → Type → Subtype) with the B2 route inked red. It fills
-   the panel-driven cell (contain, centered). Decorative — name comes from the link. */
+   the panel-driven cell (contain, centered). Decorative. Name comes from the link. */
 function GlenoidInstrument() {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-plate p-6">
@@ -426,7 +426,7 @@ function GlenoidInstrument() {
           SUBTYPE
         </text>
 
-        {/* connectors — ink */}
+        {/* connectors: ink */}
         <g strokeLinecap="round">
           <line x1="106" y1="84" x2="180" y2="84" strokeWidth={1} className="stroke-ink/45" />
           <line x1="106" y1="84" x2="106" y2="100" strokeWidth={1} className="stroke-ink/45" />
@@ -439,7 +439,7 @@ function GlenoidInstrument() {
           <line x1="210" y1="246" x2="210" y2="288" strokeWidth={1} className="stroke-ink/45" />
         </g>
 
-        {/* connectors — red route (Screen → Diseased → B → B2) */}
+        {/* connectors: red route (Screen → Diseased → B → B2) */}
         <g strokeLinecap="round">
           <line x1="180" y1="68" x2="180" y2="84" strokeWidth={1.5} className="stroke-red" />
           <line x1="180" y1="84" x2="254" y2="84" strokeWidth={1.5} className="stroke-red" />
@@ -511,17 +511,17 @@ function NflkClipping() {
   );
 }
 
-/* Pending SHT 07 — RideGuide, in preparation. Blueprint construction-line
+/* Pending SHT 07: RideGuide, in preparation. Blueprint construction-line
    treatment, intentionally NOT linked (no rideguide route on the sheet index). */
 export function PendingStrip() {
   return (
     <div className="mt-10 border-b border-t border-dashed border-blueprint-line py-6">
       <p className="font-anno text-[10px] uppercase tracking-[0.16em] text-blueprint">
-        In preparation — SHT 07
+        In preparation · SHT 07
       </p>
       <p className="mt-2 max-w-3xl font-prose text-[15px] leading-relaxed text-ink-soft">
         {
-          "RideGuide — an AI transit assistant for the Greater Toronto & Hamilton Area: live arrivals, delays, and trip planning across 10 agencies, drawn from real-time GTFS-RT feeds and fronted by an LLM query pipeline. Full write-up on the way — more sheets to follow."
+          "RideGuide, an AI transit assistant for the Greater Toronto & Hamilton Area: live arrivals, delays, and trip planning across 10 agencies, drawn from real-time GTFS-RT feeds and fronted by an LLM query pipeline. Full write-up on the way. More sheets to follow."
         }
       </p>
     </div>

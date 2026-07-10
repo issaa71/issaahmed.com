@@ -1,11 +1,11 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   SpecGrid — hairline-separated component/spec cells (name + role). The
+   SpecGrid: hairline-separated component/spec cells (name + role). The
    "engineering-breadth up top" grid: hardware for the robotics projects, a
    stack-&-methods table for the ML ones. Server-safe, stacks 2-up on mobile.
    Extracted from the RECLAIM page so every project shares one grid.
    ────────────────────────────────────────────────────────────────────────── */
 
-/** sm+ column count — static class names so Tailwind's compiler can see them
+/** sm+ column count: static class names so Tailwind's compiler can see them
     (it can't resolve dynamically-built strings). Mobile is always 2-up. */
 const SPEC_COLS: Record<2 | 3, string> = {
   2: "sm:grid-cols-2",
