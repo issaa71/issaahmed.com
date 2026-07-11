@@ -1,10 +1,5 @@
 import Link from "next/link";
-import {
-  TopBar,
-  SiteFooter,
-  DimensionedName,
-  PulseDot,
-} from "./_components/drafting";
+import { TopBar, SiteFooter, DimensionedName } from "./_components/drafting";
 import { CopyEmail } from "./_components/copy-email";
 import { ProjectGrid } from "./_components/project-cards";
 import { PROFILE, SKILLS, CERTIFICATIONS } from "./_data/site";
@@ -53,39 +48,28 @@ function Hero() {
           Everything here is something I designed, built, and shipped.
         </p>
 
-        <dl className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-px border border-line bg-line text-left sm:grid-cols-3">
-          <div className="bg-paper px-5 py-4">
-            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
-              Live demos
-            </dt>
-            <dd className="mt-2 flex items-baseline gap-2">
-              <span className="font-struct text-[30px] font-bold leading-none tabular-nums text-red">
-                4
-              </span>
-              <span className="font-prose text-[13.5px] leading-[1.25] text-ink-soft">
-                run right in
-                <br />
-                your browser
-              </span>
-            </dd>
-          </div>
-          <div className="bg-paper px-5 py-4">
-            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
-              Focus
-            </dt>
-            <dd className="mt-2 font-struct text-[15.5px] font-semibold leading-snug text-ink">
-              {"Robotics · Applied ML & AI · Full-stack"}
-            </dd>
-          </div>
-          <div className="bg-paper px-5 py-4">
-            <dt className="font-anno text-[10px] uppercase tracking-[0.16em] text-graphite">
-              Status
-            </dt>
-            <dd className="mt-2 flex items-center gap-2 font-struct text-[15.5px] font-semibold leading-snug text-ink">
-              <PulseDot />
-              Toronto · open to new-grad roles
-            </dd>
-          </div>
+        <dl className="mx-auto mt-11 grid max-w-3xl grid-cols-1 gap-px border border-line bg-line text-left sm:grid-cols-3">
+          {[
+            {
+              label: "Live demos",
+              value: (
+                <>
+                  <span className="text-red">4</span> run live in your browser
+                </>
+              ),
+            },
+            { label: "Focus", value: "Robotics · Applied ML & AI · Full-stack" },
+            { label: "Status", value: "Toronto · open to new-grad roles" },
+          ].map((c) => (
+            <div key={c.label} className="bg-paper px-6 py-5">
+              <dt className="font-anno text-[11px] uppercase tracking-[0.13em] text-graphite">
+                {c.label}
+              </dt>
+              <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
+                {c.value}
+              </dd>
+            </div>
+          ))}
         </dl>
       </div>
     </section>
