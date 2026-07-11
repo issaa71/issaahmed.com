@@ -49,27 +49,37 @@ function Hero() {
         </p>
 
         <dl className="mx-auto mt-11 grid max-w-3xl grid-cols-1 gap-px border border-line bg-line text-left sm:grid-cols-3">
-          {[
-            {
-              label: "Live demos",
-              value: (
-                <>
-                  <span className="text-red">4</span> run live in your browser
-                </>
-              ),
-            },
-            { label: "Focus", value: "Robotics · Applied ML & AI · Full-stack" },
-            { label: "Status", value: "Toronto · open to new-grad roles" },
-          ].map((c) => (
-            <div key={c.label} className="bg-paper px-6 py-5">
-              <dt className="font-anno text-[11px] uppercase tracking-[0.13em] text-graphite">
-                {c.label}
-              </dt>
-              <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
-                {c.value}
-              </dd>
-            </div>
-          ))}
+          <div className="bg-paper px-6 py-5">
+            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
+              Live demos
+            </dt>
+            <dd className="mt-3 flex items-center gap-3">
+              <span className="font-struct text-[40px] font-extrabold leading-[0.85] tabular-nums text-red">
+                4
+              </span>
+              <span className="font-struct text-[15px] font-medium leading-[1.25] text-ink-soft">
+                run live in
+                <br />
+                your browser
+              </span>
+            </dd>
+          </div>
+          <div className="bg-paper px-6 py-5">
+            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
+              Focus
+            </dt>
+            <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
+              {"Robotics · Applied ML & AI · Full-stack"}
+            </dd>
+          </div>
+          <div className="bg-paper px-6 py-5">
+            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
+              Status
+            </dt>
+            <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
+              {"Toronto · open to new-grad roles"}
+            </dd>
+          </div>
         </dl>
       </div>
     </section>
