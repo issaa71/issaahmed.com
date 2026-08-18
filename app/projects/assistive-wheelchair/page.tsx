@@ -296,15 +296,13 @@ export default function Page() {
           </p>
         </div>
         <NoteBlock title="Honest scope">
-          This is a capstone proof-of-concept, and I&apos;d rather name its edges than oversell it.
-          I settled real parameters (0.5 m obstacle range, dual HSV red bands, 0.05 m/px maps)
-          and got repeatable behaviour, but I didn&apos;t formally measure a
-          navigation success rate or localization error, which is the first thing I&apos;d quantify
-          next. The furniture-recognition-to-approach behaviour (driving up to a specific object like
-          a bed) was designed but not fully implemented. And the hardest lessons were physical: the
-          lidar struggled to read tall objects as in-bounds, so I kept the walls low; and red-tape
-          detection failed against low-contrast flooring until I laid down a white poster-board
-          floor for reliable contrast.
+          This is a capstone proof-of-concept. I settled real parameters (0.5 m obstacle
+          range, dual HSV red bands, 0.05 m/px maps) and got repeatable behaviour, but I
+          didn&apos;t formally measure a navigation success rate or localization error, which
+          is the first thing I&apos;d quantify next. The hardest lessons were physical. The
+          lidar struggled to read tall objects as in-bounds, so I kept the walls low, and
+          red-tape detection failed against low-contrast flooring until I laid down a white
+          poster-board floor for reliable contrast.
         </NoteBlock>
       </Section>
 
@@ -335,13 +333,18 @@ export default function Page() {
 
       <Section title="Reflection">
         <p>
-          The instinct I&apos;m proudest of here is leverage: building on a capable vendor platform
-          let me put the effort where the actual problem was (the assistive-navigation logic, the
-          hazard detection, the arrival guarantee) instead of re-solving mapping and motion control.
-          It pairs with my{" "}
-          <Link href="/projects/reclaim">RECLAIM capstone</Link>{" "}
-          as a second robotics build around the same closed perception → planning → actuation loop,
-          just aimed at helping a person move through their own home.
+          The instinct I&apos;m proudest of here is leverage. Building on a capable vendor
+          platform let me put the effort where the actual problem was (the
+          assistive-navigation logic, the hazard detection, the arrival guarantee) instead of
+          re-solving mapping and motion control.
+        </p>
+        <p>
+          This is also where I first put ROS2, Nav2, SLAM, and OpenCV together on real
+          hardware. It was my introduction to the whole stack, and the groundwork I carried
+          straight into{" "}
+          <Link href="/projects/reclaim">RECLAIM</Link>, my mechatronics capstone. Same closed
+          perception → planning → actuation loop, aimed there at clearing a venue floor and
+          here at helping a person move through their own home.
         </p>
       </Section>
     </SheetShell>
