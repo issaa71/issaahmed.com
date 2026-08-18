@@ -6,11 +6,8 @@ import {
   CalloutStrip,
   Callout,
   LiveBar,
-  RefRow,
-  Ref,
   RevBlock,
   Stamp,
-  NoteBlock,
   TechStack,
   FigurePlate,  DeepSetsDiagram,
   MetricBars,
@@ -117,13 +114,6 @@ export default function Page() {
         />
       </Section>
 
-      <RefRow>
-        <Ref
-          href="https://github.com/issaa71/nba-rl-sim"
-          label="Explorer source code · GitHub"
-          detail="TypeScript inference engine matching the Python pipeline within 1e-6 on features and 1e-4 on Q-values, 250-vector parity suite, MIT"
-        />
-      </RefRow>
 
       <Section title="Where the data comes from">
         <p>
@@ -201,7 +191,7 @@ export default function Page() {
         </p>
       </Section>
 
-      <Section title="The twist: a forensic audit that broke my own result">
+      <Section title="Where the first result fell apart">
         <p>
           The first version of this project produced a headline I was proud of: a
           shot-quality metric (EPSA, expected points per shot attempt above league
@@ -210,7 +200,7 @@ export default function Page() {
           <strong>6× better</strong>. It was the kind of clean, citable number that ends
           a slide deck. So I tried to break it instead.
         </p>
-        <p>Two things broke:</p>
+        <p>Two things broke.</p>
         <p>
           <strong>The metric was circular.</strong>{" "}EPSA scored shots using the same
           contest-adjusted Expected-Points-Value (EPV) proxy that the agent was{" "}
@@ -268,20 +258,20 @@ export default function Page() {
         </div>
       </Section>
 
-      <Section title="The repair: clean data substrate + an outcome-grounded reward">
+      <Section title="Rebuilding the data and the reward">
         <p>
           Rather than patch the symptom, I rebuilt the foundation. The possession
           segmenter was rewritten to re-derive the true <strong>shot-release frame</strong>{" "}
           using a direction-free nearer-basket distance, chosen over two alternative
           &quot;join&quot; fixes specifically because it is the only one that is{" "}
           <strong>leak-free</strong>. I regenerated all 636 games into a corrected
-          substrate (<code>processed_possessions_v2</code>) and gated it on basketball
-          sanity: shots beyond 30 ft at 4.5%, three-point rate ~30%, FG% monotonically
+          dataset (<code>processed_possessions_v2</code>) and gated it on basketball
+          sanity. shots beyond 30 ft at 4.5%, three-point rate ~30%, FG% monotonically
           decreasing with distance, and <strong>100% agreement</strong>{" "}between the
           derived made/missed flag and the play-by-play log.
         </p>
         <p>
-          The reward was regrounded on reality. The circular PBRS/EPV proxy was replaced
+          The reward was regrounded on reality. The circular EPV-based shaping reward was replaced
           with <strong>real points</strong>{" "}at the logged terminal shot, minus a constant
           selectivity bar so the agent is penalized for endorsing below-average looks.
           Critically, passing earns <em>no</em>{" "}shaped teammate-EPV bonus; its value flows
@@ -382,30 +372,30 @@ export default function Page() {
         </p>
       </Section>
 
-      <NoteBlock title="Honest caveats: what this is not">
-        <ul className="space-y-2">
+      <Section title="What this result doesn't show">
+        <ul className="space-y-3 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-[0.7em] [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:bg-red [&>li]:before:content-['']">
           <li>
-            <strong>One-sided.</strong>{" "}The evaluation judges shot{" "}
-            <em>selection</em>{" "}only: the counterfactual value of a pass is unobservable
-            offline, so this is not a claim about full possession value or teammate choice.
+            <strong>Shot selection only.</strong>{" "}It judges which shot to take, not
+            whether to pass. A pass&apos;s counterfactual value is unobservable offline, so
+            nothing here is a claim about full possession value or teammate choice.
           </li>
           <li>
-            <strong>One config genuinely failed, and I kept it in the table.</strong>{" "}A
-            BCQ variant collapsed to <strong>99.9% always-shoot</strong>. Empirically, its
-            behavior-cloning head put ~99.9% probability on SHOOT at essentially every
-            state, so the BCQ feasibility mask admitted only one action (1.00 of 5 on
-            average) and hard-forced the shoot policy. An expected failure mode on this
-            near-degenerate action distribution, not a reward bug.
+            <strong>One configuration failed outright, and I left it in the table.</strong>{" "}
+            A BCQ variant collapsed to shooting on 99.9% of decision points. Its
+            behavior-cloning head put almost all probability on SHOOT at nearly every state,
+            so the feasibility mask admitted only one action (1.00 of 5 on average) and
+            forced the policy. That is an expected failure mode on this near-degenerate
+            action distribution, not a reward bug.
           </li>
           <li>
-            <strong>Training budget mattered, and checkpoints lied.</strong>{" "}The plain
-            outcome agents only earned their significant edge once trained to the full
-            100K episodes; a mid-training &quot;best-eval&quot; checkpoint (selected by the
-            old circular metric) looked like a tie. Lesson burned in: evaluate converged
-            weights, and never trust a checkpoint the broken metric picked.
+            <strong>Checkpoints lied about the training budget.</strong>{" "}The plain outcome
+            agents only earned their significant edge once trained to the full 100K
+            episodes. A mid-training checkpoint, selected by the old circular metric, looked
+            like a tie. Evaluate converged weights, and never trust a checkpoint the broken
+            metric picked.
           </li>
         </ul>
-      </NoteBlock>
+      </Section>
 
       <Section title="Tech stack">
         <TechStack
