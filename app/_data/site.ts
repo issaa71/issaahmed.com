@@ -83,7 +83,7 @@ export const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "LLM & agents",
     items: [
-      "Claude API",
+      "Claude & OpenAI APIs",
       "multi-turn tool calling",
       "streaming agent loops",
       "prompt engineering & caching",

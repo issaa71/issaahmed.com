@@ -64,8 +64,9 @@ function SheetIndex() {
           Projects
         </h2>
         <p className="mt-5 max-w-3xl text-balance font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
-          Six projects, five I designed and built, one I fought for. Two
-          autonomous robots, an offline reinforcement-learning agent, two
+          Six projects, five I designed and built, one I fought for.
+          <br />
+          Two autonomous robots, an offline reinforcement-learning agent, two
           clinical machine-learning tools, and a federal advocacy campaign.
         </p>
         <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink-soft">
@@ -134,8 +135,9 @@ function GeneralNotes() {
           Design philosophy
         </h2>
         <p className="mt-5 max-w-3xl text-balance font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
-          The work I care about sits where hardware and software meet. It
-          isn&apos;t finished until someone who isn&apos;t an engineer can
+          The work I care about sits where hardware and software meet.
+          <br />
+          It isn&apos;t finished until someone who isn&apos;t an engineer can
           understand it.
         </p>
         <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink-soft">

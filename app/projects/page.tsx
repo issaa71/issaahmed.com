@@ -30,8 +30,9 @@ export default function ProjectsPage() {
             Projects
           </h1>
           <p className="mt-5 max-w-2xl text-balance font-prose text-[18px] leading-[1.65] text-ink">
-            Six projects, five I designed and built, one I fought for. Two
-            autonomous robots, an offline reinforcement-learning agent, two
+            Six projects, five I designed and built, one I fought for.
+            <br />
+            Two autonomous robots, an offline reinforcement-learning agent, two
             clinical machine-learning tools, and a federal advocacy campaign.
           </p>
 
