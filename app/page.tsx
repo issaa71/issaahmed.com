@@ -31,10 +31,9 @@ export default function Home() {
   );
 }
 
-/* Hero: the name + thesis, then a spec bar (the drawing's title block) that
-   gives the proof and availability a designed, substantial treatment. The old
-   tiny mono identity line read as an afterthought; this makes the standout
-   fact (four live demos) the focal point and the identity a real block. */
+/* Hero: the dimensioned name, the thesis, and one line of framing. Deliberately
+   quiet: the projects below are the proof, so the hero hands off to them fast
+   instead of front-loading stats. */
 function Hero() {
   return (
     <section className="pb-14 pt-14 text-center">
@@ -47,40 +46,6 @@ function Hero() {
         <p className="mx-auto mt-4 max-w-xl font-prose text-[16px] leading-relaxed text-ink-soft">
           Everything here is something I designed, built, and shipped.
         </p>
-
-        <dl className="mx-auto mt-11 grid max-w-3xl grid-cols-1 gap-px border border-line bg-line text-left sm:grid-cols-3">
-          <div className="bg-paper px-6 py-5">
-            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
-              Live demos
-            </dt>
-            <dd className="mt-3 flex items-center gap-3">
-              <span className="font-struct text-[40px] font-extrabold leading-[0.85] tabular-nums text-red">
-                4
-              </span>
-              <span className="font-struct text-[15px] font-medium leading-[1.25] text-ink-soft">
-                run live in
-                <br />
-                your browser
-              </span>
-            </dd>
-          </div>
-          <div className="bg-paper px-6 py-5">
-            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
-              Focus
-            </dt>
-            <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
-              {"Robotics · Applied ML & AI · Full-stack"}
-            </dd>
-          </div>
-          <div className="bg-paper px-6 py-5">
-            <dt className="font-struct text-[12.5px] font-bold uppercase tracking-[0.05em] text-graphite">
-              Status
-            </dt>
-            <dd className="mt-3 font-struct text-[16.5px] font-semibold leading-[1.4] text-ink">
-              {"Toronto · open to new-grad roles"}
-            </dd>
-          </div>
-        </dl>
       </div>
     </section>
   );
@@ -165,23 +130,26 @@ function GeneralNotes() {
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
           Design philosophy
         </h2>
-        <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
-          I&apos;m a mechatronics generalist: happiest at the seams where hardware,
-          software, and ML meet, and comfortable moving between them and the people
-          who aren&apos;t engineers. A few habits I keep coming back to:
+        <p className="mt-5 max-w-3xl font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
+          The work I care about sits where hardware and software meet. It
+          isn&apos;t finished until someone who isn&apos;t an engineer can
+          understand it.
+        </p>
+        <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink-soft">
+          A few habits I keep coming back to.
         </p>
 
         <ol className="mt-8 border-t border-line/70">
           {NOTES.map((n, i) => (
             <li
               key={n.title}
-              className="grid gap-2 border-b border-line/70 py-6 sm:grid-cols-[7rem_1fr] sm:gap-8"
+              className="grid gap-x-6 gap-y-2 border-b border-line/70 py-7 sm:grid-cols-[4.5rem_1fr]"
             >
-              <p className="font-anno text-[10.5px] uppercase tracking-[0.16em] text-red">
+              <p className="font-struct text-[34px] font-extrabold leading-[0.82] tabular-nums text-red sm:text-[40px]">
                 {String(i + 1).padStart(2, "0")}
               </p>
               <div>
-                <h3 className="font-struct text-[18px] font-semibold text-ink">
+                <h3 className="font-struct text-[19px] font-bold leading-snug text-ink sm:text-[20px]">
                   {n.title}
                 </h3>
                 <p className="mt-2 font-prose text-[15.5px] leading-relaxed text-ink-soft">
