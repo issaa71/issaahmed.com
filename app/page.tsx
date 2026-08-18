@@ -64,7 +64,7 @@ function SheetIndex() {
           Projects
         </h2>
         <p className="mt-5 max-w-3xl font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
-          Six projects, five I designed and built, one I fought for: two
+          Six projects, five I designed and built, one I fought for. Two
           autonomous robots, an offline reinforcement-learning agent, two
           clinical machine-learning tools, and a federal advocacy campaign.
         </p>
@@ -98,7 +98,7 @@ function SheetIndex() {
 const NOTES = [
   {
     title: "Integrate across subsystems",
-    body: "My best work is where separate parts become one system: perception, control, firmware, and the arm on RECLAIM; a vendor ROS2 stack and my own nodes on the wheelchair. Mechatronics taught me to work across the seams, not stay in one lane.",
+    body: "My best work is where separate parts become one system. On RECLAIM that meant perception, control, firmware, and the arm. On the wheelchair it meant a vendor ROS2 stack running alongside my own nodes. Mechatronics taught me to work across the seams, not stay in one lane.",
     evidence: "RECLAIM · the full stack",
     href: "/projects/reclaim",
   },
@@ -110,13 +110,13 @@ const NOTES = [
   },
   {
     title: "Do whatever the thing needs",
-    body: "A startup taught me the job is whatever moves it forward: a pitch deck, a live demo, a cold-outreach email, or unglamorous grunt work. I don't wait for a perfectly-scoped ticket to start being useful.",
+    body: "A startup taught me the job is whatever moves it forward, whether that's a pitch deck, a live demo, a cold-outreach email, or grunt work. I find what needs doing and start on it, instead of waiting for the work to arrive already scoped.",
     evidence: "No Fly List Kids · eight years of it",
     href: "/projects/no-fly-list-kids",
   },
   {
     title: "Make the claim checkable",
-    body: "I'd rather ship a result you can poke at than a number you have to trust. So I audit my own work until it holds, and where I can, I put the thing live in the browser so you can check it yourself.",
+    body: "I'd rather ship a result you can poke at than a number you have to trust. So I audit my own work until it holds, and where I can, I put it in front of people so they can check it too.",
     evidence: "NBA · the live explorer",
     href: "/projects/nba-shot-selection",
   },
