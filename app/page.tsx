@@ -40,7 +40,7 @@ function Hero() {
       <div className={SHELL}>
         <DimensionedName />
 
-        <p className="mx-auto mt-8 max-w-2xl font-prose text-[23px] leading-snug text-ink sm:text-[26px]">
+        <p className="mx-auto mt-8 max-w-2xl text-balance font-prose text-[23px] leading-snug text-ink sm:text-[26px]">
           {PROFILE.tagline}
         </p>
         <p className="mx-auto mt-4 max-w-xl font-prose text-[16px] leading-relaxed text-ink-soft">
@@ -63,7 +63,7 @@ function SheetIndex() {
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
           Projects
         </h2>
-        <p className="mt-5 max-w-3xl font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
+        <p className="mt-5 max-w-3xl text-balance font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
           Six projects, five I designed and built, one I fought for. Two
           autonomous robots, an offline reinforcement-learning agent, two
           clinical machine-learning tools, and a federal advocacy campaign.
@@ -133,7 +133,7 @@ function GeneralNotes() {
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
           Design philosophy
         </h2>
-        <p className="mt-5 max-w-3xl font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
+        <p className="mt-5 max-w-3xl text-balance font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
           The work I care about sits where hardware and software meet. It
           isn&apos;t finished until someone who isn&apos;t an engineer can
           understand it.
@@ -279,7 +279,7 @@ function Contact() {
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
           Contact
         </h2>
-        <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
+        <p className="mt-4 max-w-4xl text-pretty font-prose text-[17px] leading-relaxed text-ink">
           Open to roles and collaborations in robotics, AI and machine
           learning, and full-stack engineering.
         </p>

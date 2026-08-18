@@ -97,6 +97,7 @@ export const SKILLS: { group: string; items: string[] }[] = [
     group: "AI / ML",
     items: [
       "classical & deep-learning models",
+      "computer vision",
       "PyTorch",
       "TensorFlow",
       "scikit-learn",
@@ -116,17 +117,14 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "Next.js",
       "FastAPI",
       "SQL",
-      "WebSockets",
     ],
   },
   {
     group: "Data & pipelines",
     items: [
       "real-time feed ingestion (GTFS-RT)",
-      "Protocol Buffers",
       "PostgreSQL",
       "SQLAlchemy",
-      "Alembic migrations",
       "data-quality auditing",
       "geospatial data",
     ],
@@ -145,7 +143,6 @@ export const SKILLS: { group: string; items: string[] }[] = [
       "pytest",
       "Playwright",
       "Jira",
-      "n8n",
     ],
   },
 ];
