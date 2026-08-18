@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Stamp } from "./drafting";
 import { PROJECTS } from "../_data/site";
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -14,7 +13,6 @@ import { PROJECTS } from "../_data/site";
    ────────────────────────────────────────────────────────────────────────── */
 
 type Spec = { label: string; value: string };
-type CardStamp = { label: string; tone: "red" | "ink"; pulse?: boolean };
 
 type Sheet = {
   no: string;
@@ -22,7 +20,6 @@ type Sheet = {
   category: string;
   role: string;
   specs: Spec[];
-  stamps: CardStamp[];
   live?: string; // RUN LIVE target, external when it starts with http
   flip: boolean; // on lg, photo moves to the right on flipped rows
 };
@@ -42,10 +39,6 @@ export const SHEETS: Sheet[] = [
       { label: "Perception", value: "30 FPS on Jetson" },
       { label: "Placement", value: "3rd overall · 1st in AI division" },
     ],
-    stamps: [
-      { label: "As built", tone: "ink" },
-      { label: "Live", tone: "red", pulse: true },
-    ],
     live: "https://reclaim-nav-sim.vercel.app",
     flip: false,
   },
@@ -59,24 +52,19 @@ export const SHEETS: Sheet[] = [
       { label: "Hazard detection", value: "10 Hz OpenCV" },
       { label: "Arrival", value: "QR-verified" },
     ],
-    stamps: [
-      { label: "As built", tone: "ink" },
-      { label: "Live", tone: "red", pulse: true },
-    ],
     live: "/projects/assistive-wheelchair#sim",
     flip: true,
   },
   {
     no: "03",
     slug: "tha-pain-prediction",
-    category: "Clinical ML · Published",
+    category: "Clinical machine learning · Published",
     role: "2nd of 7 authors, the only engineer",
     specs: [
       { label: "Journal", value: "J. Arthroplasty 2026" },
       { label: "Best T3 MSE", value: "2.70 vs 3.07 baseline" },
       { label: "Patients", value: "513 (SAFE-T cohort)" },
     ],
-    stamps: [{ label: "Published", tone: "red" }],
     flip: false,
   },
   {
@@ -89,26 +77,18 @@ export const SHEETS: Sheet[] = [
       { label: "Shot-quality model", value: "AUC 0.733" },
       { label: "Trained on", value: "116,928 possessions" },
     ],
-    stamps: [
-      { label: "Audited & regrounded", tone: "ink" },
-      { label: "Live", tone: "red", pulse: true },
-    ],
     live: "https://nba-rl-sim.vercel.app",
     flip: true,
   },
   {
     no: "05",
     slug: "glenoid-classifier",
-    category: "Clinical ML",
+    category: "Clinical machine learning",
     role: "Solo project",
     specs: [
       { label: "Healthy-vs-diseased", value: "~91% · AUC 0.98" },
       { label: "Walch classes", value: "6" },
       { label: "End-to-end 6-way", value: "~63% (honest)" },
-    ],
-    stamps: [
-      { label: "Live", tone: "red", pulse: true },
-      { label: "In-browser model", tone: "ink" },
     ],
     live: "/projects/glenoid-classifier#calculator",
     flip: false,
@@ -123,7 +103,6 @@ export const SHEETS: Sheet[] = [
       { label: "Redress funding", value: "$81M (2018 budget)" },
       { label: "Op-ed", value: "Toronto Star · sole author" },
     ],
-    stamps: [{ label: "Ongoing", tone: "ink" }],
     flip: true,
   },
 ];
@@ -177,16 +156,13 @@ export function ProjectGrid() {
   );
 }
 
-/* A compact index cell: media on top, then SHT · category, the title (the whole
-   card is its link via the inset-0 ::after overlay), and a stamp row. */
+/* A compact index cell: media on top, then SHT · category and the title (the
+   whole card is its link via the inset-0 ::after overlay). The category row is
+   the only tagging on a card. */
 function GridCard({ sheet }: { sheet: Sheet }) {
   const proj = PROJECTS.find((p) => p.slug === sheet.slug);
   if (!proj) return null;
-  const { no, slug, category, stamps, live } = sheet;
-  const first = stamps[0];
-  // The status stamp already carries LIVE for the always-on tools (e.g.
-  // Glenoid); only add a separate Live pip when the lead stamp doesn't pulse.
-  const showLive = Boolean(live) && !first?.pulse;
+  const { no, slug, category } = sheet;
 
   return (
     <article className="group relative flex flex-col border border-line bg-plate transition-colors hover:border-red/40">
@@ -214,19 +190,6 @@ function GridCard({ sheet }: { sheet: Sheet }) {
             {proj.title}
           </Link>
         </h3>
-
-        <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
-          {first ? (
-            <Stamp tone={first.tone} pulse={first.pulse}>
-              {first.label}
-            </Stamp>
-          ) : null}
-          {showLive ? (
-            <Stamp tone="red" pulse>
-              Live
-            </Stamp>
-          ) : null}
-        </div>
       </div>
     </article>
   );
@@ -238,7 +201,7 @@ function GridCard({ sheet }: { sheet: Sheet }) {
 function SheetCard({ sheet }: { sheet: Sheet }) {
   const proj = PROJECTS.find((p) => p.slug === sheet.slug);
   if (!proj) return null;
-  const { no, slug, category, role, specs, stamps, live, flip } = sheet;
+  const { no, slug, category, role, specs, live, flip } = sheet;
   const external = live ? /^https?:/.test(live) : false;
 
   const runLiveClass =
@@ -299,14 +262,6 @@ function SheetCard({ sheet }: { sheet: Sheet }) {
               </div>
             ))}
           </dl>
-
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            {stamps.map((s) => (
-              <Stamp key={s.label} tone={s.tone} pulse={s.pulse}>
-                {s.label}
-              </Stamp>
-            ))}
-          </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <Link

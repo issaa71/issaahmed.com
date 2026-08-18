@@ -63,10 +63,13 @@ function SheetIndex() {
         <h2 className="font-struct text-[clamp(1.6rem,3.6vw,2.3rem)] font-bold tracking-tight text-ink">
           Projects
         </h2>
-        <p className="mt-4 max-w-3xl font-prose text-[17px] leading-relaxed text-ink-soft">
+        <p className="mt-5 max-w-3xl font-struct text-[20px] font-medium leading-[1.4] text-ink sm:text-[22px]">
           Six projects, five I designed and built, one I fought for: two
-          autonomous robots, an offline-RL agent, two clinical ML tools, and a
-          federal advocacy campaign. Open any sheet for the full story.
+          autonomous robots, an offline reinforcement-learning agent, two
+          clinical machine-learning tools, and a federal advocacy campaign.
+        </p>
+        <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink-soft">
+          Open any sheet for the full story.
         </p>
 
         <ProjectGrid />
@@ -277,8 +280,8 @@ function Contact() {
           Contact
         </h2>
         <p className="mt-4 max-w-2xl font-prose text-[17px] leading-relaxed text-ink">
-          Open to roles and collaborations in robotics, AI / ML, and full-stack
-          engineering.
+          Open to roles and collaborations in robotics, AI and machine
+          learning, and full-stack engineering.
         </p>
 
         {/* Email: copies the address to the clipboard (the "Send an Email"

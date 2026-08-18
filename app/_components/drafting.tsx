@@ -93,7 +93,7 @@ export function SiteFooter() {
     <footer className="mt-16 px-6 pb-10 lg:px-10">
       <div className="mx-auto max-w-[72rem]">
         <p className="font-anno text-[10px] text-graphite">
-          © {year} · Toronto, ON · Next.js + Vercel
+          © {year} · Toronto, ON
         </p>
       </div>
     </footer>

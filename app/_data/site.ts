@@ -1,7 +1,7 @@
 export const PROFILE = {
   name: "Issa Ahmed",
   tagline:
-    "I build autonomous robots, applied ML and AI systems, and full-stack tools.",
+    "I build autonomous robots, applied machine learning and AI systems, and full-stack tools.",
   currentLine:
     "Everything here is something I designed, built, and shipped, and four of the projects run live, right in your browser.",
   identity:
@@ -36,7 +36,7 @@ export const PROJECTS: {
   },
   {
     slug: "nba-shot-selection",
-    title: "NBA Shot Selection: Offline RL",
+    title: "NBA Shot Selection: Offline Reinforcement Learning",
     codename: "Reinforcement Learning · PyTorch",
     blurb:
       "A Dueling DQN with a per-entity Deep Sets architecture, trained on real SportVU tracking to call shoot-or-pass, then audited until its own headline metric broke, and regrounded on real shot outcomes.",
@@ -46,14 +46,14 @@ export const PROJECTS: {
     title: "Predicting Pain After Total Hip Arthroplasty",
     codename: "Applied ML · Research · Streamlit",
     blurb:
-      "Peer-reviewed ML pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
+      "Peer-reviewed machine-learning pipeline comparing 13 models on 513 patients from the SAFE-T cohort. Co-authored with Sunnybrook + University of Toronto Orthopaedics.",
   },
   {
     slug: "glenoid-classifier",
     title: "Glenoid Morphology Classifier",
     codename: "Clinical ML · scikit-learn",
     blurb:
-      "A three-tier ML pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification, with the real trained model running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
+      "A three-tier machine-learning pipeline that maps CT-derived shoulder measurements onto the Walch glenoid classification, with the real trained model running live in your browser. Healthy-vs-diseased screen ~91% (AUC 0.98).",
   },
   {
     slug: "no-fly-list-kids",
