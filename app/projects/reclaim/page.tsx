@@ -10,7 +10,6 @@ import {
   FigurePlate,
   DataTable,
   NoteBlock,
-  RevBlock,
   TechStack,
   FlowDiagram,
   FsmDiagram,
@@ -97,6 +96,32 @@ export default function Page() {
         className="breakout"
       />
 
+      <Section title="Demo videos">
+        <p>
+          Three pick-attempt runs on the physical prototype, captured during capstone
+          testing and on the showcase floor (March 2026). Each exercises the full
+          vision-servo loop: detect → approach → pick → sort. (The navigation
+          re-benchmark further down this sheet is post-capstone, in simulation.)
+        </p>
+        <VideoGrid className="breakout">
+          <Reel
+            id="_Bktd8VUelg"
+            title="Pickup 1: Tissue, then water bottle"
+            caption="Two-item autonomous run from capstone prototype testing, March 2026: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
+          />
+          <Reel
+            id="vifXLBFmasQ"
+            title="Pickup 2: Aluminum can"
+            caption="Single-item run on a recyclable, March 2026: the scan → detect → drive → pick → sort loop on the physical prototype."
+          />
+          <Reel
+            id="jR9Q2AjDWao"
+            title="Pickup 3: Three-class sweep"
+            caption="Showcase-period run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). Physical prototype, March 2026."
+          />
+        </VideoGrid>
+      </Section>
+
       <Section title="System architecture">
         <SpecGrid
           label="Product design (specified, not built)"
@@ -172,30 +197,152 @@ export default function Page() {
         />
       </Section>
 
-      <Section title="Demo videos">
+
+
+      <Section title="Problem">
         <p>
-          Three pick-attempt runs on the physical prototype, captured during capstone
-          testing and on the showcase floor (March 2026). Each exercises the full
-          vision-servo loop: detect → approach → pick → sort. (The navigation
-          re-benchmark above is post-capstone, in simulation.)
+          Post-event cleanup at indoor venues is an operations problem before it is an
+          environmental one. The United States produces 292.4 million tonnes of municipal
+          solid waste a year and recycles only 32% of it, and U.S. schools alone generate
+          530,000 tonnes of cafeteria waste annually. Contamination rates of 25–30% in
+          recycling streams cost the U.S. recycling industry an estimated $3.5–4 billion
+          a year in rejected loads and reprocessing, and most of that contamination is
+          human sorting error at the bin.
         </p>
-        <VideoGrid className="breakout">
-          <Reel
-            id="_Bktd8VUelg"
-            title="Pickup 1: Tissue, then water bottle"
-            caption="Two-item autonomous run from capstone prototype testing, March 2026: landfill (tissue) → recyclable (water bottle), correctly classified and sorted."
-          />
-          <Reel
-            id="vifXLBFmasQ"
-            title="Pickup 2: Aluminum can"
-            caption="Single-item run on a recyclable, March 2026: the scan → detect → drive → pick → sort loop on the physical prototype."
-          />
-          <Reel
-            id="jR9Q2AjDWao"
-            title="Pickup 3: Three-class sweep"
-            caption="Showcase-period run across all three waste streams: landfill (paper cup) → recyclable (aluminum can) → compost (half-eaten apple). Physical prototype, March 2026."
-          />
-        </VideoGrid>
+        <p>
+          The people who do this work are getting harder to find and harder to keep.
+          Around 80% of commercial cleaning companies report they cannot staff
+          adequately, annual turnover in custodial roles runs over 75%, and custodial
+          work ranks as the fourth-deadliest occupation in the United States, with
+          repetitive bending, lifting, and waste transport driving documented
+          musculoskeletal injury risk.
+        </p>
+        <p>
+          Existing automation addresses these problems in isolation. Floor scrubbers
+          clear fine debris but have no end effector for picking up discrete objects,
+          and stationary sorters like AMP Robotics&apos; Cortex reach high accuracy on a
+          conveyor line but need fixed infrastructure and a waste stream someone has
+          already collected. No commercially available platform integrates autonomous
+          navigation, object-level detection, physical pickup, and multi-stream sorting
+          on a single mobile base. RECLAIM is built for the open floor of conference
+          halls, banquet rooms, gyms, cafeterias, and expo floors, the same five venue
+          types its navigation stack is benchmarked on.
+        </p>
+      </Section>
+
+      <Section title="My role">
+        <p>
+          Four-person capstone team (Abdul Kassem, Issa Ahmed, Dev Panara, Shady Siam).
+          As team lead I had a hand in every part of the build, and the subsystem I owned
+          end-to-end was perception and control. That meant the Jetson Orin NX onboard
+          computer and every Python ROS2 node running on it, the Teensy 4.1 firmware plus
+          the pinout and wiring for actuators and encoders, the computer-vision model
+          design and its TensorRT export pipeline, and the URDF robot model and servo
+          work for the 4-DOF prototype arm.
+        </p>
+      </Section>
+
+      <Section title="Approach: perception">
+        <p>
+          YOLO26n trained on a combination of Roboflow + Kaggle waste datasets, refined
+          across three training cycles (v3, v5, v6) using confusion-matrix-driven class
+          elimination to cut the class set from 11 to 6 and drop ambiguous categories. mAP50
+          improved from 0.693 to 0.826 across those cycles.
+          Exported under TensorRT FP16 to hit 30 FPS on the Jetson Orin NX, sufficient
+          to drive a vision-servo control loop without dropping frames.
+        </p>
+        <FigurePlate
+          src="/projects/reclaim/showcase-perception.jpg"
+          alt="Issa presenting the RECLAIM perception stack at the showcase, monitors showing the detector's throughput, model size, and class-to-bin map."
+          caption="Demoing the perception stack at the showcase: the monitors show the TensorRT-FP16 detector at 30 FPS, its 5.1 MB model, and the class-to-bin mapping."
+          width={1200}
+          height={1600}
+          className="mx-auto max-w-md"
+        />
+        <FigurePlate
+          src="/projects/reclaim/perception-detection.jpg"
+          alt="The RECLAIM perception node's live output: YOLO bounding boxes labeling a cup (0.70), a napkin (0.42), and a plastic bottle (0.41), each annotated with its 3D X/Y/Z position in millimetres from the depth camera."
+          caption="The detector running live: each waste item gets a YOLO class + confidence and a 3D position (X/Y/Z in mm) fused from the OAK-D depth camera (what the arm uses to reach for it)."
+          width={1600}
+          height={1277}
+        />
+      </Section>
+
+      <Section title="Approach: navigation (rebuilt post-capstone)">
+        <p>
+          The capstone shipped a robot, and a navigation benchmark I stopped trusting.
+          The original simulator assumed an idealized 0.5 m/s robot with continuous
+          motion, and its numbers made it into the final report. After the March showcase
+          I rebuilt the simulator from scratch (reclaim_v2, June 2026), calibrated to the
+          real robot&apos;s measured specs: 0.3 m/s max linear velocity, 1.0 rad/s
+          angular, 0.3 m/s² acceleration, 0.470 m wheel separation, the OAK-D&apos;s 73°
+          FOV and 0.4–3.0 m detection range, and the ~13 s/item stop-look-drive approach
+          cadence from the real <code>waste_tracker_v2.py</code> pipeline, then
+          re-benchmarked every algorithm on it. Every navigation number on this page comes
+          from that re-baseline.
+        </p>
+        <p>
+          reclaim_v2 is an event-driven executive over four behaviors (SCAN, COLLECT,
+          SWEEP, DUMP) arbitrated by priority:
+        </p>
+        <FsmDiagram
+          label="Nav executive"
+          states={[
+            { name: "SCAN", role: "frontier exploration" },
+            { name: "COLLECT", role: "route + pick items", via: "items detected" },
+            { name: "SWEEP", role: "close coverage gaps", via: "coverage ≥ 99%" },
+            { name: "DUMP", role: "empty the bin", via: "buffer full / final" },
+          ]}
+          events={[
+            "item picked → re-decide",
+            "scan finished → COLLECT",
+            "path blocked ×3 → requeue · ×6 → abandon",
+            "buffer full → DUMP → resume",
+          ]}
+          caption="Event-driven executive: it re-decides only on events (item picked, scan finished, path blocked), never per tick, so targets switch at plan boundaries instead of oscillating between goals. Transitions are priority-arbitrated; the primary path is shown."
+        />
+        <ul className="space-y-3 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-[0.7em] [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:bg-red [&>li]:before:content-['']">
+          <li>
+            <strong>Commits, doesn&apos;t thrash.</strong>{" "}The executive re-decides only
+            on events (item picked, scan finished, path blocked) never per-tick, so
+            target switches happen at plan boundaries instead of oscillating between goals.
+          </li>
+          <li>
+            <strong>SCAN: frontier exploration.</strong>{" "}Scan viewpoints sit on the seen
+            side of the fog boundary, scored by unseen cells revealed per unit of
+            travel-plus-scan time, with a directed pivot scan on arrival (0.25 rad/s around
+            the left wheel, like the real robot).
+          </li>
+          <li>
+            <strong>COLLECT: exact routing where it&apos;s affordable.</strong>{" "}Batches of
+            ≤7 items are routed exactly (Held-Karp) over true A* path distances; larger
+            batches use nearest-neighbor + 2-opt. Dump-station stops are inserted at the
+            tour boundary that adds the least detour, computed in closed form from an
+            init-time Dijkstra field.
+          </li>
+          <li>
+            <strong>Motion + recovery.</strong>{" "}Pure-pursuit driving with acceleration
+            limits matching the real drivetrain, plus a watchdog recovery ladder: 3
+            consecutive A* failures requeues the item, 6 abandons and logs it, so one
+            unreachable item can never hang a mission.
+          </li>
+        </ul>
+        <p>
+          The simulator runs entirely client-side: React + Three.js (R3F), with a headless
+          Node harness that regenerates the benchmark matrix from a single command. Every
+          run is reproducible byte-for-byte from its (preset · seed) chip, shown in the UI.
+          To try it live, pick a venue and seed, watch the planned route, behavior timeline,
+          and live detection captions, and pit v2 against the four baselines on the
+          comparison dashboard,{" "}
+          <a
+            href="https://reclaim-nav-sim.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+          >
+            interactive 3D demo ↗
+          </a>
+          .
+        </p>
       </Section>
 
       <Section title="Results: the re-benchmarked navigation stack">
@@ -269,156 +416,6 @@ export default function Page() {
           flatter the wrong side. The numbers that survive it are mission completion and
           distance per item collected, so those are the headlines.
         </NoteBlock>
-      </Section>
-
-      <Section title="Problem">
-        <p>
-          Post-event waste at large indoor venues is a concurrent operational and
-          environmental problem. A single NFL game generates 35–40 tonnes of waste at
-          cleanup costs approaching $46,000, while single-stream recycling contamination
-          rates of 25–30% cost the U.S. recycling industry an estimated $3.5–4 billion
-          annually. Existing automation addresses these problems in isolation: floor
-          scrubbers lack end effectors, stationary sorters like AMP Robotics Cortex
-          require fixed conveyor infrastructure. No commercially available platform
-          integrates autonomous navigation, object-level detection, physical pickup, and
-          multi-stream sorting on a single mobile base.
-        </p>
-      </Section>
-
-      <Section title="My role">
-        <p>
-          4-person capstone team (Abdul Kassem, Issa Ahmed, Dev Panara, Shady Siam). I
-          owned the perception + control stack end-to-end: the Jetson Orin NX onboard
-          computer and every Python ROS2 node running on it, the Teensy 4.1 firmware
-          + pinout/wiring for actuators and encoders, the YOLO perception model design
-          and TensorRT export pipeline, and the URDF + servo work for the 4-DOF prototype arm.
-        </p>
-      </Section>
-
-      <Section title="Approach: perception">
-        <p>
-          YOLO26n trained on a combination of Roboflow + Kaggle waste datasets, refined
-          across three training cycles (v3, v5, v6) using confusion-matrix-driven class
-          elimination to cut the class set from 11 to 6 and drop ambiguous categories. mAP50
-          improved from 0.693 to 0.826 across those cycles.
-          Exported under TensorRT FP16 to hit 30 FPS on the Jetson Orin NX, sufficient
-          to drive a vision-servo control loop without dropping frames.
-        </p>
-        <FigurePlate
-          src="/projects/reclaim/showcase-perception.jpg"
-          alt="Issa presenting the RECLAIM perception stack at the showcase, monitors showing the detector's throughput, model size, and class-to-bin map."
-          caption="Demoing the perception stack at the showcase: the monitors show the TensorRT-FP16 detector at 30 FPS, its 5.1 MB model, and the class-to-bin mapping."
-          width={1200}
-          height={1600}
-          className="mx-auto max-w-md"
-        />
-        <FigurePlate
-          src="/projects/reclaim/perception-detection.jpg"
-          alt="The RECLAIM perception node's live output: YOLO bounding boxes labeling a cup (0.70), a napkin (0.42), and a plastic bottle (0.41), each annotated with its 3D X/Y/Z position in millimetres from the depth camera."
-          caption="The detector running live: each waste item gets a YOLO class + confidence and a 3D position (X/Y/Z in mm) fused from the OAK-D depth camera (what the arm uses to reach for it)."
-          width={1600}
-          height={1277}
-        />
-      </Section>
-
-      <Section title="Approach: navigation (rebuilt post-capstone)">
-        <p>
-          The capstone shipped a robot, and a navigation benchmark I stopped trusting.
-          The original simulator assumed an idealized 0.5 m/s robot with continuous
-          motion, and its numbers made it into the final report. After the March showcase
-          I rebuilt the simulator from scratch (reclaim_v2, June 2026), calibrated to the
-          real robot&apos;s measured specs: 0.3 m/s max linear velocity, 1.0 rad/s
-          angular, 0.3 m/s² acceleration, 0.470 m wheel separation, the OAK-D&apos;s 73°
-          FOV and 0.4–3.0 m detection range, and the ~13 s/item stop-look-drive approach
-          cadence from the real <code>waste_tracker_v2.py</code> pipeline, then
-          re-benchmarked every algorithm on it. Every navigation number on this page comes
-          from that re-baseline. The honest result: the algorithm I presented at the
-          showcase completes 6 of 15 missions on the calibrated simulator. The rewrite
-          completes 15 of 15.
-        </p>
-        <RevBlock
-          context="Navigation benchmark"
-          rows={[
-            {
-              rev: "A",
-              tone: "ink",
-              description:
-                "Idealized simulator: 0.5 m/s, continuous motion; the numbers that shipped in the report. 6 / 15 missions.",
-              date: "MAR 2026",
-            },
-            {
-              rev: "B",
-              tone: "red",
-              description:
-                "Rebuilt and calibrated to the real robot: 0.3 m/s, 73° FOV, ~13 s/item. Every navigation number on this page. 15 / 15 missions.",
-              date: "JUN 2026",
-            },
-          ]}
-          caption="Same algorithm family, honest dynamics: the re-baseline cost the headline number and bought one I can defend line by line."
-          className="breakout"
-        />
-        <p>
-          reclaim_v2 is an event-driven executive over four behaviors (SCAN, COLLECT,
-          SWEEP, DUMP) arbitrated by priority:
-        </p>
-        <FsmDiagram
-          label="Nav executive"
-          states={[
-            { name: "SCAN", role: "frontier exploration" },
-            { name: "COLLECT", role: "route + pick items", via: "items detected" },
-            { name: "SWEEP", role: "close coverage gaps", via: "coverage ≥ 99%" },
-            { name: "DUMP", role: "empty the bin", via: "buffer full / final" },
-          ]}
-          events={[
-            "item picked → re-decide",
-            "scan finished → COLLECT",
-            "path blocked ×3 → requeue · ×6 → abandon",
-            "buffer full → DUMP → resume",
-          ]}
-          caption="Event-driven executive: it re-decides only on events (item picked, scan finished, path blocked), never per tick, so targets switch at plan boundaries instead of oscillating between goals. Transitions are priority-arbitrated; the primary path is shown."
-        />
-        <ul className="space-y-3 [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:top-[0.7em] [&>li]:before:h-1.5 [&>li]:before:w-1.5 [&>li]:before:bg-red [&>li]:before:content-['']">
-          <li>
-            <strong>Commits, doesn&apos;t thrash.</strong>{" "}The executive re-decides only
-            on events (item picked, scan finished, path blocked) never per-tick, so
-            target switches happen at plan boundaries instead of oscillating between goals.
-          </li>
-          <li>
-            <strong>SCAN: frontier exploration.</strong>{" "}Scan viewpoints sit on the seen
-            side of the fog boundary, scored by unseen cells revealed per unit of
-            travel-plus-scan time, with a directed pivot scan on arrival (0.25 rad/s around
-            the left wheel, like the real robot).
-          </li>
-          <li>
-            <strong>COLLECT: exact routing where it&apos;s affordable.</strong>{" "}Batches of
-            ≤7 items are routed exactly (Held-Karp) over true A* path distances; larger
-            batches use nearest-neighbor + 2-opt. Dump-station stops are inserted at the
-            tour boundary that adds the least detour, computed in closed form from an
-            init-time Dijkstra field.
-          </li>
-          <li>
-            <strong>Motion + recovery.</strong>{" "}Pure-pursuit driving with acceleration
-            limits matching the real drivetrain, plus a watchdog recovery ladder: 3
-            consecutive A* failures requeues the item, 6 abandons and logs it, so one
-            unreachable item can never hang a mission.
-          </li>
-        </ul>
-        <p>
-          The simulator runs entirely client-side: React + Three.js (R3F), with a headless
-          Node harness that regenerates the benchmark matrix from a single command. Every
-          run is reproducible byte-for-byte from its (preset · seed) chip, shown in the UI.
-          Try it live: pick a venue and seed, watch the planned route, behavior timeline,
-          and live detection captions, and pit v2 against the four baselines on the
-          comparison dashboard,{" "}
-          <a
-            href="https://reclaim-nav-sim.vercel.app"
-            target="_blank"
-            rel="noreferrer"
-          >
-            interactive 3D demo ↗
-          </a>
-          .
-        </p>
       </Section>
 
       <Section title="Approach: manipulation">
@@ -507,13 +504,6 @@ export default function Page() {
           loop with hobby-grade components. That separation forced honest reasoning
           about what we were validating with each subsystem and is what carried us
           through the live demo without manual intervention.
-        </p>
-        <p>
-          The second constraint was self-imposed, after the grade was in: the navigation
-          benchmark I&apos;d presented was measured on an idealized simulator, and I knew
-          it. Rebuilding the simulator around the real robot&apos;s calibrated dynamics
-          (and publishing that the showcase-era algorithm completes 6 of 15 missions on it)
-          cost me the headline number and bought a result I can defend line by line.
         </p>
       </Section>
     </SheetShell>
